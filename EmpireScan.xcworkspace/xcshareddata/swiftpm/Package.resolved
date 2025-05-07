@@ -1,0 +1,15 @@
+{
+  "originHash" : "c10d2fb1c2ab6b69e864167d47438d329a83fae1b885a816bf5a99bccb13b945",
+  "pins" : [
+    {
+      "identity" : "structurekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/structureio/StructureKit",
+      "state" : {
+        "revision" : "4a16a243f3c01b61952f54b473f836dd4bcc433e",
+        "version" : "1.0.1"
+      }
+    }
+  ],
+  "version" : 3
+}

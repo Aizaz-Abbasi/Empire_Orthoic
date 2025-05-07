@@ -1,0 +1,28 @@
+PODS:
+  - Alamofire (5.10.2)
+  - KeychainAccess (4.2.2)
+  - Kingfisher (8.3.1)
+  - ZIPFoundation (0.9.19)
+
+DEPENDENCIES:
+  - Alamofire (~> 5.8)
+  - KeychainAccess (~> 4.2.2)
+  - Kingfisher (~> 8.0)
+  - ZIPFoundation
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - KeychainAccess
+    - Kingfisher
+    - ZIPFoundation
+
+SPEC CHECKSUMS:
+  Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  Kingfisher: 3204d23de16b5ea53541c44ca5a8efb55741dec3
+  ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
+
+PODFILE CHECKSUM: c4428029879f092e584d31b8ab01afe2e52b37ad
+
+COCOAPODS: 1.16.2
