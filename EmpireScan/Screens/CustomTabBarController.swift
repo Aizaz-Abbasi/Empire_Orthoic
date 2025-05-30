@@ -45,6 +45,6 @@ class CustomTabBarController: UITabBarController {
     }
     
     func navigateToTab(index: Int) {
-            self.selectedIndex = index
+        self.selectedIndex = index
     }
 }

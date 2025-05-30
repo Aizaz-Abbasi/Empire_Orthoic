@@ -51,6 +51,7 @@ class HomeVC: UIViewController {
                     }
                 case .failure(let error): break
                    // errorMessage = error.localizedDescription
+                    print("error getStats ",error.localizedDescription)
                 }
             }
         }
@@ -77,7 +78,6 @@ class HomeVC: UIViewController {
     
     func setupProfile() {
         nameLbl?.text = (profileData?.firstName ?? "") + " " + (profileData?.lastName ?? "")
-        
     }
     
     func setupStats() {

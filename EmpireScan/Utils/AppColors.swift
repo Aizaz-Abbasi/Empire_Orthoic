@@ -4,7 +4,6 @@
 //
 //  Created by MacOK on 12/03/2025.
 //
-
 import Foundation
 import SwiftUI
 
@@ -20,5 +19,10 @@ struct Colors {
     static let border = Color(hex: "#E9E9E9")
     static let lightGray = Color(hex: "#9AA2AB")
     static let grayBG = Color(hex: "#F5F5F5")
+}
 
+extension Color {
+    var uiColor: UIColor {
+        UIColor(self)
+    }
 }

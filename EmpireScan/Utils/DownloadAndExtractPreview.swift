@@ -7,14 +7,12 @@
 import Foundation
 import ZIPFoundation
 
-import Foundation
-
-func downloadAndExtractPreview(from urlString: String, identifier: String = UUID().uuidString, completion: @escaping (URL?, URL?) -> Void) {
+func downloadAndExtractPreview(from urlString: String, identifier: String = UUID().uuidString, completion: @escaping (URL?, URL?,URL?) -> Void) {
     print("📥 downloadAndExtractPreview from: \(urlString), identifier: \(identifier)")
     
     guard let url = URL(string: urlString) else {
         print("❌ Invalid URL: \(urlString)")
-        completion(nil, nil)
+        completion(nil, nil,nil)
         return
     }
     
@@ -37,7 +35,7 @@ func downloadAndExtractPreview(from urlString: String, identifier: String = UUID
         guard let tempURL = tempURL, error == nil else {
             print("❌ Download failed: \(error?.localizedDescription ?? "Unknown error")")
             DispatchQueue.main.async {
-                completion(nil, nil)
+                completion(nil, nil,nil)
             }
             return
         }
@@ -80,7 +78,7 @@ func downloadAndExtractPreview(from urlString: String, identifier: String = UUID
             } catch let zipError {
                 print("❌ Error unzipping main file: \(zipError)")
                 DispatchQueue.main.async {
-                    completion(nil, nil)
+                    completion(nil, nil,nil)
                 }
                 return
             }
@@ -88,14 +86,15 @@ func downloadAndExtractPreview(from urlString: String, identifier: String = UUID
             // Look for Preview.jpg
             let previewImageURL = extractURL.appendingPathComponent("Preview.jpg")
             var meshFileURL: URL?
+            var stlFileURL: URL?
 
             // Get contents of extracted directory
             let contents = try fileManager.contentsOfDirectory(at: extractURL, includingPropertiesForKeys: nil)
             print("📂 Directory contents: \(contents.map { $0.lastPathComponent })")
             
             // Look for mesh files recursively
-            func findMeshFiles(in directory: URL) -> URL? {
-                let meshExtensions = ["obj", "ply", "stl"]
+            func findMeshFiles(in directory: URL,meshExtensions:[String]) -> URL? {
+                
                 do {
                     let contents = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
                     
@@ -111,7 +110,7 @@ func downloadAndExtractPreview(from urlString: String, identifier: String = UUID
                         var isDir: ObjCBool = false
                         fileManager.fileExists(atPath: file.path, isDirectory: &isDir)
                         if isDir.boolValue {
-                            if let meshURL = findMeshFiles(in: file) {
+                            if let meshURL = findMeshFiles(in: file, meshExtensions: meshExtensions) {
                                 return meshURL
                             }
                         }
@@ -124,21 +123,27 @@ func downloadAndExtractPreview(from urlString: String, identifier: String = UUID
                         
             // If still no mesh found, try the main directory
             if meshFileURL == nil {
-                meshFileURL = findMeshFiles(in: extractURL)
+                let meshExtensions = ["obj", "ply", "stl"]
+                meshFileURL = findMeshFiles(in: extractURL, meshExtensions: meshExtensions)
             }
             
+            if stlFileURL == nil {
+                let meshExtensions = ["stl"]
+                stlFileURL = findMeshFiles(in: extractURL, meshExtensions: meshExtensions)
+            }
+            print("stlFileURL",stlFileURL)
             // Returning the result
             DispatchQueue.main.async {
                 completion(
                     fileManager.fileExists(atPath: previewImageURL.path) ? previewImageURL : nil,
-                    meshFileURL
+                    meshFileURL,stlFileURL
                 )
             }
 
         } catch {
             print("❌ Processing failed: \(error)")
             DispatchQueue.main.async {
-                completion(nil, nil)
+                completion(nil, nil,nil)
             }
         }
     }.resume()

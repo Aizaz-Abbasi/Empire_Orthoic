@@ -19,7 +19,6 @@ class CanvasViewController<T: PKCanvasView>: UIViewController, PKToolPickerObser
     
     /// Currently active subview
     var highlightedSubview: UIView?
-    
     var selectionEnabled = true
     
     init(canvas: T!, onChanged: ((PKDrawing) -> Void)?, onSelectionChanged: ((UIView?) -> Void)?, shouldBecameFirstResponder: Bool) {
@@ -57,9 +56,9 @@ class CanvasViewController<T: PKCanvasView>: UIViewController, PKToolPickerObser
         
         if (canvas is Canvas) {
             let toolPicker = PKToolPicker()
-            toolPicker.setVisible(true, forFirstResponder: canvas)
+            toolPicker.setVisible(false, forFirstResponder: canvas)
             toolPicker.addObserver(canvas)
-            toolPicker.selectedTool = PKInkingTool(.pen, color: .white, width: 5) // default tool
+            toolPicker.selectedTool = PKInkingTool(.pen, color: .black, width: 7) // default tool
             toolPicker.overrideUserInterfaceStyle = .dark
             toolPicker.colorUserInterfaceStyle = .dark // required for correct black and white colors in different system modes
             self.toolPicker = toolPicker
@@ -330,13 +329,14 @@ class CanvasViewController<T: PKCanvasView>: UIViewController, PKToolPickerObser
             // deselect another one
             // highlighted.layer.borderColor = UIColor.black.cgColor
             if let label = highlighted as? TextLabel {
+                
                 highlighted.layer.cornerRadius = label.styledLayer.cornerRadius
                 highlighted.layer.borderWidth = label.styledLayer.borderWidth
                 highlighted.layer.borderColor = label.styledLayer.borderColor
             }
         }
         
-        view.layer.borderColor = UIColor.systemBlue.cgColor
+        view.layer.borderColor = UIColor.black.cgColor
         view.layer.borderWidth = 3.0
         
         highlightedSubview = view

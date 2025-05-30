@@ -35,7 +35,7 @@ struct PatientListView: View {
     private func headerView() -> some View {
         HStack {
             totalPatientsView()
-            selectAllButton()
+            //selectAllButton()
         }
         .padding()
     }

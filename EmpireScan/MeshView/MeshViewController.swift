@@ -71,7 +71,6 @@ class MeshViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let shareButton = UIBarButtonItem(title: "Save", style: .plain,  target: self, action: #selector(shareMesh(_:)))
         navigationItem.rightBarButtonItem = shareButton
-        
         // Custom initialization
         title = "3D Foot Scan"
     }
@@ -97,9 +96,8 @@ class MeshViewController: UIViewController, UIGestureRecognizerDelegate {
                 print("❌ One or more values are nil: mtkView=\(mtkView), device=\(device), _mesh=\(mesh)")
             }
         }
-        
 
-//        mtkRenderer = RendererMetal(view: mtkView, device: device, mesh: _mesh, size: view.bounds.size)
+//      mtkRenderer = RendererMetal(view: mtkView, device: device, mesh: _mesh, size: view.bounds.size)
         mtkRenderer.viewpointController = viewpointController
         mtkView.delegate = mtkRenderer
         // we will trigger drawing by ourselfes
@@ -173,13 +171,11 @@ class MeshViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupDisplayLynk()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         needsDisplay = true
     }
     
@@ -259,16 +255,14 @@ class MeshViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let cacheDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let screenshotPath = cacheDirectory.appendingPathComponent("Preview.jpg")
-
+        
         // Set file permissions and prepare screenshot
         try? FileManager.default.setAttributes([.posixPermissions: 0o777], ofItemAtPath: screenshotPath.path)
         prepareScreenShot(screenshotPath: screenshotPath)
-
         let timestamp = Int(Date().timeIntervalSince1970)
-
         // Prepare file paths
         let objFileName = "Model_\(timestamp).obj"
-        let stlFileName = "Model_\(timestamp).stl"
+        let stlFileName = "Model_STL_\(timestamp).stl"
         let objFileURL = cacheDirectory.appendingPathComponent(objFileName)
         let stlFileURL = cacheDirectory.appendingPathComponent(stlFileName)
         
@@ -310,17 +304,14 @@ class MeshViewController: UIViewController, UIGestureRecognizerDelegate {
         if FileManager.default.fileExists(atPath: zipFileURL.path) {
             try? FileManager.default.removeItem(at: zipFileURL)
         }
-
         do {
             guard let archive = Archive(url: zipFileURL, accessMode: .create) else {
                 print("❌ Could not create archive")
                 return
             }
-
             try archive.addEntry(with: objFileName, fileURL: objFileURL)
             try archive.addEntry(with: stlFileName, fileURL: stlFileURL)
             try archive.addEntry(with: screenshotPath.lastPathComponent, fileURL: screenshotPath)
-
             print("📦 ZIP file created at: \(zipFileURL.path)")
             uploadMesh(zipFileURL: zipFileURL)
 
@@ -330,78 +321,78 @@ class MeshViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
 
-//    @MainActor private func openShareMeshDialog() {
-//        print("openShareMeshDialog")
-//        LoaderManager.shared.show(in: self.view,message: "Saving Scan")
-//        let cacheDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        let screenshotPath = cacheDirectory.appendingPathComponent("Preview.jpg")
-//        
-//        // Set file permissions for screenshot
-//        try? FileManager.default.setAttributes([.posixPermissions: 0o777], ofItemAtPath: screenshotPath.path)
-//        // Take a screenshot and save it to disk.
-//        prepareScreenShot(screenshotPath: screenshotPath)
-//        
-//        let exportExtensions: [Int: String] = [
-//            STMeshWriteOptionFileFormat.objFile.rawValue: "obj",
-//            STMeshWriteOptionFileFormat.plyFile.rawValue: "ply",
-//            STMeshWriteOptionFileFormat.binarySTLFile.rawValue: "stl"
-//        ]
-//
-//        let meshExportFormat: Int = getMeshExportFormat()
-//        guard let fileExtension = exportExtensions[meshExportFormat] else {
-//            print("❌ Unsupported file format")
-//            return
-//        }
-//        
-//        let timestamp = Int(Date().timeIntervalSince1970)
-//        let meshFileName = "Model_\(timestamp).\(fileExtension)"
-//        let meshFileURL = cacheDirectory.appendingPathComponent(meshFileName)
-//        
-//        print("⏳ Saving mesh file: \(meshFileName)")
-//        
-//        // Request a zipped OBJ file, potentially with embedded MTL and texture.
-//        let options: [String: Any] = [
-//            kSTMeshWriteOptionFileFormatKey: meshExportFormat,
-//            kSTMeshWriteOptionUseXRightYUpConventionKey: true
-//        ]
-//        
-//        do {
-//            try _mesh.write(toFile: meshFileURL.path, options: options)
-//        } catch let error as NSError {
-//            let message = "Exporting failed: \(error.localizedDescription)."
-//            let alert = UIAlertController(title: "Mesh cannot be exported.",
-//                                          message: message,
-//                                          preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(alert, animated: true)
-//            return
-//        }
-//        // Ensure file exists before sharing
-//        guard FileManager.default.fileExists(atPath: meshFileURL.path) else {
-//            print("❌ Mesh file does not exist at path: \(meshFileURL.path)")
-//            return
-//        }
-//        // Create ZIP file and add mesh and screenshot
-//        let zipFileURL = cacheDirectory.appendingPathComponent("Model_\(timestamp).zip")
-//        // Delete if ZIP already exists
-//        if FileManager.default.fileExists(atPath: zipFileURL.path) {
-//            try? FileManager.default.removeItem(at: zipFileURL)
-//        }
-//         do {
-//                // Create ZIP archive
-//             guard let archive = Archive(url: zipFileURL, accessMode: .create) else {
-//                 print("❌ Could not create archive")
-//                 return
-//             }
-//                try archive.addEntry(with: meshFileURL.lastPathComponent, fileURL: meshFileURL)
-//                try archive.addEntry(with: screenshotPath.lastPathComponent, fileURL: screenshotPath)
-//                
-//                print("📤 ZIP file created at: \(zipFileURL.path)")
-//                uploadMesh(zipFileURL: zipFileURL)
-//            } catch {
-//                print("❌ Failed to create ZIP file: \(error.localizedDescription)")
-//            }
-//    }
+    @MainActor private func openShareMeshDialog1() {
+        print("openShareMeshDialog")
+        LoaderManager.shared.show(in: self.view,message: "Saving Scan")
+        let cacheDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let screenshotPath = cacheDirectory.appendingPathComponent("Preview.jpg")
+        
+        // Set file permissions for screenshot
+        try? FileManager.default.setAttributes([.posixPermissions: 0o777], ofItemAtPath: screenshotPath.path)
+        // Take a screenshot and save it to disk.
+        prepareScreenShot(screenshotPath: screenshotPath)
+        
+        let exportExtensions: [Int: String] = [
+            STMeshWriteOptionFileFormat.objFile.rawValue: "obj",
+            STMeshWriteOptionFileFormat.plyFile.rawValue: "ply",
+            STMeshWriteOptionFileFormat.binarySTLFile.rawValue: "stl"
+        ]
+
+        let meshExportFormat: Int = getMeshExportFormat()
+        guard let fileExtension = exportExtensions[meshExportFormat] else {
+            print("❌ Unsupported file format")
+            return
+        }
+        
+        let timestamp = Int(Date().timeIntervalSince1970)
+        let meshFileName = "Model_\(timestamp).\(fileExtension)"
+        let meshFileURL = cacheDirectory.appendingPathComponent(meshFileName)
+        
+        print("⏳ Saving mesh file: \(meshFileName)")
+        
+        // Request a zipped OBJ file, potentially with embedded MTL and texture.
+        let options: [String: Any] = [
+            kSTMeshWriteOptionFileFormatKey: meshExportFormat,
+            kSTMeshWriteOptionUseXRightYUpConventionKey: true
+        ]
+        
+        do {
+            try _mesh.write(toFile: meshFileURL.path, options: options)
+        } catch let error as NSError {
+            let message = "Exporting failed: \(error.localizedDescription)."
+            let alert = UIAlertController(title: "Mesh cannot be exported.",
+                                          message: message,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+            return
+        }
+        // Ensure file exists before sharing
+        guard FileManager.default.fileExists(atPath: meshFileURL.path) else {
+            print("❌ Mesh file does not exist at path: \(meshFileURL.path)")
+            return
+        }
+        // Create ZIP file and add mesh and screenshot
+        let zipFileURL = cacheDirectory.appendingPathComponent("Model_\(timestamp).zip")
+        // Delete if ZIP already exists
+        if FileManager.default.fileExists(atPath: zipFileURL.path) {
+            try? FileManager.default.removeItem(at: zipFileURL)
+        }
+         do {
+                // Create ZIP archive
+             guard let archive = Archive(url: zipFileURL, accessMode: .create) else {
+                 print("❌ Could not create archive")
+                 return
+             }
+                try archive.addEntry(with: meshFileURL.lastPathComponent, fileURL: meshFileURL)
+                try archive.addEntry(with: screenshotPath.lastPathComponent, fileURL: screenshotPath)
+                
+                print("📤 ZIP file created at: \(zipFileURL.path)")
+                uploadMesh(zipFileURL: zipFileURL)
+            } catch {
+                print("❌ Failed to create ZIP file: \(error.localizedDescription)")
+            }
+    }
 
     func uploadMesh(zipFileURL: URL) {
         print("📤 Calling uploadMesh() with ZIP file: \(zipFileURL.path)")

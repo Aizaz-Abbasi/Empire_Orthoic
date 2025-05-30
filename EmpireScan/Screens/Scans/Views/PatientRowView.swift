@@ -3,7 +3,27 @@ import Kingfisher
 
 struct PatientRowView: View {
     let patient: PatientData
-
+    var statusColor: Color {
+        switch patient.status {
+        case "Not Scanned":
+            return .red
+        case "Scanned":
+            return .blue
+        case "Scanned and Submitted":
+            return .blue
+        case "In Progress":
+            return Colors.primary
+        case "Pending":
+            return .orange
+        case "Order Created":
+            return .gray
+        case "Completed":
+            return .green
+        default:
+            return .gray
+        }
+    }
+    
     var body: some View {
         //Color.green
         GeometryReader { geometry in
@@ -23,7 +43,9 @@ struct PatientRowView: View {
                         .font(.system(size: geometry.size.width * 0.035))
                         .padding(.horizontal, 12)
                         .padding(.vertical, 4)
-                        .background(patient.status == "Sent" ? Color.green.opacity(0.2) : Color.gray.opacity(0.2))
+                        .foregroundColor(statusColor)
+                        .background(statusColor.opacity(0.2))
+                        //.background(patient.status == "Sent" ? Color.green.opacity(0.2) : Color.gray.opacity(0.2))
                         .cornerRadius(12)
                 }.background(Color.clear)
                 Divider() // Adds a subtle separator

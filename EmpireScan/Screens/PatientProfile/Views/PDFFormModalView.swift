@@ -9,7 +9,7 @@ struct PDFFormViewer: View {
     @Binding var patientData: OrderPatientProfile?
     @Binding var folderItem: ScanFolderItem?
     @State private var prefilledValues: [String: String] = [:]
-    @Binding   var footImage: UIImage?
+    @Binding var footImage: UIImage?
     @Binding var heelLiftText: String?
     @Binding var notes: String?
     @Binding var prefilledCheckBoxes: [String: String]?
@@ -17,7 +17,6 @@ struct PDFFormViewer: View {
     var selectedDocumentId: Int?
     var documentURL: URL?
     @State private var hasChanges = false
-    
     var onClose: ((OrderScans?, Bool,Bool) -> Void)?
     
     var body: some View {
@@ -29,7 +28,7 @@ struct PDFFormViewer: View {
                 }
                 .padding()
                 Spacer()
-                if(patient?.status == "Not Scanned"){
+                if(patient?.status == "Not Scanned" || patient?.status == "Scanned"){
                     Button("Save") {
                         savePDF()
                     }
@@ -39,16 +38,6 @@ struct PDFFormViewer: View {
                 }
             }
             .background(Color(.systemGray6))
-//            if let uiImage = footImage {
-//                Image(uiImage: uiImage)
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(width: 200, height: 200)
-//            } else {
-//                Text("No image selected")
-//            }
-
-            
             PDFFormViewGPT(document: $document, hasChanges: $hasChanges, prefilledValues: prefilledValues)
                 .edgesIgnoringSafeArea(.bottom)
                 .onAppear {
@@ -76,7 +65,7 @@ struct PDFFormViewer: View {
             print("Failed to download PDF: \(error)")
         }
     }
-
+    
     
     func setupPrefferedValues() {
         let formatter = DateFormatter()
@@ -108,7 +97,7 @@ struct PDFFormViewer: View {
         prefilledCheckBoxes?.forEach { key, value in
             self.prefilledValues[key] = value
         }
-        
+        print("prefilledCheckBoxes--->",prefilledCheckBoxes)
         //printAllCheckboxFieldNames()
         prefillForm()
     }
@@ -136,43 +125,37 @@ struct PDFFormViewer: View {
                 // Only process editable form fields
                 if !annotation.isReadOnly {
                     guard let fieldName = annotation.fieldName else { continue }
+                    print("fieldName",fieldName)
+                    if(fieldName == "5th" || fieldName == "1st"){
+                        print("fieldName---->",fieldName)
+                        print( prefilledValues[fieldName])
+                        print("prefilledValues",prefilledValues)
+                    }
                     if annotation.widgetFieldType != .button {
                         highlightFormField(annotation)
                     }
                     if let value = prefilledValues[fieldName] {
                         if annotation.widgetFieldType == .signature {
-                            print("value========>",value)
+                            //print("value========>",value)
                         }
                         if annotation.widgetFieldType == .text {
                             switch fieldName.lowercased() {
-                                case "date":
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "M/dd/yyyy"
-                                    annotation.widgetStringValue = " \(dateFormatter.string(from: Date()))"
-                                case "note":
-                                    annotation.widgetStringValue = value + ""
-                                case "mm":
-                                    annotation.widgetStringValue = "\(value)"
-                                default:
-                                    annotation.widgetStringValue = value
-                                }
+                            case "date":
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "M/dd/yyyy"
+                                annotation.widgetStringValue = " \(dateFormatter.string(from: Date()))"
+                            case "note":
+                                annotation.widgetStringValue = value + ""
+                            case "mm":
+                                annotation.widgetStringValue = "\(value)"
+                            default:
+                                annotation.widgetStringValue = value
+                            }
                         } else if annotation.widgetFieldType == .button {
                             print("fieldName",fieldName)
                             if isImageField(fieldName), let image = footImage {
-                                                addImageAnnotation(image: image, on: page, in: annotation.bounds)
-                                //annotation.
-                                                // Optionally remove the button annotation to replace with image
-//                                                page.removeAnnotation(annotation)
-//                                if let existingImageAnnotation = findExistingImageAnnotation(on: page, in: annotation.bounds) {
-//                                        // Update the existing annotation
-//                                        existingImageAnnotation.updateImage(image)
-////                                    if let widgetAnnotation = annotation as? PDFAnnotationWidget {
-////                                        if let imageValue = image.pdfWidgetAnnotationValue {
-////                                            widgetAnnotation.widgetValue = imageValue
-////                                        }
-////                                    }
-//                                    }
-                                            } else  if ["yes", "true", "1", "on", "checked"].contains(value.lowercased()) {
+                                addImageAnnotation(image: image, on: page, in: annotation.bounds)
+                            } else  if ["yes", "true", "1", "on", "checked"].contains(value.lowercased()) {
                                 setCheckboxToCheckedState(annotation)
                             } else {
                                 annotation.buttonWidgetState = .offState
@@ -180,6 +163,7 @@ struct PDFFormViewer: View {
                             }
                         } else if annotation.widgetFieldType == .choice {
                             annotation.widgetStringValue = value
+                            
                         }
                         // Mark that we have changes
                         hasChanges = true
@@ -200,8 +184,8 @@ struct PDFFormViewer: View {
     }
     
     private func isImageField(_ fieldName: String) -> Bool {
-        print("fieldName",fieldName)
-        print("fieldName---->",fieldName.lowercased().contains("signature") || fieldName.lowercased().contains("image"))
+        //print("fieldName",fieldName)
+        //print("fieldName---->",fieldName.lowercased().contains("signature") || fieldName.lowercased().contains("image"))
         return fieldName.lowercased().contains("signature") || fieldName.lowercased().contains("image")
     }
     
@@ -227,13 +211,13 @@ struct PDFFormViewer: View {
         let annotation = ImageStampAnnotation(bounds: bounds, image: image)
         page.addAnnotation(annotation)
     }
-
-
+    
+    
     // Helper function to properly set checkbox to checked state
     private func setCheckboxToCheckedState(_ annotation: PDFAnnotation) {
         let exportValue = annotation.value(forAnnotationKey: .widgetValue) as? String
         let knownStates = annotation.buttonWidgetStateString.components(separatedBy: ",")
-
+        
         if let onState = knownStates.first(where: { $0.lowercased() != "off" }) {
             annotation.buttonWidgetState = .onState
             annotation.buttonWidgetStateString = onState
@@ -508,19 +492,19 @@ func printPDFFormFieldNames(document: PDFDocument) {
 //
 class ImageStampAnnotation: PDFAnnotation {
     private var image: UIImage
-
+    
     init(bounds: CGRect, image: UIImage) {
         self.image = image
         super.init(bounds: bounds, forType: .stamp, withProperties: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func draw(with box: PDFDisplayBox, in context: CGContext) {
         super.draw(with: box, in: context)
-
+        
         guard let cgImage = image.cgImage else { return }
         context.saveGState()
         // Convert annotation bounds to the PDF coordinate system
@@ -533,12 +517,12 @@ class ImageStampAnnotation: PDFAnnotation {
         context.restoreGState()
     }
     func updateImage(_ newImage: UIImage) {
-            self.image = newImage
-            // Force redraw
-            self.willChangeValue(for: \.bounds)
-            self.didChangeValue(for: \.bounds)
-        }
-        
+        self.image = newImage
+        // Force redraw
+        self.willChangeValue(for: \.bounds)
+        self.didChangeValue(for: \.bounds)
+    }
+    
 }
 
 

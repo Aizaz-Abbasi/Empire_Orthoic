@@ -56,6 +56,7 @@
 		A34393832DA94BF9007E2E18 /* w4_form.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A34393822DA94BF9007E2E18 /* w4_form.pdf */; };
 		A3726BAE2D7ED1C10096FC82 /* Hexa-Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3726BAD2D7ED1C10096FC82 /* Hexa-Colors.swift */; };
 		A378CBA62D814D570009D084 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A378CBA52D814D570009D084 /* Alamofire.framework */; };
+		A39EEBFF2DDDE7920097FD67 /* ScanSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39EEBFE2DDDE7920097FD67 /* ScanSettings.swift */; };
 		A3A11EB72DC0F8CA00E0C9B0 /* blank_order_form1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A3A11EB62DC0F8CA00E0C9B0 /* blank_order_form1.pdf */; };
 		A3A4A1342D883BD000F24F05 /* TabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A4A1332D883BD000F24F05 /* TabViewModel.swift */; };
 		A3B5F63D2DAE298F001D9C5C /* ZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B5F63C2DAE298F001D9C5C /* ZIP.swift */; };
@@ -67,6 +68,8 @@
 		A3D4BDBE2D7EB201003B89A3 /* Inter_24pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3D4BDBB2D7EB201003B89A3 /* Inter_24pt-Bold.ttf */; };
 		A3D4BDBF2D7EB201003B89A3 /* Inter_24pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3D4BDBD2D7EB201003B89A3 /* Inter_24pt-SemiBold.ttf */; };
 		A3D4BDC02D7EB201003B89A3 /* Inter_24pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3D4BDBC2D7EB201003B89A3 /* Inter_24pt-Medium.ttf */; };
+		A3D9B7BF2DE875930022DD0A /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A3D9B7BE2DE875930022DD0A /* Development.xcconfig */; };
+		A3D9B7C12DE875B10022DD0A /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A3D9B7C02DE875B10022DD0A /* Production.xcconfig */; };
 		D51E7B6E9E2F354E3B606F21 /* Pods_EmpireScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0B7BE2CFC3713D46F52B4C /* Pods_EmpireScan.framework */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +143,7 @@
 		A3726BAD2D7ED1C10096FC82 /* Hexa-Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hexa-Colors.swift"; sourceTree = "<group>"; };
 		A378CBA52D814D570009D084 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C43412D915E0E0098336B /* Structure.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Structure.xcframework; sourceTree = "<group>"; };
+		A39EEBFE2DDDE7920097FD67 /* ScanSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSettings.swift; sourceTree = "<group>"; };
 		A3A11EB62DC0F8CA00E0C9B0 /* blank_order_form1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = blank_order_form1.pdf; sourceTree = "<group>"; };
 		A3A4A1332D883BD000F24F05 /* TabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewModel.swift; sourceTree = "<group>"; };
 		A3AA26552D7AD56B008E3199 /* EmpireScan_Pro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EmpireScan_Pro-Info.plist"; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 		A3D4BDBB2D7EB201003B89A3 /* Inter_24pt-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_24pt-Bold.ttf"; sourceTree = "<group>"; };
 		A3D4BDBC2D7EB201003B89A3 /* Inter_24pt-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_24pt-Medium.ttf"; sourceTree = "<group>"; };
 		A3D4BDBD2D7EB201003B89A3 /* Inter_24pt-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_24pt-SemiBold.ttf"; sourceTree = "<group>"; };
+		A3D9B7BE2DE875930022DD0A /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		A3D9B7C02DE875B10022DD0A /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		FFA36368BCB490029E0A8E70 /* Pods-EmpireScan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmpireScan.debug.xcconfig"; path = "Target Support Files/Pods-EmpireScan/Pods-EmpireScan.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -306,6 +312,7 @@
 		66052A4E273C26B600744306 /* EmpireScan */ = {
 			isa = PBXGroup;
 			children = (
+				A3D9B7BD2DE875430022DD0A /* Shared */,
 				A3A4A1322D883BBC00F24F05 /* ViewModel */,
 				A309EE112D8169F4009CE2EE /* Utils */,
 				A309EE0D2D8160E6009CE2EE /* Views */,
@@ -321,13 +328,7 @@
 				66052A4F273C26B600744306 /* AppDelegate.swift */,
 				66552EA0273EAD0F00E59499 /* MeshView */,
 				66552E9F273EA95C00E59499 /* Utility */,
-				66052A53273C26B600744306 /* ViewController.swift */,
-				66052A6A273C283C00744306 /* ViewController+CaptureSession.swift */,
-				66052A69273C283C00744306 /* ViewController+SLAM.swift */,
-				6610402227FDCB6B0085DBBA /* ViewController+Metal.swift */,
-				6652F3052771F95F004C9166 /* HelpOverlay.swift */,
-				323B350A27EB41B500EA9AA5 /* Storekit.storekit */,
-				6AA33C222AF53594006A3B8B /* Private.swift */,
+				A39EEBFB2DDDE1750097FD67 /* Scanning */,
 			);
 			path = EmpireScan;
 			sourceTree = "<group>";
@@ -381,6 +382,21 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A39EEBFB2DDDE1750097FD67 /* Scanning */ = {
+			isa = PBXGroup;
+			children = (
+				66052A53273C26B600744306 /* ViewController.swift */,
+				66052A6A273C283C00744306 /* ViewController+CaptureSession.swift */,
+				66052A69273C283C00744306 /* ViewController+SLAM.swift */,
+				6610402227FDCB6B0085DBBA /* ViewController+Metal.swift */,
+				6652F3052771F95F004C9166 /* HelpOverlay.swift */,
+				323B350A27EB41B500EA9AA5 /* Storekit.storekit */,
+				6AA33C222AF53594006A3B8B /* Private.swift */,
+				A39EEBFE2DDDE7920097FD67 /* ScanSettings.swift */,
+			);
+			path = Scanning;
+			sourceTree = "<group>";
+		};
 		A3A4A1322D883BBC00F24F05 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,6 +414,15 @@
 				A3D4BDBD2D7EB201003B89A3 /* Inter_24pt-SemiBold.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A3D9B7BD2DE875430022DD0A /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A3D9B7BE2DE875930022DD0A /* Development.xcconfig */,
+				A3D9B7C02DE875B10022DD0A /* Production.xcconfig */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		BF6450CF6C0F08AA25F5A4D6 /* Pods */ = {
@@ -479,6 +504,7 @@
 			files = (
 				A34393832DA94BF9007E2E18 /* w4_form.pdf in Resources */,
 				3762F48528F571DF00432973 /* Distance.mp3 in Resources */,
+				A3D9B7BF2DE875930022DD0A /* Development.xcconfig in Resources */,
 				3762F48628F571DF00432973 /* LaunchScreen.storyboard in Resources */,
 				3762F48728F571DF00432973 /* Images.xcassets in Resources */,
 				3762F48828F571DF00432973 /* Scan.mp3 in Resources */,
@@ -487,6 +513,7 @@
 				3762F48B28F571DF00432973 /* Storekit.storekit in Resources */,
 				A3D4BDBE2D7EB201003B89A3 /* Inter_24pt-Bold.ttf in Resources */,
 				A3D4BDBF2D7EB201003B89A3 /* Inter_24pt-SemiBold.ttf in Resources */,
+				A3D9B7C12DE875B10022DD0A /* Production.xcconfig in Resources */,
 				A3D4BDC02D7EB201003B89A3 /* Inter_24pt-Medium.ttf in Resources */,
 				A3A11EB72DC0F8CA00E0C9B0 /* blank_order_form1.pdf in Resources */,
 				3762F48C28F571DF00432973 /* Main.storyboard in Resources */,
@@ -547,6 +574,7 @@
 				A3CA6D702DB0C11C005B7F65 /* UIViewController+Toast.swift in Sources */,
 				A3B5F63D2DAE298F001D9C5C /* ZIP.swift in Sources */,
 				3762F44D28F571DF00432973 /* SettingsPopupView.swift in Sources */,
+				A39EEBFF2DDDE7920097FD67 /* ScanSettings.swift in Sources */,
 				A3CD0F012D8AA755005C41D2 /* PatientsViewModel.swift in Sources */,
 				3762F45028F571DF00432973 /* MeshViewController.swift in Sources */,
 				3762F45428F571DF00432973 /* ViewController.swift in Sources */,
@@ -597,9 +625,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 7YYQHRBXHC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DERIVED_FILE_DIR)/PackageFrameworks",
@@ -642,9 +671,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 7YYQHRBXHC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DERIVED_FILE_DIR)/PackageFrameworks",
@@ -683,6 +713,7 @@
 		};
 		66052A5E273C26B900744306 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3D9B7BE2DE875930022DD0A /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -752,6 +783,7 @@
 		};
 		66052A5F273C26B900744306 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3D9B7C02DE875B10022DD0A /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

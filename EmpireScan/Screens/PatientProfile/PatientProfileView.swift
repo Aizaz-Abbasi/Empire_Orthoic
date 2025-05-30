@@ -14,18 +14,19 @@ struct PatientProfileView: View {
     @State private var scanList: [ScanFolderItem] = []
     @State private var isLoading = true
     @State private var errorMessage: String?
-    @State private var showOverlay = false
     @State private var selectedIndex: Int? = nil
     @State private var isShowingPDFForm = false
     @State private var isNotificationTriggered = false
+    @State var shouldAutoSubmit: Bool = false
 
     var onSOrderSubmitted: ((Int) -> Void)?
+    var onUpdateScan: ((Int,String) -> Void)?
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
     @State private var showScanView = false
     @State private var selectedScanObj: ScanFolderItem? = nil
- 
+    
     var body: some View {
         ZStack {
             // Main content
@@ -55,7 +56,7 @@ struct PatientProfileView: View {
                     }
                     
                 }
-                if(self.patient.status == "Not Scanned"){
+                if(self.patient.status == "Not Scanned" || self.patient.status == "Scanned"){
                     bottomButtons()
                 }
             }
@@ -68,14 +69,17 @@ struct PatientProfileView: View {
                 
                 ScanOverlayView(
                     isPresented: $showScanView,
-                    isEditable: .constant(self.patient.status == "Not Scanned"),
+                    isEditable: .constant(self.patientData?.status == "Not Scanned" || self.patientData?.status == "Scanned"),
                     folderItem: $selectedScanObj,
                     patient:patient,
                     patientData: $patientData,
+                    shouldAutoSubmit:shouldAutoSubmit,
                     onDismiss: {item in
+                        
                         updateScanItem(updatedItem: item, profileData: nil,isSubmitted: false)
                     },
                     submitOrder:{item,data,op  in
+                        
                         updateScanItem(updatedItem: item,profileData:data, isSubmitted: true)
                     }
                 )
@@ -92,17 +96,35 @@ struct PatientProfileView: View {
     }
     
     func updateScanItem(updatedItem: ScanFolderItem,profileData:PatientData?,isSubmitted:Bool) {
+        var isScanned = false
         if let index = scanList.firstIndex(where: { $0.id == updatedItem.id }) {
             scanList[index] = updatedItem
+            if(updatedItem.scans.count > 0){
+                isScanned = true
+            }
         }
+        
         if(isSubmitted){
             self.isNotificationTriggered = false
-            self.patient.status = "Pending"
+            if isScanned{
+                self.patient.status = "Pending"
+                self.patientData?.status = "Pending"
+            }else{
+                self.patient.status = "Pending"
+                self.patientData?.status = "Pending"
+            }
             onSOrderSubmitted?(self.patient.id!)
+            onUpdateScan?(self.patient.id ?? 0, self.patientData?.status ?? "Pending")
             //self.patient.orderId = profileData?.orderId ?? 0
             fetchPatientProfile()
             fetchScanList()
+        }else if isScanned{
+            //self.patient.status = "Pending"
+            self.patientData?.status = "Scanned"
+            print("self.patientData?.status",self.patientData?.status)
+            onUpdateScan?(self.patient.id ?? 0, self.patientData?.status ?? "Scanned")
         }
+        shouldAutoSubmit = false
     }
    
     private var generalInformationView: some View {
@@ -208,35 +230,57 @@ struct PatientProfileView: View {
         return hasLeft && hasRight
     }
     
+    func hasBothScansAndOrderForm(in folderItem: ScanFolderItem?) -> Bool {
+        print("hasBothScansAndOrderForm",folderItem)
+        guard let scans = folderItem?.scans, !scans.isEmpty,
+              let documents = folderItem?.documents else {
+            return false
+        }
+        
+        let hasLeft = scans.contains { $0.footType?.lowercased() == "left" }
+        let hasRight = scans.contains { $0.footType?.lowercased() == "right" }
+        print("documents",documents)
+        let hasOrderForm = documents.count > 0
+        
+        return hasLeft && hasRight && hasOrderForm
+    }
+    
     @ViewBuilder
     func bottomButtons() -> some View {
         let screenWidth = UIScreen.main.bounds.width
-        let allComplete = !scanList.isEmpty && scanList.allSatisfy { hasBothScans(in: $0) }
+        let allComplete = !scanList.isEmpty && scanList.allSatisfy { hasBothScansAndOrderForm(in: $0) }
+        let allScans = !scanList.isEmpty && scanList.allSatisfy { hasBothScans(in: $0) }
 
         VStack(spacing: 0) {
-            Button(action: {
-                print("Scan Now")
-                navigateToScannerVC()
-            }) {
-                HStack {
-                    Image(systemName: "viewfinder")
-                        .foregroundColor(Colors.primary)
-                    Text("Scan now")
+            if(!allScans){
+                Button(action: {
+                    print("Scan Now")
+                    navigateToScannerVC()
+                }) {
+                    HStack {
+                        Image(systemName: "viewfinder")
+                            .foregroundColor(Colors.primary)
+                        Text("Scan now")
+                    }
+                    .font(.system(size: 16, weight: .bold))
+                    .frame(width: screenWidth * 0.9, height: 50)
+                    .background(Colors.white)
+                    .foregroundColor(Colors.primary)
+                    .overlay(
+                        Capsule().stroke(Colors.primary, lineWidth: 2)
+                    )
+                    .clipShape(Capsule())
                 }
-                .font(.system(size: 16, weight: .bold))
-                .frame(width: screenWidth * 0.9, height: 50)
-                .background(Colors.white)
-                .foregroundColor(Colors.primary)
-                .overlay(
-                    Capsule().stroke(Colors.primary, lineWidth: 2)
-                )
-                .clipShape(Capsule())
+                .padding(.top, 5)
             }
-            .padding(.top, 5)
+            
             
             if(allComplete){
                 Button(action: {
                     print("Saveee Profile Tapped")
+                    shouldAutoSubmit =  true
+                    selectedScanObj = scanList.last
+                    showScanView = true
                 }) {
                     HStack {
                         Image(systemName: "checkmark.circle")
@@ -265,6 +309,7 @@ struct PatientProfileView: View {
                 isLoading = false
                 switch result {
                 case .success(let response):
+                    print("fetchPatientProfile",response.data)
                     self.patientData = response.data
                 case .failure(let error):
                     self.errorMessage = error.localizedDescription
@@ -339,6 +384,26 @@ struct PatientProfileHeaderView: View {
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     @Environment(\.presentationMode) var presentationMode
+    var statusColor: Color {
+        switch patientData?.status {
+        case "Not Scanned":
+            return .red
+        case "Scanned":
+            return .blue
+        case "In Progress":
+            return Colors.primary
+        case "Pending":
+            return .orange
+        case "Order Created":
+            return .gray
+        case "Complete":
+            return .green
+        case "Scanned and Submitted":
+            return .blue
+        default:
+            return .gray
+        }
+    }
     
     var body: some View {
         VStack {
@@ -405,23 +470,32 @@ struct PatientProfileHeaderView: View {
                         .padding(.horizontal, screenWidth*0.02)
                         
                         Spacer()
-                        HStack {
+                        HStack{
+//                            HStack {
+//                                Image(systemName: patientData?.status == "Not Scanned" ? "xmark.circle.fill" : "checkmark.circle.fill")
+//                                    .foregroundColor(patientData?.status == "Not Scanned" ? .red : .green)
+//                                Text("\(patientData?.status ?? "")")
+//                                    .font(.caption)
+//                                    .foregroundColor(patientData?.status == "Not Scanned" ? .red : .green)
+//                            }
                             HStack {
                                 Image(systemName: patientData?.status == "Not Scanned" ? "xmark.circle.fill" : "checkmark.circle.fill")
-                                    .foregroundColor(patientData?.status == "Not Scanned" ? .red : .green)
-                                Text("\(patientData?.status ?? "")")
+                                    .foregroundColor(statusColor)
+
+                                Text(patientData?.status ?? "")
                                     .font(.caption)
-                                    .foregroundColor(patientData?.status == "Not Scanned" ? .red : .green)
+                                    .foregroundColor(statusColor)
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
-                            .background(Color(patientData?.status == "Not Scanned" ? .red : .green).opacity(0.2))
+                            .background(statusColor.opacity(0.2))
                             .clipShape(Capsule())
                             .overlay(
                                 Capsule()
-                                    .stroke(patientData?.status == "Not Scanned" ? Color.red : Color.green, lineWidth: 1)
+                                    .stroke(statusColor, lineWidth: 1)
                             )
                             .offset(x: -10, y: 40)
+
                         }
                     }
                     .padding(.horizontal)
@@ -451,23 +525,23 @@ struct PatientProfileHeaderView: View {
     }
 }
 
-struct FloatingButton: View {
-    var action: () -> Void
-    let screenHeight = UIScreen.main.bounds.height
-    var body: some View {
-        
-        Button(action: action) {
-            Text("Scan now")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(.gray)
-            Image("scanBtn")
-                .resizable()
-                .scaledToFit()
-                .frame(width: screenHeight * 0.04, height: screenHeight * 0.04)
-        }
-    }
-}
+//struct FloatingButton: View {
+//    var action: () -> Void
+//    let screenHeight = UIScreen.main.bounds.height
+//    var body: some View {
+//        
+//        Button(action: action) {
+//            Text("Scan now")
+//                .font(.subheadline)
+//                .fontWeight(.semibold)
+//                .foregroundColor(.gray)
+//            Image("scanBtn")
+//                .resizable()
+//                .scaledToFit()
+//                .frame(width: screenHeight * 0.04, height: screenHeight * 0.04)
+//        }
+//    }
+//}
 
 struct ProfileInfoRow: View {
     var title: String

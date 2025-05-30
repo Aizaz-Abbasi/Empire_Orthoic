@@ -65,7 +65,7 @@ struct OrderPatientProfile: Codable {
     let imageUrl: String?
     let firstName: String?
     let lastName: String?
-    let status: String?
+    var status: String?
     let lastScan: Date?
     let email: String?
     let phone: String?

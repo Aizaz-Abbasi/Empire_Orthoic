@@ -20,12 +20,13 @@ struct SearchOrdersRequest: Encodable {
     var practitionerId: Int?
     var startDate: String?
     var endDate: String?
-    var sortBy: String
+    var sortBy: String?
     var pageNumber: Int
     var pageSize: Int
+    var displayUploadedScans:Bool?=false
 
     enum CodingKeys: String, CodingKey {
-        case searchText, status, practitionerId, startDate, endDate, sortBy, pageNumber, pageSize
+        case searchText, status, practitionerId, startDate, endDate, sortBy, pageNumber, pageSize,displayUploadedScans
     }
 
     func encode(to encoder: Encoder) throws {
@@ -35,9 +36,10 @@ struct SearchOrdersRequest: Encodable {
         try container.encodeIfPresent(practitionerId, forKey: .practitionerId)
         try container.encodeIfPresent(startDate, forKey: .startDate) // Ensures null instead of omission
         try container.encodeIfPresent(endDate, forKey: .endDate) // Ensures null instead of omission
-        try container.encode(sortBy, forKey: .sortBy)
+        try container.encodeIfPresent(sortBy, forKey: .sortBy)
         try container.encode(pageNumber, forKey: .pageNumber)
         try container.encode(pageSize, forKey: .pageSize)
+        try container.encodeIfPresent(displayUploadedScans, forKey: .displayUploadedScans)
     }
 }
 

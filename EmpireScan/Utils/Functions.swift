@@ -6,6 +6,15 @@
 //
 import Foundation
 
+func formatDateToString(_ date: Date?) -> String? {
+    guard let date = date else { return nil }
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    formatter.timeZone = TimeZone(abbreviation: "UTC")
+    return formatter.string(from: date)
+}
+
+
 public func formattedDate(_ date: Any?) -> String {
     // If the input is nil, return "N/A"
     guard let inputDate = date else { return "N/A" }

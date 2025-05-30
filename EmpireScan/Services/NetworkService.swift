@@ -9,8 +9,20 @@ import Alamofire
 class NetworkService {
     static let shared = NetworkService()
     private init() {}
-    //private let baseURL = "http://66.109.28.157"
-    private let baseURL = "http://empireapiv2.sjcomputers.com"
+    //private let baseURL =  "https://api.empireoplabs.com"
+    //private let baseURL =  "http://66.109.28.165:8082"
+    
+    private var baseURL: String {
+        guard let url = Bundle.main.infoDictionary?["BASE_URL"] as? String, !url.isEmpty else {
+            print("BASE_URL not set in Info.plist or .xcconfig")
+            assertionFailure("BASE_URL not set in Info.plist or .xcconfig")
+            return "https://default.api.com"
+        }
+        print(Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as? String ?? "--")
+        print("BASE_URL not set in Info.plist or .xcconfig",url)
+        return url
+    }
+    
     private func request<T: Decodable, B: Encodable>(
         endpoint: String,
         method: HTTPMethod,
@@ -62,17 +74,17 @@ class NetworkService {
             }
         //
         //print("body?.asDictionary()",body?.asDictionary())
-//        AF.request(url, method: method, parameters: body?.asDictionary(), encoding: JSONEncoding.default, headers: finalHeaders)
-//            .validate()
-//            .responseDecodable(of: T.self) { response in
-//                //print("response req",response.result)
-//                switch response.result {
-//                case .success(let data):
-//                    completion(.success(data))
-//                case .failure(let error):
-//                    completion(.failure(error))
-//                }
-//            }
+        //        AF.request(url, method: method, parameters: body?.asDictionary(), encoding: JSONEncoding.default, headers: finalHeaders)
+        //            .validate()
+        //            .responseDecodable(of: T.self) { response in
+        //                //print("response req",response.result)
+        //                switch response.result {
+        //                case .success(let data):
+        //                    completion(.success(data))
+        //                case .failure(let error):
+        //                    completion(.failure(error))
+        //                }
+        //            }
     }
     
     func get<T: Decodable>(endpoint: String, headers: HTTPHeaders = [:], completion: @escaping (Result<T, Error>) -> Void) {
@@ -128,7 +140,7 @@ class NetworkService {
             case .success(let data):
                 print("✅ Success Response: \(data)")
                 completion(.success(data))
-               
+                
             case .failure(let error):
                 // ❌ Print debug info for better troubleshooting
                 if let responseData = response.data, let errorMessage = String(data: responseData, encoding: .utf8) {
@@ -140,42 +152,4 @@ class NetworkService {
         }
     }
 }
-    
-//    func upload<T: Decodable>(
-//        endpoint: String,
-//        parameters: [String: String] = [:],
-//        fileData: Data,
-//        fileName: String,
-//        mimeType: String,
-//        headers: HTTPHeaders = [:],
-//        completion: @escaping (Result<T, Error>) -> Void
-//    ) {
-//        let url = "\(baseURL)/\(endpoint)"
-//        print("url-->",url)
-//        print("fileData",fileData,fileName,mimeType)
-//        print("parameters",parameters)
-//
-//        var finalHeaders = headers
-//        finalHeaders.add(name: "Content-Type", value: "multipart/form-data")
-//        
-//        if let accessToken = TokenManager.shared.accessToken {
-//            finalHeaders.add(name: "Authorization", value: "Bearer \(accessToken)")
-//        }
-//        
-//        AF.upload(multipartFormData: { formData in
-//            for (key, value) in parameters {
-//                formData.append(Data(value.utf8), withName: key)
-//            }
-//            formData.append(fileData, withName: "image", fileName: fileName, mimeType: mimeType)
-//        }, to: url, headers: finalHeaders)
-//        .validate()
-//        .responseDecodable(of: T.self) { response in
-//            switch response.result {
-//            case .success(let data):
-//                completion(.success(data))
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
-//    }
-//}
+

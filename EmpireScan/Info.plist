@@ -48,5 +48,7 @@
 	<string>Required faceId to store the image to the gallery</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>BASE_URL</key>
+	<string>$(BASE_URL)</string>
 </dict>
 </plist>

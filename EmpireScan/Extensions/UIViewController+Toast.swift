@@ -9,12 +9,17 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    func showToast(message: String, duration: Double = 2.0) {
+    func showToast(
+        message: String,
+        duration: Double = 2.0,
+        textColor: UIColor? = .white,
+        backgroundColor: UIColor? = UIColor.black.withAlphaComponent(0.8)
+    ) {
         let toastLabel = UILabel()
         toastLabel.text = message
-        toastLabel.textColor = .white
+        toastLabel.textColor = textColor
         toastLabel.textAlignment = .center
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        toastLabel.backgroundColor = backgroundColor
         toastLabel.font = UIFont.systemFont(ofSize: 14)
         toastLabel.numberOfLines = 0
         toastLabel.alpha = 0.0
@@ -42,4 +47,5 @@ extension UIViewController {
             })
         }
     }
+
 }

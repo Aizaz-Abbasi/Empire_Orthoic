@@ -25,7 +25,7 @@ struct OrthoticWorkOrderPart1: View {
         Option(title: "Spenco", isSelected: false),
         Option(title: "Perforated EVA", isSelected: false),
         Option(title: "Leather", isSelected: false),
-        Option(title: "W/O Padding", isSelected: false),
+        Option(title: "Leather W/O Padding", isSelected: false),
         Option(title: "Multi-Color EVA", isSelected: false),
         Option(title: "Plastazote", isSelected: false)
     ]

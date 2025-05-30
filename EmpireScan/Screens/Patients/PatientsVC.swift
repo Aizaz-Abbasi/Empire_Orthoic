@@ -14,6 +14,13 @@ class PatientsVC: UIViewController {
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var cancellables: Set<AnyCancellable> = []
     
+    var appliedFilters: FilterValues?
+    private let filterStatusView = UIView()
+    private let filterLabel = UILabel()
+    private let clearFilterButton = UIButton(type: .system)
+    private var hasNavigated = false
+    var isSearching: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,8 +28,9 @@ class PatientsVC: UIViewController {
         setupSearchBar()
         setupLoader()
         addPatientScanList()
+        setupFilterStatusView()
         bindViewModel()
-        //getData(searchText: "")
+        getData(searchText: "")
         print("User name:", HomeService.shared.user?.firstName ?? "No name1" + (HomeService.shared.user?.lastName ?? "No name2"))
         profileImg?.image = profileImg?.image?.withRenderingMode(.alwaysTemplate)
         profileImg?.tintColor = .gray
@@ -30,7 +38,18 @@ class PatientsVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        getData(searchText: "")
+        print("viewDidAppear")
+//        getData(searchText: "")
+        hasNavigated = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("viewDidDisappear - ScansVC")
+        if !hasNavigated {
+            clearFilters()
+            print("viewDidDisappear - ScansVC Clearing Filter")
+        }
     }
     
     private func setupSearchBar() {
@@ -65,7 +84,7 @@ class PatientsVC: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] updatedPatients in
                 guard let self = self else { return }
-
+                
                 DispatchQueue.main.async {
                     self.hostingControllerPatients?.rootView = PatientsListView(
                         patients: Binding(
@@ -82,6 +101,20 @@ class PatientsVC: UIViewController {
                             print("Calling API to load more data...")
                             var statusTag: String?
                             statusTag = "Not Scanned"
+                            let sortOption = appliedFilters?.sortOption
+                            let startDate = appliedFilters?.startDate
+                            let endDate = appliedFilters?.endDate
+                            let displayUploaded = appliedFilters?.displayUploadedScans ?? false
+                            viewModel.fetchPatients(
+                                for: statusTag,
+                                searchText: searchBar.text ?? "-",
+                                pageNumber: self.viewModel.currentPage + 1,
+                                isSearching: isSearching,
+                                sortOption: sortOption,
+                                startDate: startDate,
+                                endDate: endDate,
+                                displayUploadedScans: displayUploaded
+                            )
                             self.viewModel.fetchPatients(for: statusTag, searchText: "", pageNumber: self.viewModel.currentPage + 1)
                         },
                         onPatientSelected: { [weak self] patient in
@@ -100,12 +133,54 @@ class PatientsVC: UIViewController {
             .sink { [weak self] loading in
                 guard let self = self else { return }
                 if loading {
+                    self.view.bringSubviewToFront(self.activityIndicator)
                     self.activityIndicator.startAnimating()
                 } else {
                     self.activityIndicator.stopAnimating()
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupFilterStatusView() {
+        filterStatusView.translatesAutoresizingMaskIntoConstraints = false
+        filterStatusView.backgroundColor = UIColor.systemGray6
+        filterStatusView.layer.cornerRadius = 8
+        filterStatusView.isHidden = true // Hidden by default
+        
+        filterLabel.translatesAutoresizingMaskIntoConstraints = false
+        filterLabel.textColor = .darkGray
+        filterLabel.font = UIFont.systemFont(ofSize: 14)
+        
+        clearFilterButton.setTitle("✖", for: .normal)
+        clearFilterButton.translatesAutoresizingMaskIntoConstraints = false
+        clearFilterButton.addTarget(self, action: #selector(clearFilters), for: .touchUpInside)
+        
+        filterStatusView.addSubview(filterLabel)
+        filterStatusView.addSubview(clearFilterButton)
+        view.addSubview(filterStatusView)
+        
+        NSLayoutConstraint.activate([
+            filterStatusView.topAnchor.constraint(equalTo: searchView?.bottomAnchor ?? view.topAnchor, constant: 8),
+            filterStatusView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            filterStatusView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            filterLabel.leadingAnchor.constraint(equalTo: filterStatusView.leadingAnchor, constant: 8),
+            filterLabel.centerYAnchor.constraint(equalTo: filterStatusView.centerYAnchor),
+            clearFilterButton.leadingAnchor.constraint(equalTo: filterLabel.trailingAnchor, constant: 8),
+            clearFilterButton.trailingAnchor.constraint(equalTo: filterStatusView.trailingAnchor, constant: -8),
+            clearFilterButton.centerYAnchor.constraint(equalTo: filterStatusView.centerYAnchor),
+            filterStatusView.heightAnchor.constraint(equalToConstant: 32)
+        ])
+    }
+    
+    @objc private func clearFilters() {
+        appliedFilters = nil
+        SessionService.shared.filters = nil
+        filterLabel.text = ""
+        filterStatusView.isHidden = true
+        viewModel.canLoadMore = true
+        viewModel.currentPage = 1
+        getData(searchText: "")
     }
     
     func addPatientScanList() {
@@ -129,20 +204,53 @@ class PatientsVC: UIViewController {
         ])
     }
     
-    func getData(searchText:String) {
+    func getData(searchText:String,isSearching: Bool = false) {
         //isLoading = true
         var status: String?
         status = "Not Scanned"
-        viewModel.fetchPatients(for: status, searchText: searchText,pageNumber: 1)
-        
+        if let filters = appliedFilters {
+            var components: [String] = []
+            
+            if let sort = filters.sortOption, !sort.isEmpty {
+                components.append("Sort: \(sort)")
+            }
+            if let start = filters.startDate {
+                components.append("| Date")
+                print("Date",start)
+            }else if let end = filters.endDate {
+                components.append("| Date")
+                print("Date",end)
+            }
+            filterLabel.text = components.joined(separator: " | ")
+            filterStatusView.isHidden = components.isEmpty
+            viewModel.canLoadMore = true
+            viewModel.currentPage = 1
+            print("components",components)
+        } else {
+            filterLabel.text = ""
+            filterStatusView.isHidden = true
+        }
+        let sortOption = appliedFilters?.sortOption
+        let startDate = appliedFilters?.startDate
+        let endDate = appliedFilters?.endDate
+        let displayUploaded = appliedFilters?.displayUploadedScans ?? false
+        viewModel.fetchPatients(
+            for: status,
+            searchText: searchText,
+            pageNumber: 1,
+            isSearching: isSearching,
+            sortOption: sortOption,
+            startDate: startDate,
+            endDate: endDate,
+            displayUploadedScans: displayUploaded
+        )
     }
     
-    func updateData(searchText:String) {
-       // isLoading = true
-        var status: String?
-        status = "Not Scanned"
-        viewModel.fetchPatients(for: status, searchText: searchText,pageNumber: 1,isSearching: true)
-    }
+//    func updateData(searchText:String) {
+//        //isLoading = true
+//        
+//        viewModel.fetchPatients(for: status, searchText: searchText,pageNumber: 1,isSearching: true)
+//    }
     
     func appendAndNavigate(data:PatientData) {
         viewModel.appendNewPatient(data)
@@ -160,10 +268,11 @@ class PatientsVC: UIViewController {
                 }
             }
         ), FromScreen: "Patients",
-         onApply: { [weak self] filters in
+              onApply: { [weak self] filters in
             guard let self = self else { return }
-//            self.appliedFilters = filters
-//            self.getData(searchText: "")
+            SessionService.shared.filters = filters
+            self.appliedFilters = filters
+            self.getData(searchText: "")
         })
         let hostingController = UIHostingController(rootView: filterModalView)
         hostingController.modalPresentationStyle = .automatic
@@ -171,10 +280,15 @@ class PatientsVC: UIViewController {
     }
     
     private func openPatientProfile(patient: PatientData) {
+        hasNavigated = true
         let swiftUIView = PatientProfileView(patient: patient,
                                              onSOrderSubmitted: {id in
-                self.viewModel.removePatient(byId: id)
-        })
+            self.viewModel.removePatient(byId: id)
+        },
+                                             onUpdateScan: {id, status in
+            self.viewModel.updatePatientStatus(byId: id, status: status)
+        }
+        )
         let hostingController = UIHostingController(rootView: swiftUIView)
         hostingController.hidesBottomBarWhenPushed = true
         
@@ -186,7 +300,12 @@ extension PatientsVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print("User typed: \(searchText)")
-        getData(searchText: searchText)
+        isSearching = true
+        if(searchText.isEmpty){
+            print("User typed: isSearching = false")
+            isSearching = false
+        }
+        getData(searchText: searchText,isSearching: true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

@@ -63,12 +63,12 @@ struct EditorView: View {
     
     /// Available fill colors
     let fillColors: [UIColor] = [
-        .white, UIColor.dark, .systemYellow, .systemGreen, .systemBlue, .systemPurple, .systemPink, .systemRed, .systemOrange,
+        .black, UIColor.dark, .systemYellow, .systemGreen, .systemBlue, .systemPurple, .systemPink, .systemRed, .systemOrange,
     ]
     
     /// Text colors coming with pair to display different colors on different backgrounds - white on black atd.
     let textColors: [UIColor: UIColor] = [ // fill:text
-        .white: UIColor.dark,
+        .black: UIColor.dark,
         UIColor.dark: .white,
         .systemYellow: .white,
         .systemGreen: .white,
@@ -193,7 +193,7 @@ struct EditorView: View {
                     }
                     .padding(.all, 8)
                     .animation(.spring())
-                    .disabled(!canUndo)
+                    //.disabled(!canUndo)
                 }
                 .disabled(isProcesing)
                        
@@ -762,7 +762,7 @@ struct EditorView: View {
             
             canvas.isUserInteractionEnabled = true
             mlCanvas.isUserInteractionEnabled = true
-            toolPicker?.setVisible(true, forFirstResponder: canvas)
+            toolPicker?.setVisible(false, forFirstResponder: canvas)
             
             activateCanvas()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
@@ -798,7 +798,7 @@ struct EditorView: View {
         label.numberOfLines = 0
         
         label.text = text
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
 
         let labelSize = label.intrinsicContentSize
@@ -806,7 +806,7 @@ struct EditorView: View {
         
         label.layer.cornerRadius = 16
         label.layer.borderWidth = 3
-        label.layer.borderColor = UIColor.white.cgColor
+        label.layer.borderColor = UIColor.black.cgColor
         label.tag = 1
         label.layer.masksToBounds = true
         label.styledLayer = label.layer.copied

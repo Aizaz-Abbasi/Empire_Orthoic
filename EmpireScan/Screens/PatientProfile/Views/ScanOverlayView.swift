@@ -1,14 +1,11 @@
-//
 //  ScanOverlayView.swift
 //  EmpireScan
-//
 //  Created by MacOK on 09/04/2025.
-//
 import Foundation
 import SwiftUI
 import PhotosUI
-
 struct ScanOverlayView: View {
+    
     @Binding var isPresented: Bool
     @Binding var isEditable: Bool
     @Binding var folderItem: ScanFolderItem?
@@ -19,13 +16,14 @@ struct ScanOverlayView: View {
     @State private var leftPreviewURL: URL?
     @State private var rightMeshURL: URL?
     @State private var leftMeshURL: URL?
+    @State var shouldAutoSubmit: Bool = false
+    
+    @State private var rightStlURL: URL?
+    @State private var leftStlURL: URL?
     var onDismiss: ((ScanFolderItem) -> Void)? = nil
     var submitOrder: ((ScanFolderItem,PatientData?,Bool) -> Void)? = nil
     @State private var showPDF = false
-    //@State private var selectedPdfUrl: URL? = nil
-    // @State private var selectedDocumentId: Int? = nil
     @State private var selectedPDF: PDFSelection?
-    //@State private var selectedImageURL: URL?
     @State private var isImageFullScreen = false
     @State private var isLoading = true
     @State private var didLoadRight = false
@@ -38,14 +36,14 @@ struct ScanOverlayView: View {
     @State private var selectedItem: PhotosPickerItem?
     @State private var isToastVisible = false
     @State private var toastMessage = ""
-    @State var reloadViewTrigger = false
+    
     //ORDER FORM
     @State private var showOrthoticWorkOrder = false
     @State private var prefilledCheckBoxes: [String: String]? = nil
-
+    
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
-
+    
     struct PDFSelection {
         let url: URL
         let documentId: Int
@@ -83,7 +81,11 @@ struct ScanOverlayView: View {
             .cornerRadius(20)
             .toast(isShowing: $isToastVisible, message: toastMessage)
             if isLoading {
-                loadingOverlay
+                if shouldAutoSubmit{
+                    loadingOverlay(text: "Submitting order. This may take a moment...")
+                }else{
+                    loadingOverlay()
+                }
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -191,8 +193,8 @@ struct ScanOverlayView: View {
     }
     
     private var headerView: some View {
-      
-//        return
+        
+        //        return
         VStack {
             let rightScan = folderItem?.scans.first { $0.footType?.lowercased() == "right" }
             let leftScan = folderItem?.scans.first { $0.footType?.lowercased() == "left" }
@@ -204,7 +206,7 @@ struct ScanOverlayView: View {
                         .font(.title2)
                         .foregroundColor(.white)
                         .padding(.leading)
-
+                    
                     HStack(spacing: 20) {
                         // Right Scan
                         ScanItem(
@@ -222,9 +224,11 @@ struct ScanOverlayView: View {
                                 isLoading = true
                                 didLoadRight = false
                                 if let rightScan = rightScan {
-                                    downloadAndExtractPreview(from: rightScan.attachmentUrl, identifier: "left_model") { url, meshUrl in
+                                    downloadAndExtractPreview(from: rightScan.attachmentUrl, identifier: "left_model") { url, meshUrl, stlUrl in
                                         self.rightPreviewURL = url
+                                        print("left---->",stlUrl)
                                         self.rightMeshURL = meshUrl
+                                        self.rightStlURL = stlUrl
                                         didLoadRight = true
                                         checkIfDoneLoading()
                                     }
@@ -234,7 +238,7 @@ struct ScanOverlayView: View {
                                 }
                             }
                         }
-
+                        
                         // Left Scan
                         ScanItem(
                             title: "Left",
@@ -251,9 +255,11 @@ struct ScanOverlayView: View {
                                 isLoading = true
                                 didLoadLeft = false
                                 if let leftScan = leftScan {
-                                    downloadAndExtractPreview(from: leftScan.attachmentUrl, identifier: "right_model") { url, meshUrl in
+                                    downloadAndExtractPreview(from: leftScan.attachmentUrl, identifier: "right_model") { url, meshUrl,stlUrl in
+                                        print("right---->",stlUrl)
                                         self.leftPreviewURL = url
                                         self.leftMeshURL = meshUrl
+                                        self.leftStlURL = stlUrl
                                         didLoadLeft = true
                                         checkIfDoneLoading()
                                     }
@@ -266,7 +272,7 @@ struct ScanOverlayView: View {
                     }
                     .padding(.horizontal)
                 }
-
+                
                 Spacer()
                 // Right Side: Buttons (❌, 📷, 📸)
                 VStack(spacing: screenHeight * 0.02) {
@@ -287,34 +293,34 @@ struct ScanOverlayView: View {
                             .clipShape(Circle())
                     }
                     if(isEditable){
-                    // 📷 Photo Library Button
-                    Button(action: {
-                        sourceType = .photoLibrary
-                        showPicker = true
-                    }) {
-                        Image(systemName: "photo.on.rectangle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: screenHeight * 0.02, height: screenHeight * 0.02)
-                            .padding(10)
-                            .background(Color.white.opacity(0.3))
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                    }
-                    // 📸 Camera Button
-                    Button(action: {
-                        sourceType = .camera
-                        showPicker = true
-                    }) {
-                        Image(systemName: "camera")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: screenHeight * 0.02, height: screenHeight * 0.02)
-                            .padding(10)
-                            .background(Color.white.opacity(0.3))
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                    }
+                        // 📷 Photo Library Button
+                        Button(action: {
+                            sourceType = .photoLibrary
+                            showPicker = true
+                        }) {
+                            Image(systemName: "photo.on.rectangle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: screenHeight * 0.02, height: screenHeight * 0.02)
+                                .padding(10)
+                                .background(Color.white.opacity(0.3))
+                                .foregroundColor(.white)
+                                .clipShape(Circle())
+                        }
+                        // 📸 Camera Button
+                        Button(action: {
+                            sourceType = .camera
+                            showPicker = true
+                        }) {
+                            Image(systemName: "camera")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: screenHeight * 0.02, height: screenHeight * 0.02)
+                                .padding(10)
+                                .background(Color.white.opacity(0.3))
+                                .foregroundColor(.white)
+                                .clipShape(Circle())
+                        }
                     }
                 }
                 .padding(.trailing, 12)
@@ -370,7 +376,7 @@ struct ScanOverlayView: View {
                                             }
                                         }
                                     }
-
+                                    
                                     // Delete button
                                     if(isEditable){
                                         Button(action: {
@@ -388,7 +394,7 @@ struct ScanOverlayView: View {
                                 .frame(width: 100, height: 140)
                             }
                         }
-
+                        
                     }
                 }
                 .padding(.horizontal)
@@ -435,8 +441,10 @@ struct ScanOverlayView: View {
                         Image(systemName: "plus.circle")
                             .foregroundColor(.white)
                     }
+                }else{
+                    Text("View Only")
+                        .foregroundColor(.white)
                 }
-               
             }.padding(.horizontal)
             
             ScrollView(.horizontal, showsIndicators: false) {
@@ -512,26 +520,26 @@ struct ScanOverlayView: View {
             }
         }
         .fullScreenCover(isPresented: $showOrthoticWorkOrder) {
-                NavigationView {
-                    OrthoticWorkOrderPart1(folderItem:$folderItem, patient:patient, patientData: $patientData, orderId: patient?.orderId ?? 0, orderStatus: patient?.status ?? "Not Scanned", onSubmit: {pdfItem,isUpdated in
-                        showOrthoticWorkOrder = false
-                        if let pdfItem = pdfItem{
-                            appendPdf(pdfItem: pdfItem)
-                        }
-//                        submitOrderAPI()
-                    })
-                        .navigationBarItems(leading: Button("Cancel") {
-                            showOrthoticWorkOrder = false
-                        })
-                }
+            NavigationView {
+                OrthoticWorkOrderPart1(folderItem:$folderItem, patient:patient, patientData: $patientData, orderId: patient?.orderId ?? 0, orderStatus: patient?.status ?? "Not Scanned", onSubmit: {pdfItem,isUpdated in
+                    showOrthoticWorkOrder = false
+                    if let pdfItem = pdfItem{
+                        appendPdf(pdfItem: pdfItem)
+                    }
+                    //                        submitOrderAPI()
+                })
+                .navigationBarItems(leading: Button("Cancel") {
+                    showOrthoticWorkOrder = false
+                })
             }
+        }
     }
     
     @ViewBuilder
     func bottomButtons() -> some View {
         let screenWidth = UIScreen.main.bounds.width
         let buttonWidth = (screenWidth * 0.9 - 10) / 2 // 10 is the spacing between buttons
-
+        
         HStack(spacing: 10) {
             Button(action: {
                 
@@ -552,7 +560,7 @@ struct ScanOverlayView: View {
                 )
                 .clipShape(Capsule())
             }
-
+            
             Button(action: {
                 print("Save Profile Tapped")
                 isPresented = false
@@ -574,18 +582,39 @@ struct ScanOverlayView: View {
         .padding(.horizontal, (screenWidth - (buttonWidth * 2 + 10)) / 2)
         .padding(.bottom, 20)
     }
-
     
-    private var loadingOverlay: some View {
+//    private var loadingOverlay: some View {
+//        Color.black.opacity(0.6)
+//            .ignoresSafeArea()
+//            .overlay(
+//                ProgressView()
+//                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+//                    .scaleEffect(1.5)
+//                    .padding()
+//                    .background(Color.black.opacity(1))
+//                    .cornerRadius(12)
+//            )
+//    }
+    
+    private func loadingOverlay(text: String? = nil) -> some View {
         Color.black.opacity(0.6)
             .ignoresSafeArea()
             .overlay(
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                    .scaleEffect(1.5)
-                    .padding()
-                    .background(Color.black.opacity(1))
-                    .cornerRadius(12)
+                VStack(spacing: 12) {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(1.5)
+
+                    if let text = text {
+                        Text(text)
+                            .foregroundColor(.white)
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                    }
+                }
+                .padding()
+                .background(Color.black.opacity(1))
+                .cornerRadius(12)
             )
     }
     
@@ -594,24 +623,37 @@ struct ScanOverlayView: View {
         if didLoadRight && didLoadLeft {
             isLoading = false
             print("checkIfDoneLoading false")
+            checkAndAutoSubmit()
         }else{
             print("checkIfDoneLoading true")
         }
     }
     
+     func checkAndAutoSubmit() {
+            // Only auto-submit if both STL URLs are available and the autoSubmit flag is true
+            if shouldAutoSubmit{
+                if let leftUrl = leftStlURL, let rightUrl = rightStlURL {
+                    print("Auto-submitting order with both STL files ready")
+                    submitOrderAPI()
+                    shouldAutoSubmit = false
+                }
+            }
+    }
+    
     func hasBothScansAndOrderForm(in folderItem: ScanFolderItem?) -> Bool {
+        print("hasBothScansAndOrderForm")
         guard let scans = folderItem?.scans, !scans.isEmpty,
               let documents = folderItem?.documents else {
             return false
         }
-
+        
         let hasLeft = scans.contains { $0.footType?.lowercased() == "left" }
         let hasRight = scans.contains { $0.footType?.lowercased() == "right" }
+        print("documents",documents)
         let hasOrderForm = documents.count > 0
-
         return hasLeft && hasRight && hasOrderForm
     }
-
+    
     
     private func deleteImage(_ document: OrderScans) {
         
@@ -627,6 +669,7 @@ struct ScanOverlayView: View {
             }
         }
     }
+    
     private func deletePdf(_ document: OrderScans) {
         
         ScansService.shared.deleteAttachment(documentId:document.documentId, orderStatus: patient?.status ?? "Not Scanned") { result in
@@ -641,18 +684,16 @@ struct ScanOverlayView: View {
             }
         }
     }
-
     
     private func saveImage(_ image: UIImage) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             print("❌ Failed to convert image to data")
             return
         }
-
         let fileManager = FileManager.default
         let docDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let imageURL = docDir.appendingPathComponent("CapturedImage.jpg")
-
+        
         do {
             try imageData.write(to: imageURL)
             print("📸 Image saved at: \(imageURL)")
@@ -693,22 +734,48 @@ struct ScanOverlayView: View {
     private func submitOrderAPI() {
         print("submitOrderAPI")
         isLoading = true
-        let submitRequest = SubmitOrder(orderId: patient?.orderId ?? 0)
-            PatientsService.shared.postSubmitOrder(requestBody: submitRequest) { result in
-                isLoading = false
+        let mergedURL = FileManager.default.temporaryDirectory.appendingPathComponent("merged_output.stl")
+        do {
+            if let leftStlURL = leftStlURL,let rightStlURL = rightStlURL{
+                try mergeBinarySTLFiles(leftURL: leftStlURL, rightURL: rightStlURL, outputURL: mergedURL)
+            }
+            
+            ScansService.shared.uploadScanResult(
+                orderId:patient?.orderId ?? 0,
+                description: "",
+                footType: "Merged",
+                scanType: "STL",
+                folderId: folderItem?.folderId,
+                orderStatus:patient?.status ?? "Scanned",
+                meshFileURL: mergedURL
+            ) { result in
+                
                 switch result {
-                case .success(let apiResponse):
-                    print("postSubmitOrder========>",apiResponse)
-                    if let folderItem = folderItem, let data = apiResponse.data{
-                        print("postSubmitOrder---->IN",apiResponse)
-                        isPresented = false
-                        submitOrder?(folderItem,nil, true)
+                case .success(let response):
+                    print("📩 Message STL: \(response.message)")
+                    let submitRequest = SubmitOrder(orderId: patient?.orderId ?? 0)
+                    PatientsService.shared.postSubmitOrder(requestBody: submitRequest) { result in
+                        isLoading = false
+                        switch result {
+                        case .success(let apiResponse):
+                            print("postSubmitOrder========>",apiResponse)
+                            if let folderItem = folderItem, let data = apiResponse.data{
+                                print("postSubmitOrder---->IN",apiResponse)
+                                isPresented = false
+                                submitOrder?(folderItem,nil, true)
+                            }
+                            
+                        case .failure(let error):
+                            print("postSubmitOrder error",error)
+                        }
                     }
-                    
                 case .failure(let error):
-                    print("postSubmitOrder error",error)
+                    print("❌ Upload STL failed: \(error.localizedDescription)")
                 }
             }
+        } catch {
+            print("❌ Failed to merge STL files: \(error)")
+        }
     }
     
     // Function to handle navigation when button is clicked
@@ -734,14 +801,12 @@ struct ScanOverlayView: View {
                 print("❌ Could not instantiate FixedOrientationController or inner ViewController")
                 return
             }
-            
             // Pass necessary data
             viewController.footType = footType
             viewController.orderId = patient?.orderId
             viewController.folderId = folderItem?.folderId
             viewController.scanType = scan?.scanType
             viewController.orderStatus = patient?.status
-            
             fixedOrientationVC.modalPresentationStyle = .fullScreen
             topController.present(fixedOrientationVC, animated: true)
             
@@ -773,35 +838,61 @@ struct ScanOverlayView: View {
         }
     }
     
-    func calcBBox(_ mesh: STMesh) -> (vector_float3, vector_float3)? {
-        guard mesh.meshVertices(0) != nil else {
-            //showAlert(title: "Error!!!", message: "Empty Mesh found while calculating Boundary Box")
-            return nil
-        }
-        var minPoint = vector_float3(mesh.meshVertices(0)[0])
-        var maxPoint = vector_float3(minPoint)
-        
-        for i in 0..<mesh.numberOfMeshes() {
-            let numVertices = Int(mesh.number(ofMeshVertices: i))
-            if let vertex = mesh.meshVertices(Int32(i)) {
-                for j in 0..<numVertices {
-                    let v = vertex[Int(j)]
-                    minPoint.x = min(minPoint.x, v.x)
-                    minPoint.y = min(minPoint.y, v.y)
-                    minPoint.z = min(minPoint.z, v.z)
-                    maxPoint.x = max(maxPoint.x, v.x)
-                    maxPoint.y = max(maxPoint.y, v.y)
-                    maxPoint.z = max(maxPoint.z, v.z)
+    func mergeBinarySTLFiles(leftURL: URL, rightURL: URL, outputURL: URL, rightModelXOffset: Float = 0.25) throws {
+        func readTriangles(from url: URL, offsetX: Float = 0.0) throws -> [Data] {
+            let data = try Data(contentsOf: url)
+            guard data.count >= 84 else { throw NSError(domain: "STL", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid STL file size"]) }
+
+            let triangleCount = data.subdata(in: 80..<84).withUnsafeBytes { $0.load(as: UInt32.self) }
+            let expectedSize = 84 + Int(triangleCount) * 50
+            guard data.count == expectedSize else { throw NSError(domain: "STL", code: 2, userInfo: [NSLocalizedDescriptionKey: "File size doesn't match triangle count"]) }
+
+            var triangles: [Data] = []
+
+            for i in 0..<triangleCount {
+                let start = 84 + Int(i) * 50
+                var triangle = data.subdata(in: start..<(start + 50))
+                // Offset the vertex positions if needed
+                if offsetX != 0 {
+                    var mutableTriangle = triangle
+                    for j in 0..<3 { // 3 vertices
+                        let vertexOffset = 12 + j * 12 // Normal is first 12 bytes
+                        let xRange = vertexOffset..<(vertexOffset + 4)
+                        let x = mutableTriangle.subdata(in: xRange).withUnsafeBytes { $0.load(as: Float.self) }
+                        var newX = x + offsetX
+                        let newXData = Data(bytes: &newX, count: 4)
+                        mutableTriangle.replaceSubrange(xRange, with: newXData)
+                    }
+                    triangles.append(mutableTriangle)
+                } else {
+                    triangles.append(triangle)
                 }
             }
+            return triangles
         }
-        return (minPoint, maxPoint)
+
+        let leftTriangles = try readTriangles(from: leftURL)
+        let rightTriangles = try readTriangles(from: rightURL, offsetX: rightModelXOffset)
+        let allTriangles = leftTriangles + rightTriangles
+        let totalCount = UInt32(allTriangles.count)
+        var mergedData = Data()
+
+        let header = "Merged STL File".padding(toLength: 80, withPad: " ", startingAt: 0)
+        mergedData.append(header.data(using: .ascii)!)
+
+        var triangleCount = totalCount
+        mergedData.append(Data(bytes: &triangleCount, count: 4))
+
+        for triangle in allTriangles {
+            mergedData.append(triangle)
+        }
+        
+        try mergedData.write(to: outputURL)
+        print("✅ Merged STL file written to: \(outputURL.path)")
     }
 }
 
-
 // MARK: - Subviews
-
 struct ScanItem: View {
     let title: String
     let image: String?
@@ -810,76 +901,76 @@ struct ScanItem: View {
     let onButtonClick: () -> Void
     
     var body: some View {
-            ZStack(alignment: .bottom) {
-                // Background image
-                if let url = imageURL {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                                .frame(width: 150, height: 140)
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 150, height: 140)
-                                .clipped()
-                        case .failure:
-                            Image(systemName: "photo.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 120, height: 100)
-                                .foregroundColor(.gray)
-                                .clipped()
-                        @unknown default:
-                            EmptyView()
-                        }
+        ZStack(alignment: .bottom) {
+            // Background image
+            if let url = imageURL {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 150, height: 140)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 150, height: 140)
+                            .clipped()
+                    case .failure:
+                        Image(systemName: "photo.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 120, height: 100)
+                            .foregroundColor(.gray)
+                            .clipped()
+                    @unknown default:
+                        EmptyView()
                     }
-                } else if let image = image {
-                    Image(image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 120, height: 100)
-                        .foregroundColor(Colors.primary)
-                        .clipped()
                 }
-
-                // Description Icon (top-left)
-                if showDescriptionIcon {
-                    VStack {
-                        HStack {
-                            Image(systemName: "doc.text")
-                                .foregroundColor(.white)
-                                .padding(6)
-                                .background(Color.black.opacity(0.6))
-                                .clipShape(Circle())
-                            Spacer()
-                        }
+            } else if let image = image {
+                Image(image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 120, height: 100)
+                    .foregroundColor(Colors.primary)
+                    .clipped()
+            }
+            
+            // Description Icon (top-left)
+            if showDescriptionIcon {
+                VStack {
+                    HStack {
+                        Image(systemName: "doc.text")
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.black.opacity(0.6))
+                            .clipShape(Circle())
                         Spacer()
                     }
-                    .frame(width: 150, height: 140)
+                    Spacer()
                 }
-
-                // Title at bottom
-                Text(title)
-                    .foregroundColor(.white)
-                    .bold()
-                    .padding(6)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.black.opacity(0.5))
+                .frame(width: 150, height: 140)
             }
-            .frame(width: 150, height: 140)
-            .cornerRadius(10)
-            .clipped()
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.white, lineWidth: 2)
-            )
-            .onTapGesture {
-                onButtonClick()
-            }
+            
+            // Title at bottom
+            Text(title)
+                .foregroundColor(.white)
+                .bold()
+                .padding(6)
+                .frame(maxWidth: .infinity)
+                .background(Color.black.opacity(0.5))
+        }
+        .frame(width: 150, height: 140)
+        .cornerRadius(10)
+        .clipped()
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.white, lineWidth: 2)
+        )
+        .onTapGesture {
+            onButtonClick()
         }
     }
+}
 
 struct LatestScanItem: View {
     let item: ScanFolderItem
@@ -888,9 +979,9 @@ struct LatestScanItem: View {
     let isSelected: Bool
     
     private var hasBothScans: Bool {
-           let hasLeft = item.scans.contains { $0.footType?.lowercased() == "left" }
-           let hasRight = item.scans.contains { $0.footType?.lowercased() == "right" }
-           return hasLeft && hasRight
+        let hasLeft = item.scans.contains { $0.footType?.lowercased() == "left" }
+        let hasRight = item.scans.contains { $0.footType?.lowercased() == "right" }
+        return hasLeft && hasRight
     }
     
     var body: some View {
@@ -898,11 +989,11 @@ struct LatestScanItem: View {
             VStack(alignment: .leading) {
                 Text(scanTitle(for: item.scans))
                     .font(.system(size: 15, weight: .semibold))
-
+                
                 Text(item.scans.first?.scanType ?? "")
                     .font(.system(size: 15, weight: .medium))
                     .foregroundColor(isSelected ? .white : .black)
-
+                
                 Text(latestScanDateFormatted(from: item.scans))
                     .font(.system(size: 12))
                     .foregroundColor(isSelected ? .white : .gray)

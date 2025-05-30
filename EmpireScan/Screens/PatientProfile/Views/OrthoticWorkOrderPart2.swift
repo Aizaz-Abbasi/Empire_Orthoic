@@ -49,15 +49,8 @@ struct OrthoticWorkOrderPart2: View {
     )
     @State private var isToastVisible = false
     @State private var toastMessage = ""
-    @State private var pdfDocument: PDFDocument = {
-        if let url = Bundle.main.url(forResource: "blank_order_form", withExtension: "pdf") {
-            print("Document found")
-            return PDFDocument(url: url)!
-        }
-        print("Document not found")
-        fatalError("PDF document could not be loaded")
-    }()
-    
+    @State private var pdfDocument: PDFDocument? = nil
+
     var body: some View {
         VStack {
             if isLoading {
@@ -178,8 +171,9 @@ struct OrthoticWorkOrderPart2: View {
                             Picker("Met-head Cutout", selection: $metheadCutout) {
                                 Text("1st").tag("1st").foregroundColor(.black)
                                 Text("5th").tag("5th").foregroundColor(.black)
+                                //Text("None").tag("None").foregroundColor(.black)
                             }
-                            
+                            .tint(.black)
                             .pickerStyle(.segmented)
                             .frame(width: screenSize.width * 0.30)
                         }
@@ -218,6 +212,7 @@ struct OrthoticWorkOrderPart2: View {
                         .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 0)
                     Button {
                         showEditor = true
+                        loadBlankPDF()
 //                        self.submitForm()
                     } label: {
                         HStack {
@@ -234,9 +229,9 @@ struct OrthoticWorkOrderPart2: View {
                         .padding(.horizontal, screenSize.width * 0.05)
                     }
                 }
-                //            }
             }
         }
+        .environment(\.colorScheme, .light)
         .simultaneousGesture(
             TapGesture().onEnded {
                 isKeyboardVisible = false
@@ -244,33 +239,39 @@ struct OrthoticWorkOrderPart2: View {
             }
         )
         .fullScreenCover(isPresented: $showPDF) {
-            PDFFormViewer(
-                document: $pdfDocument,
-                isPresented: $showPDF,
-                patient: $patient,
-                patientData: $patientData,
-                folderItem: $folderItem,
-                footImage:Binding(
-                    get: { selectedItem?.image },
-                    set: { newVal in selectedItem?.image = newVal }
-                ),
-                heelLiftText: $heelLiftText,
-                notes: $notes,
-                prefilledCheckBoxes: $prefilledValues,
-                selectedDocumentId: selectedDocumentId,
-                documentURL: selectedPdfUrl,
-                onClose: { pdfItem, code, isChanged in
-                    print("onClose")
-                    if let pdfItem = pdfItem {
-                        handlePDFFormClosed(pdfItem: pdfItem, isUpdated: code)
-                    }else{
-                        print("onClose Empty")
-                        prefilledValues = [:]
-                        //selectedImage = nil
-                        //selectedItem?.image = UIImage(named: "footImage")
+            if let unwrappedDoc = pdfDocument {
+                PDFFormViewer(
+                    document: Binding(get: { unwrappedDoc }, set: { self.pdfDocument = $0 }),
+                    isPresented: $showPDF,
+                    patient: $patient,
+                    patientData: $patientData,
+                    folderItem: $folderItem,
+                    footImage:Binding(
+                        get: { selectedItem?.image },
+                        set: { newVal in selectedItem?.image = newVal }
+                    ),
+                    heelLiftText: $heelLiftText,
+                    notes: $notes,
+                    prefilledCheckBoxes: $prefilledValues,
+                    selectedDocumentId: selectedDocumentId,
+                    documentURL: selectedPdfUrl,
+                    onClose: { pdfItem, code, isChanged in
+                        print("onClose")
+                        if let pdfItem = pdfItem {
+                            handlePDFFormClosed(pdfItem: pdfItem, isUpdated: code)
+                        }else{
+                            print("onClose Empty")
+                            prefilledValues = [:]
+                            workOrderOptions = []
+                            globeOrthotic = false
+                            //isGaitToInduce = false
+                            metheadCutout = ""
+                            gaitToInduce = ""
+                            //...
+                        }
                     }
-                }
-            )
+                )
+            }
         }
         .fullScreenCover(isPresented: $showEditor) {
             if let item = selectedItem {
@@ -303,6 +304,16 @@ struct OrthoticWorkOrderPart2: View {
             )
     }
     
+    private func loadBlankPDF() {
+        if let url = Bundle.main.url(forResource: "blank_order_form", withExtension: "pdf"),
+           let doc = PDFDocument(url: url) {
+            self.pdfDocument = doc
+        } else {
+            print("Failed to load blank_order_form.pdf")
+        }
+    }
+
+    
     private func handlePDFFormClosed(pdfItem: OrderScans, isUpdated: Bool) {
         print("handlePDFFormClosed",pdfItem,isUpdated)
         self.isLoading = true
@@ -324,6 +335,7 @@ struct OrthoticWorkOrderPart2: View {
     
     func submitForm() {
         //print("=== SUBMISSION ===")
+        workOrderOptions = []
         if gaitToInduce.isEmpty || gaitToInduce == ""{
             if let gaitPlateOption = otherOptions.first(where: { $0.name == "Gait Plate" }) {
                 let (gaitPlate, gaitPlateL, gaitPlateR) = (gaitPlateOption.BL, gaitPlateOption.left, gaitPlateOption.right)
@@ -355,9 +367,7 @@ struct OrthoticWorkOrderPart2: View {
         }
         
         // From topCover
-        //print("Top Cover: \(topCover)")
         for mod in topCover {
-            //print(" - \(mod.title): isSelected: \(mod.isSelected),")
             let option = WorkOrderOption(
                 optionName: mod.title,
                 isLeft: false,
@@ -371,9 +381,7 @@ struct OrthoticWorkOrderPart2: View {
         }
         
         // From extensionOptions
-        //print("Extension Options: \(extensionOptions)")
         for mod in extensionOptions {
-            //print(" - \(mod.title): isSelected: \(mod.isSelected),")
             let option = WorkOrderOption(
                 optionName: mod.title,
                 isLeft: false,
@@ -405,12 +413,11 @@ struct OrthoticWorkOrderPart2: View {
             workOrderOptions.append(option)
         }
         
-        
         //print("Other Options:")
         //print("Reverse Morton's Extension: \(reverseMorton)")
         for option in otherOptions {
             //print(" - \(option.name): Left: \(option.left), Right: \(option.right)")
-            if option.name == "Morton's Extension"  {
+            if option.name == "Morton's Extension"{
                 let workOrderOption = WorkOrderOption(
                     optionName: option.name,
                     isLeft: option.left,
@@ -456,7 +463,6 @@ struct OrthoticWorkOrderPart2: View {
                     )
                     workOrderOptions.append(workOrderOption)
                 }
-                
             }else{
                 let workOrderOption = WorkOrderOption(
                     optionName: option.name,
@@ -470,7 +476,7 @@ struct OrthoticWorkOrderPart2: View {
                 workOrderOptions.append(workOrderOption)
             }
         }
-        //print("Heel Lift: \(heelLift)")
+        print("Heel Lift: \(heelLift)")
         let isHeelLiftCustom = ((heelLiftText?.isEmpty) == nil)
         let workOrderOption = WorkOrderOption(
             optionName: heelLift.name,
@@ -534,6 +540,7 @@ struct OrthoticWorkOrderPart2: View {
         print("currentDateString",currentDateString,patientData?.practitionerName ?? "PN")
         print("patient?.doctorName ??",patient?.doctorName ?? "DocName")
         print("patientData?.practitionerName",patientData?.practitionerName ?? "PN")
+        self.prefilledValues = [:]
         self.prefilledValues  =  [
             "Patient":
                 "\(patient?.patientFirstName ?? "") \(patient?.patientLastName ?? "")",
@@ -702,18 +709,18 @@ struct OrthoticWorkOrderPart2: View {
                 
             }else if mod.name == "Met-head Cutout"{
                 if !metheadCutout.isEmpty {
-                    if(metheadCutout == "Out"){
-                        self.prefilledValues?["OutToe"] = "Yes"
+                    if(metheadCutout == "1st"){
+                        self.prefilledValues?["1th"] = "Yes"
                     }else{
-                        self.prefilledValues?["InToe"] = "Yes"
+                        self.prefilledValues?["5th"] = "Yes"
                     }
                 }
             }else if mod.name == "Gait to Induce (Toe Position)"{
                 if !gaitToInduce.isEmpty {
-                    if(gaitToInduce == "1st"){
-                        self.prefilledValues?["1th"] = "Yes"
+                    if(gaitToInduce == "Out"){
+                        self.prefilledValues?["OutToe"] = "Yes"
                     }else{
-                        self.prefilledValues?["5th"] = "Yes"
+                        self.prefilledValues?["InToe"] = "Yes"
                     }
                 }
             } else if(globeOrthotic == true){
@@ -734,6 +741,11 @@ struct OrthoticWorkOrderPart2: View {
             let key = checkboxFieldMapping["Met-head Cutout"]
             if let key = key{
                 self.prefilledValues?[key] = "Yes"
+                if(metheadCutout == "1st"){
+                    self.prefilledValues?["1st"] = "Yes"
+                }else{
+                    self.prefilledValues?["5th"] = "Yes"
+                }
             }
         }
         
@@ -743,6 +755,17 @@ struct OrthoticWorkOrderPart2: View {
                 self.prefilledValues?[key] = "Yes"
             }
         }
+ 
+            if heelLift.right {
+                self.prefilledValues?["Heel Lift R"] = "Yes"
+                if heelLift.left {
+                    self.prefilledValues?["Heel Lift L.0"] = "Yes"
+                    self.prefilledValues?["Heel Lift"] = "Yes"
+                }
+            } else if heelLift.left {
+                self.prefilledValues?["Heel Lift L.0"] = "Yes"
+            }
+        print("prefilledValues",prefilledValues)
         self.showPDF=true
     }
     

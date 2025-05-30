@@ -21,6 +21,7 @@ var selectedImageURL: URL?
 class MeshViewVC: UIViewController {
     
     var modelURL: URL?
+    var stlURL: String?
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     private var isWireframe = false
@@ -47,6 +48,7 @@ class MeshViewVC: UIViewController {
         setupTopLeftControls()
         if(isEditable){
           setupRefreshButton()
+          //setupRefreshButton()
         }
        
         setupBottomButtons()
@@ -160,9 +162,43 @@ class MeshViewVC: UIViewController {
             label.topAnchor.constraint(equalTo: refreshButton.bottomAnchor, constant: 8)
         ])
     }
+    
+    private func setupMeasureButton() {
+        let measureButton = UIButton(type: .system)
+        let image = UIImage(systemName: "ruler")?.withRenderingMode(.alwaysTemplate)
+        measureButton.setImage(image, for: .normal)
+        measureButton.tintColor = .white
+        measureButton.backgroundColor = UIColor(Colors.primary)
+        measureButton.layer.cornerRadius = screenWidth * 0.06
+        measureButton.translatesAutoresizingMaskIntoConstraints = false
 
+        measureButton.addTarget(self, action: #selector(measureTapped), for: .touchUpInside)
 
-//
+        view.addSubview(measureButton)
+
+        NSLayoutConstraint.activate([
+            measureButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            measureButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            measureButton.widthAnchor.constraint(equalToConstant: screenWidth * 0.12),
+            measureButton.heightAnchor.constraint(equalToConstant: screenWidth * 0.12)
+        ])
+
+        // Optional Label
+        let label = UILabel()
+        label.text = "Measure"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: measureButton.centerXAnchor),
+            label.topAnchor.constraint(equalTo: measureButton.bottomAnchor, constant: 8)
+        ])
+    }
+
+    
     private func setupBottomButtons() {
         // Image names for the buttons (make sure these match your Assets exactly)
         let buttonImages = ["wireframe", "location", "description", "screenshot"]
@@ -358,6 +394,10 @@ class MeshViewVC: UIViewController {
             let topController = rootViewController.topMostViewController()
             topController.present(fixedOrientationVC, animated: true)
         }
+    }
+    
+    @objc private func measureTapped() {
+       
     }
     
     //

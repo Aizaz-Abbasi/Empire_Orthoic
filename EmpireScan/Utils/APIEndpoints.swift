@@ -5,7 +5,6 @@
 //  Created by MacOK on 10/03/2025.
 //
 import Foundation
-
 struct APIEndpoints {
     static let login = "login"
     static let register = "auth/register"

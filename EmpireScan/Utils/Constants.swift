@@ -18,7 +18,7 @@ let checkboxFieldMapping: [String: String] = [
     "Leather": "Leather.0",
     "Multi-Color EVA": "Multi-color.0",
     "Plastazote": "Plastazote",
-    "W/O Padding": "w/o",
+    "Leather W/O Padding": "w/o",
     
     // Extension Options
     "Full": "Full",
