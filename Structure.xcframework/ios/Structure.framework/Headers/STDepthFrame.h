@@ -11,13 +11,6 @@
 
 #import <GLKit/GLKit.h>
 
-/// Indicates the source sensor of the depth frame
-typedef NS_ENUM(NSInteger, STDepthFrameSource) {
-    STDepthFrameSourceStructureSensor = 1,
-    STDepthFrameSourceAppleTrueDepth = 2,
-    STDepthFrameSourceAppleLidar = 3
-};
-
 #pragma mark - STDepthFrame API
 
 /** Depth Frame.
@@ -104,5 +97,4 @@ sensor with an old firmware.
 
 - (void)applyDepthRefinement;
 
-- (STDepthFrameSource)source;
 @end

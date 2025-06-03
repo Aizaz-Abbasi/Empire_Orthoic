@@ -564,15 +564,10 @@ color camera frames at).
   - Set by default by the capture session factory methods (e.g. newCaptureSession).
 - `kSTCaptureSessionOptionColorResolutionKey` :
   - Specifies the desired resolution of the streamed color frames.
-  - `NSArray` of two values - width and height, e.g. "@[@640, @480]".
-  - OR `NSNumber` integral value equal to one of the `STCaptureSessionColorResolution` constants.
+  - `NSNumber` integral value equal to one of the `STCaptureSessionColorResolution` constants.
   - Defaults to VGA resolution.
-- `kSTCaptureSessionOptionColorBinningKey` :
-  - Specifies wether the format should be binned format of the streamed color frames.
-  - `BOOL` value, true if-and-only-if you want binned format.
-  - Defaults to `@NO`.
-- `kSTCaptureSessionOptionDepthFrameResolutionKey` :
- - Specifies the desired resolution of the streamed depth frames.
+ - `kSTCaptureSessionOptionDepthFrameResolutionKey` :
+   - Specifies the desired resolution of the streamed depth frames.
  - `NSNumber` integral value equal to one of the `STCaptureSessionDepthFrameResolution` constants.
  - Defaults to VGA  resolution.
 - `kSTCaptureSessionOptionColorMaxFPSKey` :

@@ -8,7 +8,6 @@
 
 #import <Structure/StructureBase.h>
 #import <Structure/STMesh.h>
-#import <Structure/STCaptureSession+Types.h>
 
 #import <GLKit/GLKMatrix4.h>
 
@@ -31,12 +30,6 @@ be accessing the STScene from background threads. In particular, STMesh objects 
 - Parameter glContext: a valid EAGLContext.
 */
 - (instancetype)initWithContext:(EAGLContext*)glContext ST_GLES_DEPRECATED;
-
-/** Initializer for STScene.
-- Parameter api: graphical API of your choice.
-- Note: This is a beta API
-*/
-- (instancetype)initWithApi:(STSlamGraphicApi)api;
 
 /** Reference to the current scene mesh.
 

@@ -41,20 +41,4 @@ calculated.
 */
 - (STScanQualityScore)calcQualityOfMesh:(STMesh* _Nonnull)mesh;
 
-/// Number of holes in mesh.
-- (int)numberOfHoles;
-
-/** Pointer to a contiguous chunk of `numberOfVerticesInHole:holeIndex` `GLKVector3` values representing (x, y, z)
-vertex coordinates.
-
-- Parameter holeIndex: Index to the hole in mesh.
-*/
-- (GLKVector3* _Nullable)holeVertices:(int)holeIndex;
-
-/** Number of vertices in hole .
-
- - Parameter holeIndex: Index to the hole in mesh.
- */
-- (int)numberOfVerticesInHole:(int)holeIndex;
-
 @end

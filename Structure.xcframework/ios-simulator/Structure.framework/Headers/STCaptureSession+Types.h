@@ -17,7 +17,6 @@ extern NSString* const kSTCaptureSessionOptionDepthSensorVGAEnabledIfAvailableKe
 extern NSString* const kSTCaptureSessionOptionSensorAndIOSCameraSyncEnabledKey;
 extern NSString* const kSTCaptureSessionOptionIOSCameraKey;
 extern NSString* const kSTCaptureSessionOptionColorResolutionKey;
-extern NSString* const kSTCaptureSessionOptionColorBinningKey;
 extern NSString* const kSTCaptureSessionOptionDepthFrameResolutionKey;
 extern NSString* const kSTCaptureSessionOptionIrFrameResolutionKey;
 extern NSString* const kSTCaptureSessionOptionTrueDepthFrameResolutionKey;
@@ -346,7 +345,7 @@ typedef NS_ENUM(NSInteger, STCaptureSessionPreset) {
     /// ST02 range: default, ST03 range: 0.6-10+m
     STCaptureSessionPresetOutdoor = 2,
 
-    /// ST02 range: default, ST03 range: 0.56m - 12m+
+    /// ST02 range: default, ST03 range: default
     STCaptureSessionPresetRoomScanning = 3,
 
     /// ST02 range: 0.35-0.9m, the closest distance, ST03 range: 0.35m - 0.75m
@@ -355,7 +354,7 @@ typedef NS_ENUM(NSInteger, STCaptureSessionPreset) {
     /// ST02 range: extended, with reduced resolution, ST03 range: 0.6-10+m
     STCaptureSessionPresetHybridMode = 5, //
 
-    /// ST02 range: default, ST03 range: 0.27m-5m
+    /// ST02 range: default, ST03 range: default
     STCaptureSessionPresetDarkObjectScanning = 6, //
 
     /// ST02 range: 0.5-3m, ST03 range: 0.6-10+m
@@ -363,12 +362,6 @@ typedef NS_ENUM(NSInteger, STCaptureSessionPreset) {
 
     /// ST02 range: 0.4-1m, ST03 range: 0.35m - 0.75m with increased resolution
     STCaptureSessionPresetBodyDetailed = 8,
-
-    /// ST02 range: 0.35-0.9m, ST03 range: 0.26-2m
-    STCaptureSessionPresetUltraClose = 9,
-
-    /// ST02 range: default, ST03 range: 0.27-5m
-    STCaptureSessionPresetSimplified = 10,
 };
 
 /// Indicates the focus mode to be used by the iOS color camera.
@@ -538,15 +531,4 @@ typedef NS_ENUM(NSInteger, STCalibrationType) {
     /// There exists a device specific calibration from Calibrator.app of this Structure Sensor + iOS device
     /// combination.
     STCalibrationTypeDeviceSpecific,
-};
-
-/// Indicates the graphic API to use for GPU acceleration in SLAM. Does not affect visualization.
-/// Metal is not compatible with STSLAMManager
-/// Note: This is a beta API
-typedef NS_ENUM(NSInteger, STSlamGraphicApi) {
-    /// OpenGL API
-    STSlamGraphicApiOpenGL = 0,
-
-    /// Metal API
-    STSlamGraphicApiMetal = 1,
 };
