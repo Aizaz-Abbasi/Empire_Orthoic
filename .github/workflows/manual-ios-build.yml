@@ -1,4 +1,4 @@
-name: Manual iOS Build
+name: Manual iOS Build & Upload to TestFlight
 
 on:
   workflow_dispatch:
@@ -6,11 +6,10 @@ on:
       build_type:
         description: "Select build type"
         required: true
-        default: "Development"
+        default: "Release"
         type: choice
         options:
-          - Development
-          - Production
+          - Release
 
 jobs:
   build:
@@ -20,86 +19,62 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check available Xcode versions
+      - name: Select preferred Xcode version
         run: |
-          echo "📱 Available Xcode versions:"
-          ls -la /Applications/Xcode*
-          echo "Current Xcode:"
-          xcode-select -print-path
-          xcodebuild -version
-
-      - name: Select Xcode version
-        run: |
-          # Try to use Xcode 16.2, fallback to latest available
-          if [ -d "/Applications/Xcode_16.2.app" ]; then
-            echo "Using Xcode 16.2 (matches local)"
-            sudo xcode-select -switch /Applications/Xcode_16.2.app/Contents/Developer
-          elif [ -d "/Applications/Xcode_16.1.app" ]; then
-            echo "Using Xcode 16.1 (closest available)"
-            sudo xcode-select -switch /Applications/Xcode_16.1.app/Contents/Developer
-          elif [ -d "/Applications/Xcode_16.0.app" ]; then
-            echo "Using Xcode 16.0"
-            sudo xcode-select -switch /Applications/Xcode_16.0.app/Contents/Developer
-          else
-            echo "Using latest available Xcode"
-            sudo xcode-select -switch $(ls -d /Applications/Xcode_*.app | sort -V | tail -1)/Contents/Developer
-          fi
-
-          echo "Selected Xcode:"
-          xcode-select -print-path
-          xcodebuild -version
+          XCODE_PATH=$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)
+          echo "Using Xcode: $XCODE_PATH"
+          sudo xcode-select -switch "$XCODE_PATH/Contents/Developer"
 
       - name: Set up Ruby (for CocoaPods)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0
 
-      - name: Install dependencies
+      - name: Install CocoaPods
         run: |
           gem install cocoapods
           pod install --repo-update
 
-      - name: Set build number using GitHub run number
+      - name: Set build number from GitHub run number
         run: |
-          echo "📈 Setting build number using GitHub run number..."
-
-          # Use GitHub run number as build number (adds base offset for existing builds)
-          BASE_BUILD_NUMBER=1000  # Adjust this to be higher than your current build number
+          BASE_BUILD_NUMBER=1000
           NEW_BUILD=$((BASE_BUILD_NUMBER + GITHUB_RUN_NUMBER))
-
-          echo "GitHub run number: $GITHUB_RUN_NUMBER"
-          echo "New build number: $NEW_BUILD"
-
-          # Set as environment variable
           echo "BUILD_NUMBER=$NEW_BUILD" >> $GITHUB_ENV
+          echo "📈 Build number: $NEW_BUILD"
 
-      - name: List available schemes and configurations
+      - name: Build archive
         run: |
-          echo "📋 Available schemes and configurations:"
-          xcodebuild -workspace EmpireScan.xcworkspace -list
-
-      - name: Build using selected config
-        run: |
-          echo "🔧 Selected config: ${{ github.event.inputs.build_type }}"
-          echo "🔢 Build number: $BUILD_NUMBER"
-
-          # Build with correct scheme name and dynamic build number
           xcodebuild -workspace EmpireScan.xcworkspace \
             -scheme EmpireScan \
-            -configuration ${{ github.event.inputs.build_type }} \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 14' \
-            clean build \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
+            -configuration Release \
+            -archivePath build/EmpireScan.xcarchive \
+            clean archive \
             CURRENT_PROJECT_VERSION=$BUILD_NUMBER \
             MARKETING_VERSION="1.0.$BUILD_NUMBER"
 
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath build/EmpireScan.xcarchive \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath build/Exported
+
+      - name: Upload to TestFlight
+        env:
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+        run: |
+          echo "${APP_STORE_CONNECT_PRIVATE_KEY}" > AuthKey.p8
+
+          xcrun altool --upload-app \
+            --type ios \
+            --file build/Exported/EmpireScan.ipa \
+            --apiKey $APP_STORE_CONNECT_KEY_ID \
+            --apiIssuer $APP_STORE_CONNECT_ISSUER_ID
+
       - name: Upload build artifacts
-        if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: ios-build-${{ github.event.inputs.build_type }}-${{ env.BUILD_NUMBER }}
-          path: |
-            build/
-            *.xcarchive
+          name: exported-ipa-${{ env.BUILD_NUMBER }}
+          path: build/Exported/*.ipa

@@ -16,12 +16,12 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
     
   var batteryLevelCheckTimer: Timer?
   var lastBatteryLevelState: BatteryLevelState = .full
-  var slamState = SlamData()
+  var slamState = SlamDataStructure()
   var options = Options()
   var metalData: MetalData!
   var dynamicOptions = DynamicOptions()
   // Manages the app status messages.
-  var appStatus = AppStatus()
+  var appStatus = AppStatusStructure()
   // Most recent gravity vector from IMU.
   var lastGravity = GLKVector3Make(-1.0, 0.0, 0.0)
   // Scale of the scanning volume.
@@ -45,8 +45,15 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
   var depthWindowSearchHeight: Float = 11
   var runDepthRefinement: Bool = false
   var st01CompatibilityMode: Bool = false
-  var settingsPopupView: SettingsPopupView?
+  var settingsPopupView: StructureSettingsPopupView?
   var calibrationOverlay: CalibrationOverlay?
+    
+    //Params
+  var footType: String?
+  var scanType: String?
+  var orderId:Int?
+  var folderId:Int?
+  var orderStatus: String?
   
   let licenseQueue = DispatchQueue(label: "license.validation", qos: .userInitiated)
   let captureSessionQueue = DispatchQueue(label: "captureSession.operations", qos: .userInteractive)
@@ -162,7 +169,7 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
   }
 
   func initializeDynamicOptions() {
-    settingsPopupView = SettingsPopupView(settingsPopupViewDelegate: self)
+    settingsPopupView = StructureSettingsPopupView(settingsPopupViewDelegate: self)
     if let settingsPopupView = settingsPopupView {
       view.addSubview(settingsPopupView)
     }
@@ -183,9 +190,9 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
     let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture(_:)))
     view.addGestureRecognizer(panGesture)
 
-    let tapToStructureIO = UITapGestureRecognizer(target: self, action: #selector(onTapSensorRequiedImageView))
-    sensorRequiredImageView.addGestureRecognizer(tapToStructureIO)
-    sensorRequiredImageView.isUserInteractionEnabled = true
+//    let tapToStructureIO = UITapGestureRecognizer(target: self, action: #selector(onTapSensorRequiedImageView))
+//    sensorRequiredImageView.addGestureRecognizer(tapToStructureIO)
+//    sensorRequiredImageView.isUserInteractionEnabled = true
   }
 
   // Make sure the status bar is disabled
@@ -197,7 +204,6 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
     if segue.identifier == "segueToMesh" {
 
       slamState.mapper!.finalizeTriangleMesh()
-
       meshViewController = segue.destination as? MeshViewController
       meshViewController?.delegate = self
       meshViewController?.modalPresentationStyle = .fullScreen
@@ -207,6 +213,11 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
       meshViewController?.colorEnabled = useColorCamera
       meshViewController?._mesh = mesh
       meshViewController?.setCameraProjectionMatrix(metalData.depthCameraGLProjectionMatrix)
+        meshViewController?.scanType = scanType
+        meshViewController?.footType = footType
+        meshViewController?.folderId = folderId
+        meshViewController?.orderId = orderId
+        meshViewController?.orderStatus = orderStatus
 
       // Sample a few points to estimate the volume center
       var totalNumVertices: Int32 = 0
@@ -310,7 +321,6 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
     resetButton.isHidden = true
 
     captureSession.streamingEnabled = false
-
     performSegue(withIdentifier: "segueToMesh", sender: nil)
 
     slamState.scannerState = ScannerState.viewing
@@ -520,6 +530,10 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
     })
   }
 
+    @IBAction func closeButton(_ sender: AnyObject) {
+        print("closeButton")
+        dismiss(animated: true, completion: nil)
+    }
   func updateViewsWithSensorStatus() {
     let userInstructions = captureSession.userInstructions
     let needLicense = STLicenseManager.status != .valid
@@ -682,7 +696,6 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
       enhancedColorizeTask?.cancel()
       enhancedColorizeTask = nil
     }
-
     meshViewController?.hideMeshViewerMessage()
   }
 
@@ -707,7 +720,7 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
     }
   }
 
-  func meshViewDidRequestColorizing(_ mesh: STMesh, previewCompletionHandler: @escaping () -> Void, enhancedCompletionHandler: @escaping () -> Void) -> Bool {
+    func meshViewDidRequestColorizing(mesh: STMesh, previewCompletionHandler: @escaping () -> Void, enhancedCompletionHandler: @escaping () -> Void) -> Bool {
     if naiveColorizeTask != nil {
       print("Already one colorizing task running!")
       return false

@@ -378,21 +378,47 @@ class MeshViewVC: UIViewController {
         }
         
         dismiss(animated: true) {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationController") as? FixedOrientationController,
-                  let viewController = fixedOrientationVC.viewControllers.first as? ViewController else {
-                print("❌ Could not instantiate FixedOrientationController or inner ViewController")
-                return
+            let sensorType = UserDefaults.standard.string(forKey: "selectedSensorType")
+            print("sensorType",sensorType)
+            if(sensorType == "Structure"){
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                guard let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationStructure") as? FixedOrientationController,
+//                      let viewController = fixedOrientationVC.viewControllers.first as? StructureViewController else {
+//                    print("❌ Could not instantiate FixedOrientationController or inner ViewController")
+//                    return
+//                }
+                guard let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationStructure") as? FixedOrientationStructure,
+                      let viewController = fixedOrientationVC.viewControllers.first as? StructureViewController else {
+                    print("❌ Could not instantiate FixedOrientationStructure or inner ViewController")
+                    return
+                }
+                // Pass necessary data
+                viewController.footType = self.footType
+                viewController.orderId = self.orderId
+                viewController.folderId = self.folderId
+                viewController.scanType = self.scanType
+                viewController.orderStatus = self.orderStatus
+                fixedOrientationVC.modalPresentationStyle = .fullScreen
+                let topController = rootViewController.topMostViewController()
+                topController.present(fixedOrientationVC, animated: true)
+                
+            }else{
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                guard let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationController") as? FixedOrientationController,
+                      let viewController = fixedOrientationVC.viewControllers.first as? ViewController else {
+                    print("❌ Could not instantiate FixedOrientationController or inner ViewController")
+                    return
+                }
+                // Pass necessary data
+                viewController.footType = self.footType
+                viewController.orderId = self.orderId
+                viewController.folderId = self.folderId
+                viewController.scanType = self.scanType
+                viewController.orderStatus = self.orderStatus
+                fixedOrientationVC.modalPresentationStyle = .fullScreen
+                let topController = rootViewController.topMostViewController()
+                topController.present(fixedOrientationVC, animated: true)
             }
-            // Pass necessary data
-            viewController.footType = self.footType
-            viewController.orderId = self.orderId
-            viewController.folderId = self.folderId
-            viewController.scanType = self.scanType
-            viewController.orderStatus = self.orderStatus
-            fixedOrientationVC.modalPresentationStyle = .fullScreen
-            let topController = rootViewController.topMostViewController()
-            topController.present(fixedOrientationVC, animated: true)
         }
     }
     

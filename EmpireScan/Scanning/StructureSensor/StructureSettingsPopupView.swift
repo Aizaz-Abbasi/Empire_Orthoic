@@ -15,9 +15,9 @@ protocol SettingsPopupViewDelegate: AnyObject {
 }
 
 @objcMembers
-class SettingsPopupView: UIView {
+class StructureSettingsPopupView: UIView {
   private var settingsIcon: UIButton?
-  private var settingsListModal: SettingsListModal?
+  private var settingsListModal: StructureSettingsListModal?
   private var isSettingsListModalHidden: Bool = true
   private var widthConstraintWhenListModalIsShown: NSLayoutConstraint?
   private var heightConstraintWhenListModalIsShown: NSLayoutConstraint?
@@ -68,7 +68,7 @@ class SettingsPopupView: UIView {
     }
 
     // Full Settings List Modal
-    settingsListModal = SettingsListModal(settingsPopupViewDelegate: delegate)
+    settingsListModal = StructureSettingsListModal(settingsPopupViewDelegate: delegate)
 
     widthConstraintWhenListModalIsShown = NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 450.0)
 
@@ -148,7 +148,7 @@ class SettingsPopupView: UIView {
 
 typealias Action = (Int) -> Void
 
-class DropDownView: UITableView, UITableViewDelegate, UITableViewDataSource {
+class StructureDropDownView: UITableView, UITableViewDelegate, UITableViewDataSource {
   private var _options: [String] = []
   private var _cellReuseIdentifier: String = "cell"
   private var _heightConstraint: NSLayoutConstraint!
@@ -253,7 +253,7 @@ class DropDownView: UITableView, UITableViewDelegate, UITableViewDataSource {
 }
 
 @objcMembers
-class SettingsListModal: UIScrollView {
+class StructureSettingsListModal: UIScrollView {
   weak var popDelegate: SettingsPopupViewDelegate?
   private var marginSize: CGFloat = 14.0
 

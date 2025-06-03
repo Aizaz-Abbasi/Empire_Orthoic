@@ -45,52 +45,52 @@ struct DynamicOptions {
   var depthResolution: STCaptureSessionDepthFrameResolution = .resolution640x480
 }
 
-class Options {
-  // The initial scanning volume size will be 0.5 x 0.5 x 0.5 meters
-  // (X is left-right, Y is up-down, Z is forward-back)
-  var volumeSizeInMeters = vector_float3(0.5, 0.5, 0.5)
-
-  // The maximum number of keyframes saved in keyFrameManager
-  var maxNumKeyFrames: Int = 48
-
-  // Colorizer quality
-  var colorizerQuality: STColorizerQuality = .highQuality
-
-  // Take a new keyframe in the rotation difference is higher than 30 degrees.
-  var maxKeyFrameRotation = 30 * (Float.pi / 180) // 30 degrees
-
-  // Take a new keyframe if the translation difference is higher than 30 cm.
-  var maxKeyFrameTranslation: Float = 0.3 // 30cm
-
-  // Threshold to consider that the rotation motion was small enough for a frame to be accepted
-  // as a keyframe. This avoids capturing keyframes with strong motion blur / rolling shutter.
-  // It is measured in In degrees per second.
-  var maxKeyframeRotationSpeed: Float = 3
-
-  // Whether to enable an expensive per-frame depth accuracy refinement.
-  // Note: this option requires useHardwareRegisteredDepth to be set to false.
-  var applyExpensiveCorrectionToDepth: Bool = true
-
-  // Whether the colorizer should try harder to preserve appearance of the first keyframe.
-  // Recommended for face scans.
-  var prioritizeFirstFrameColor: Bool = true
-
-  // Target number of faces of the final textured mesh.
-  var colorizerTargetNumFaces: Int = 500000
-
-  // Focus position for the color camera (between 0 and 1). Must remain fixed one depth streaming
-  // has started when using hardware registered depth.
-  var lensPosition: Float = 0.75
-
-  var cubeDistanceValue: Float = 0.65
-
-  let appOrientation: AppOrientation = .landscape
-
-  var drawCubeWithOccluson: Bool = true
-}
-
-// SLAM-related members.
-struct SlamData {
+//class Options {
+//  // The initial scanning volume size will be 0.5 x 0.5 x 0.5 meters
+//  // (X is left-right, Y is up-down, Z is forward-back)
+//  var volumeSizeInMeters = vector_float3(0.5, 0.5, 0.5)
+//
+//  // The maximum number of keyframes saved in keyFrameManager
+//  var maxNumKeyFrames: Int = 48
+//
+//  // Colorizer quality
+//  var colorizerQuality: STColorizerQuality = .highQuality
+//
+//  // Take a new keyframe in the rotation difference is higher than 30 degrees.
+//  var maxKeyFrameRotation = 30 * (Float.pi / 180) // 30 degrees
+//
+//  // Take a new keyframe if the translation difference is higher than 30 cm.
+//  var maxKeyFrameTranslation: Float = 0.3 // 30cm
+//
+//  // Threshold to consider that the rotation motion was small enough for a frame to be accepted
+//  // as a keyframe. This avoids capturing keyframes with strong motion blur / rolling shutter.
+//  // It is measured in In degrees per second.
+//  var maxKeyframeRotationSpeed: Float = 3
+//
+//  // Whether to enable an expensive per-frame depth accuracy refinement.
+//  // Note: this option requires useHardwareRegisteredDepth to be set to false.
+//  var applyExpensiveCorrectionToDepth: Bool = true
+//
+//  // Whether the colorizer should try harder to preserve appearance of the first keyframe.
+//  // Recommended for face scans.
+//  var prioritizeFirstFrameColor: Bool = true
+//
+//  // Target number of faces of the final textured mesh.
+//  var colorizerTargetNumFaces: Int = 500000
+//
+//  // Focus position for the color camera (between 0 and 1). Must remain fixed one depth streaming
+//  // has started when using hardware registered depth.
+//  var lensPosition: Float = 0.75
+//
+//  var cubeDistanceValue: Float = 0.65
+//
+//  let appOrientation: AppOrientation = .landscape
+//
+//  var drawCubeWithOccluson: Bool = true
+//}
+//
+//// SLAM-related members.
+struct SlamDataStructure {
   var initialized = false
   var showingMemoryWarning = false
   var prevFrameTimeStamp: TimeInterval = -1
@@ -105,14 +105,14 @@ struct SlamData {
 
   var cameraPose: GLKMatrix4 = GLKMatrix4Identity
 }
-
-// Utility struct to manage a gesture-based scale.
-struct PinchScaleState {
-  var currentScale: CGFloat = 1
-  var initialPinchScale: CGFloat = 1
-}
-
-struct AppStatus {
+//
+//// Utility struct to manage a gesture-based scale.
+//struct PinchScaleState {
+//  var currentScale: CGFloat = 1
+//  var initialPinchScale: CGFloat = 1
+//}
+//
+struct AppStatusStructure {
   var pleaseConnectOriginalSensorMessage = "Please connect Original Structure Sensor"
   var pleaseConnectSensor3Message = "Please connect Structure Sensor 3"
   var pleaseChargeSensorMessage = "Please charge Structure Sensor."

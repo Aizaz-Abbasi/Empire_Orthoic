@@ -23,6 +23,13 @@
 	</dict>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+    <key>UISupportedExternalAccessoryProtocols</key>
+    <array>
+        <string>io.structure.control</string>
+        <string>io.structure.depth</string>
+        <string>io.structure.infrared</string>
+    </array>
+
 	<key>BASE_URL</key>
 	<string>$(BASE_URL)</string>
 </dict>

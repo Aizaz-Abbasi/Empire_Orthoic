@@ -50,7 +50,7 @@ class Options {
   // The initial scanning volume size will be 0.2 x 0.3 x 0.3 meters
   // (X is left-right, Y is up-down, Z is forward-back)
   var volumeSizeInMeters = vector_float3(0.2, 0.3, 0.3) // For Medium Size Foot Scan
-
+  var structure = StructureOptions()
   // The maximum number of keyframes saved in keyFrameManager
   var maxNumKeyFrames: Int = 48
 
@@ -59,7 +59,8 @@ class Options {
 
   // Take a new keyframe in the rotation difference is higher than 20 degrees.
   var maxKeyFrameRotation: CGFloat = CGFloat(20 * (Double.pi / 180)) // 20 degrees in radians
-
+  var maxKeyframeRotationSpeed: Float = 3
+  var applyExpensiveCorrectionToDepth: Bool = true
   // Take a new keyframe if the translation difference is higher than 30 cm.
   var maxKeyFrameTranslation: CGFloat = 0.3 // 30cm
 
@@ -102,13 +103,14 @@ class Options {
   var isShowInfo: Bool = false
   var recordOcc: Bool = false
   var useDepthFiltering: Bool = false
+  let appOrientation: AppOrientation = .portrait
 }
 
-enum ScannerState: Int {
-  case cubePlacement = 0    // Defining the volume to scan
-  case scanning            // Scanning
-  case viewing            // Visualizing the mesh
-}
+//enum ScannerState: Int {
+//  case cubePlacement = 0    // Defining the volume to scan
+//  case scanning            // Scanning
+//  case viewing            // Visualizing the mesh
+//}
 
 // Utility struct to manage a gesture-based scale.
 struct PinchScaleState {
@@ -142,17 +144,17 @@ struct AppStatus {
   var statusMessageDisabled = false
 }
 
-extension UIViewController {
-  func showAlert(title: String, message: String) {
-    let alert = UIAlertController(title: title,
-      message: message,
-      preferredStyle: .alert)
-
-    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-    alert.addAction(defaultAction)
-    present(alert, animated: true, completion: nil)
-  }
-}
+//extension UIViewController {
+//  func showAlert(title: String, message: String) {
+//    let alert = UIAlertController(title: title,
+//      message: message,
+//      preferredStyle: .alert)
+//
+//    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//    alert.addAction(defaultAction)
+//    present(alert, animated: true, completion: nil)
+//  }
+//}
 
 class CircleView: UIView {
   private var _color: UIColor = UIColor.red

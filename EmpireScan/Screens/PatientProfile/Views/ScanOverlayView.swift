@@ -796,19 +796,39 @@ struct ScanOverlayView: View {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         print("navigateToScanner")
         if scan == nil && isEditable {
-            guard let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationController") as? FixedOrientationController,
-                  let viewController = fixedOrientationVC.viewControllers.first as? ViewController else {
-                print("❌ Could not instantiate FixedOrientationController or inner ViewController")
-                return
+            let sensorType = UserDefaults.standard.string(forKey: "selectedSensorType")
+            print("sensorType",sensorType)
+            if(sensorType == "Structure"){
+                guard let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationStructure") as? FixedOrientationStructure,
+                      let viewController = fixedOrientationVC.viewControllers.first as? StructureViewController else {
+                    print("❌ Could not instantiate FixedOrientationStructure or inner ViewController")
+                    return
+                }
+                
+                // Pass necessary data
+                viewController.footType = footType
+                viewController.orderId = patient?.orderId
+                viewController.folderId = folderItem?.folderId
+                viewController.scanType = scan?.scanType
+                viewController.orderStatus = patient?.status
+                fixedOrientationVC.modalPresentationStyle = .fullScreen
+                topController.present(fixedOrientationVC, animated: true)
+            }else{
+                guard let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationController") as? FixedOrientationController,
+                      let viewController = fixedOrientationVC.viewControllers.first as? ViewController else {
+                    print("❌ Could not instantiate FixedOrientationController or inner ViewController")
+                    return
+                }
+                // Pass necessary data
+                viewController.footType = footType
+                viewController.orderId = patient?.orderId
+                viewController.folderId = folderItem?.folderId
+                viewController.scanType = scan?.scanType
+                viewController.orderStatus = patient?.status
+                fixedOrientationVC.modalPresentationStyle = .fullScreen
+                topController.present(fixedOrientationVC, animated: true)
             }
-            // Pass necessary data
-            viewController.footType = footType
-            viewController.orderId = patient?.orderId
-            viewController.folderId = folderItem?.folderId
-            viewController.scanType = scan?.scanType
-            viewController.orderStatus = patient?.status
-            fixedOrientationVC.modalPresentationStyle = .fullScreen
-            topController.present(fixedOrientationVC, animated: true)
+
             
         } else {
             guard let meshURL else {

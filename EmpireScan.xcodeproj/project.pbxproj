@@ -51,6 +51,21 @@
 		3AA2383A29F1B926003D3253 /* StructureKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3AA2383929F1B926003D3253 /* StructureKit */; };
 		3AA2383B29F1B93F003D3253 /* StructureKitGlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA2381329F1B23E003D3253 /* StructureKitGlue.swift */; };
 		6A1AA56E292E43F400488D4D /* ViewController+VolumeButtonClickListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1AA56C292E43F400488D4D /* ViewController+VolumeButtonClickListener.swift */; };
+		A30C39732DE98EE600C5C308 /* CaptureSessionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39722DE98EE600C5C308 /* CaptureSessionConfig.swift */; };
+		A30C39842DEDA6BB00C5C308 /* ViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39822DEDA6BB00C5C308 /* ViewController+Types.swift */; };
+		A30C39862DEDA6BB00C5C308 /* ViewController+showAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39812DEDA6BB00C5C308 /* ViewController+showAlert.swift */; };
+		A30C39872DEDA6BB00C5C308 /* MTLTexture+toImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C397D2DEDA6BB00C5C308 /* MTLTexture+toImage.swift */; };
+		A30C39882DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39802DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift */; };
+		A30C39892DEDA6BB00C5C308 /* STMesh+BBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C397E2DEDA6BB00C5C308 /* STMesh+BBox.swift */; };
+		A30C398B2DEDA9F100C5C308 /* CalibrationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C398A2DEDA9F100C5C308 /* CalibrationOverlay.swift */; };
+		A30C398D2DEDAA0600C5C308 /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C398C2DEDAA0600C5C308 /* MetalRenderer.swift */; };
+		A30C39922DEDAA1100C5C308 /* StructureViewController+Metal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39902DEDAA1100C5C308 /* StructureViewController+Metal.swift */; };
+		A30C39932DEDAA1100C5C308 /* StructureViewController+SLAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39912DEDAA1100C5C308 /* StructureViewController+SLAM.swift */; };
+		A30C39942DEDAA1100C5C308 /* StructureViewController+CaptureSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C398F2DEDAA1100C5C308 /* StructureViewController+CaptureSession.swift */; };
+		A30C39952DEDAA1100C5C308 /* StructureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C398E2DEDAA1100C5C308 /* StructureViewController.swift */; };
+		A30C39972DEDB32000C5C308 /* StructureSettingsPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39962DEDB32000C5C308 /* StructureSettingsPopupView.swift */; };
+		A30C39982DEDB7A100C5C308 /* Structure.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A30C39782DED7EFC00C5C308 /* Structure.xcframework */; };
+		A30C39992DEDB7A100C5C308 /* Structure.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A30C39782DED7EFC00C5C308 /* Structure.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A335066D2DC88B160093F95A /* blank_order_form.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A335066C2DC88B160093F95A /* blank_order_form.pdf */; };
 		A34393762DA6774F007E2E18 /* Data+Append.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34393752DA6774F007E2E18 /* Data+Append.swift */; };
 		A34393832DA94BF9007E2E18 /* w4_form.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A34393822DA94BF9007E2E18 /* w4_form.pdf */; };
@@ -60,10 +75,9 @@
 		A3A11EB72DC0F8CA00E0C9B0 /* blank_order_form1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A3A11EB62DC0F8CA00E0C9B0 /* blank_order_form1.pdf */; };
 		A3A4A1342D883BD000F24F05 /* TabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A4A1332D883BD000F24F05 /* TabViewModel.swift */; };
 		A3B5F63D2DAE298F001D9C5C /* ZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B5F63C2DAE298F001D9C5C /* ZIP.swift */; };
+		A3B8AAA02DE97916009D19D2 /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3B8AA9F2DE97916009D19D2 /* ExportOptions.plist */; };
 		A3CA6D702DB0C11C005B7F65 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CA6D6F2DB0C11C005B7F65 /* UIViewController+Toast.swift */; };
 		A3CD0F012D8AA755005C41D2 /* PatientsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CD0F002D8AA755005C41D2 /* PatientsViewModel.swift */; };
-		A3CFEE1D2D9272F500DD02BA /* Structure.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A39C43412D915E0E0098336B /* Structure.xcframework */; };
-		A3CFEE1E2D9272F500DD02BA /* Structure.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A39C43412D915E0E0098336B /* Structure.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A3D4BDAF2D7EA59F003B89A3 /* Encodable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D4BDAE2D7EA59F003B89A3 /* Encodable+Dictionary.swift */; };
 		A3D4BDBE2D7EB201003B89A3 /* Inter_24pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3D4BDBB2D7EB201003B89A3 /* Inter_24pt-Bold.ttf */; };
 		A3D4BDBF2D7EB201003B89A3 /* Inter_24pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3D4BDBD2D7EB201003B89A3 /* Inter_24pt-SemiBold.ttf */; };
@@ -80,7 +94,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A3CFEE1E2D9272F500DD02BA /* Structure.xcframework in Embed Frameworks */,
+				A30C39992DEDB7A100C5C308 /* Structure.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,17 +151,32 @@
 		6AA33C222AF53594006A3B8B /* Private.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Private.swift; sourceTree = "<group>"; };
 		87FC9C7F0084080517EB948D /* Pods-EmpireScan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmpireScan.release.xcconfig"; path = "Target Support Files/Pods-EmpireScan/Pods-EmpireScan.release.xcconfig"; sourceTree = "<group>"; };
 		8B0B7BE2CFC3713D46F52B4C /* Pods_EmpireScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmpireScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A30C39722DE98EE600C5C308 /* CaptureSessionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSessionConfig.swift; sourceTree = "<group>"; };
+		A30C39782DED7EFC00C5C308 /* Structure.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Structure.xcframework; sourceTree = "<group>"; };
+		A30C397D2DEDA6BB00C5C308 /* MTLTexture+toImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLTexture+toImage.swift"; sourceTree = "<group>"; };
+		A30C397E2DEDA6BB00C5C308 /* STMesh+BBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "STMesh+BBox.swift"; sourceTree = "<group>"; };
+		A30C397F2DEDA6BB00C5C308 /* StructureKitGlue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureKitGlue.swift; sourceTree = "<group>"; };
+		A30C39802DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Userdefault+isFirstLaunch.swift"; sourceTree = "<group>"; };
+		A30C39812DEDA6BB00C5C308 /* ViewController+showAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+showAlert.swift"; sourceTree = "<group>"; };
+		A30C39822DEDA6BB00C5C308 /* ViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Types.swift"; sourceTree = "<group>"; };
+		A30C398A2DEDA9F100C5C308 /* CalibrationOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationOverlay.swift; sourceTree = "<group>"; };
+		A30C398C2DEDAA0600C5C308 /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
+		A30C398E2DEDAA1100C5C308 /* StructureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureViewController.swift; sourceTree = "<group>"; };
+		A30C398F2DEDAA1100C5C308 /* StructureViewController+CaptureSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StructureViewController+CaptureSession.swift"; sourceTree = "<group>"; };
+		A30C39902DEDAA1100C5C308 /* StructureViewController+Metal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StructureViewController+Metal.swift"; sourceTree = "<group>"; };
+		A30C39912DEDAA1100C5C308 /* StructureViewController+SLAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StructureViewController+SLAM.swift"; sourceTree = "<group>"; };
+		A30C39962DEDB32000C5C308 /* StructureSettingsPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureSettingsPopupView.swift; sourceTree = "<group>"; };
 		A335066C2DC88B160093F95A /* blank_order_form.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = blank_order_form.pdf; sourceTree = "<group>"; };
 		A34393752DA6774F007E2E18 /* Data+Append.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Append.swift"; sourceTree = "<group>"; };
 		A34393822DA94BF9007E2E18 /* w4_form.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = w4_form.pdf; sourceTree = "<group>"; };
 		A3726BAD2D7ED1C10096FC82 /* Hexa-Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hexa-Colors.swift"; sourceTree = "<group>"; };
 		A378CBA52D814D570009D084 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A39C43412D915E0E0098336B /* Structure.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Structure.xcframework; sourceTree = "<group>"; };
 		A39EEBFE2DDDE7920097FD67 /* ScanSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSettings.swift; sourceTree = "<group>"; };
 		A3A11EB62DC0F8CA00E0C9B0 /* blank_order_form1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = blank_order_form1.pdf; sourceTree = "<group>"; };
 		A3A4A1332D883BD000F24F05 /* TabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewModel.swift; sourceTree = "<group>"; };
 		A3AA26552D7AD56B008E3199 /* EmpireScan_Pro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EmpireScan_Pro-Info.plist"; sourceTree = "<group>"; };
 		A3B5F63C2DAE298F001D9C5C /* ZIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZIP.swift; sourceTree = "<group>"; };
+		A3B8AA9F2DE97916009D19D2 /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExportOptions.plist; sourceTree = "<group>"; };
 		A3CA6D6F2DB0C11C005B7F65 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
 		A3CD0F002D8AA755005C41D2 /* PatientsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientsViewModel.swift; sourceTree = "<group>"; };
 		A3D4BDAE2D7EA59F003B89A3 /* Encodable+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Dictionary.swift"; sourceTree = "<group>"; };
@@ -235,7 +264,7 @@
 				3AA2383A29F1B926003D3253 /* StructureKit in Frameworks */,
 				3762F48228F571DF00432973 /* CoreMedia.framework in Frameworks */,
 				D51E7B6E9E2F354E3B606F21 /* Pods_EmpireScan.framework in Frameworks */,
-				A3CFEE1D2D9272F500DD02BA /* Structure.xcframework in Frameworks */,
+				A30C39982DEDB7A100C5C308 /* Structure.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,7 +274,7 @@
 		32224C2327EC971900FABF72 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A39C43412D915E0E0098336B /* Structure.xcframework */,
+				A30C39782DED7EFC00C5C308 /* Structure.xcframework */,
 				A378CBA52D814D570009D084 /* Alamofire.framework */,
 				6698737328C8D03E00F52D9B /* UIKit.framework */,
 				6698737128C8D03400F52D9B /* AVFoundation.framework */,
@@ -329,6 +358,7 @@
 				66552EA0273EAD0F00E59499 /* MeshView */,
 				66552E9F273EA95C00E59499 /* Utility */,
 				A39EEBFB2DDDE1750097FD67 /* Scanning */,
+				A3B8AA9F2DE97916009D19D2 /* ExportOptions.plist */,
 			);
 			path = EmpireScan;
 			sourceTree = "<group>";
@@ -343,6 +373,7 @@
 		66552E9F273EA95C00E59499 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				A30C39712DE98ED400C5C308 /* NewAdded */,
 				3AA2381329F1B23E003D3253 /* StructureKitGlue.swift */,
 				A34393822DA94BF9007E2E18 /* w4_form.pdf */,
 				A335066C2DC88B160093F95A /* blank_order_form.pdf */,
@@ -382,9 +413,46 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A30C39712DE98ED400C5C308 /* NewAdded */ = {
+			isa = PBXGroup;
+			children = (
+				A30C39722DE98EE600C5C308 /* CaptureSessionConfig.swift */,
+			);
+			path = NewAdded;
+			sourceTree = "<group>";
+		};
+		A30C397C2DEDA5CA00C5C308 /* StructureSensor */ = {
+			isa = PBXGroup;
+			children = (
+				A30C39832DEDA6BB00C5C308 /* Extensions */,
+				A30C398C2DEDAA0600C5C308 /* MetalRenderer.swift */,
+				A30C398A2DEDA9F100C5C308 /* CalibrationOverlay.swift */,
+				A30C398E2DEDAA1100C5C308 /* StructureViewController.swift */,
+				A30C398F2DEDAA1100C5C308 /* StructureViewController+CaptureSession.swift */,
+				A30C39902DEDAA1100C5C308 /* StructureViewController+Metal.swift */,
+				A30C39912DEDAA1100C5C308 /* StructureViewController+SLAM.swift */,
+				A30C39962DEDB32000C5C308 /* StructureSettingsPopupView.swift */,
+			);
+			path = StructureSensor;
+			sourceTree = "<group>";
+		};
+		A30C39832DEDA6BB00C5C308 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A30C397D2DEDA6BB00C5C308 /* MTLTexture+toImage.swift */,
+				A30C397E2DEDA6BB00C5C308 /* STMesh+BBox.swift */,
+				A30C397F2DEDA6BB00C5C308 /* StructureKitGlue.swift */,
+				A30C39802DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift */,
+				A30C39812DEDA6BB00C5C308 /* ViewController+showAlert.swift */,
+				A30C39822DEDA6BB00C5C308 /* ViewController+Types.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A39EEBFB2DDDE1750097FD67 /* Scanning */ = {
 			isa = PBXGroup;
 			children = (
+				A30C397C2DEDA5CA00C5C308 /* StructureSensor */,
 				66052A53273C26B600744306 /* ViewController.swift */,
 				66052A6A273C283C00744306 /* ViewController+CaptureSession.swift */,
 				66052A69273C283C00744306 /* ViewController+SLAM.swift */,
@@ -513,6 +581,7 @@
 				3762F48B28F571DF00432973 /* Storekit.storekit in Resources */,
 				A3D4BDBE2D7EB201003B89A3 /* Inter_24pt-Bold.ttf in Resources */,
 				A3D4BDBF2D7EB201003B89A3 /* Inter_24pt-SemiBold.ttf in Resources */,
+				A3B8AAA02DE97916009D19D2 /* ExportOptions.plist in Resources */,
 				A3D9B7C12DE875B10022DD0A /* Production.xcconfig in Resources */,
 				A3D4BDC02D7EB201003B89A3 /* Inter_24pt-Medium.ttf in Resources */,
 				A3A11EB72DC0F8CA00E0C9B0 /* blank_order_form1.pdf in Resources */,
@@ -577,6 +646,19 @@
 				A39EEBFF2DDDE7920097FD67 /* ScanSettings.swift in Sources */,
 				A3CD0F012D8AA755005C41D2 /* PatientsViewModel.swift in Sources */,
 				3762F45028F571DF00432973 /* MeshViewController.swift in Sources */,
+				A30C39732DE98EE600C5C308 /* CaptureSessionConfig.swift in Sources */,
+				A30C39972DEDB32000C5C308 /* StructureSettingsPopupView.swift in Sources */,
+				A30C398D2DEDAA0600C5C308 /* MetalRenderer.swift in Sources */,
+				A30C39922DEDAA1100C5C308 /* StructureViewController+Metal.swift in Sources */,
+				A30C39932DEDAA1100C5C308 /* StructureViewController+SLAM.swift in Sources */,
+				A30C39942DEDAA1100C5C308 /* StructureViewController+CaptureSession.swift in Sources */,
+				A30C39952DEDAA1100C5C308 /* StructureViewController.swift in Sources */,
+				A30C398B2DEDA9F100C5C308 /* CalibrationOverlay.swift in Sources */,
+				A30C39842DEDA6BB00C5C308 /* ViewController+Types.swift in Sources */,
+				A30C39862DEDA6BB00C5C308 /* ViewController+showAlert.swift in Sources */,
+				A30C39872DEDA6BB00C5C308 /* MTLTexture+toImage.swift in Sources */,
+				A30C39882DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift in Sources */,
+				A30C39892DEDA6BB00C5C308 /* STMesh+BBox.swift in Sources */,
 				3762F45428F571DF00432973 /* ViewController.swift in Sources */,
 				3762F45628F571DF00432973 /* CustomUIKitStyles.swift in Sources */,
 				3762F45928F571DF00432973 /* ViewpointController.swift in Sources */,
@@ -628,7 +710,7 @@
 				BASE_URL = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = 7YYQHRBXHC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DERIVED_FILE_DIR)/PackageFrameworks",
@@ -644,6 +726,7 @@
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "accelerometer gyroscope opengles-2 video-camera";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -674,7 +757,7 @@
 				BASE_URL = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = 7YYQHRBXHC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DERIVED_FILE_DIR)/PackageFrameworks",
@@ -690,6 +773,7 @@
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "accelerometer gyroscope opengles-2 video-camera";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -872,8 +956,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/structureio/StructureKit";
 			requirement = {
-				kind = exactVersion;
-				version = 1.0.1;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

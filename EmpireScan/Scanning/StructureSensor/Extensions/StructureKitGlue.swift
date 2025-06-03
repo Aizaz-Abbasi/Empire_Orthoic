@@ -3,22 +3,22 @@
  http://structure.io
  */
 
-import Foundation
-import Structure
-import StructureKit
-
-extension STMesh: STKMesh {
-}
-
-extension STColorFrame: STKColorFrame {
-}
-
-extension STIntrinsics: STKIntrinsics {
-}
-
-extension STDepthFrame: STKDepthFrame {
-  public func intrinsics() -> STKIntrinsics {
-    let intrinsics: STIntrinsics = self.intrinsics()
-    return intrinsics
-  }
-}
+//import Foundation
+//import Structure
+//import StructureKit
+//
+//extension STMesh: STKMesh {
+//}
+//
+//extension STColorFrame: STKColorFrame {
+//}
+//
+//extension STIntrinsics: STKIntrinsics {
+//}
+//
+//extension STDepthFrame: STKDepthFrame {
+//  public func intrinsics() -> STKIntrinsics {
+//    let intrinsics: STIntrinsics = self.intrinsics()
+//    return intrinsics
+//  }
+//}

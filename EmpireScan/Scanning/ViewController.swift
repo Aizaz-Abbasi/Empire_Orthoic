@@ -18,6 +18,12 @@ class FixedOrientationController: UINavigationController {
   }
 }
 
+class FixedOrientationStructure: UINavigationController {
+  override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    return .portrait
+  }
+}
+
 class ViewController: UIViewController {
   // MARK: UI
   @IBOutlet var mtkView: MTKView!
@@ -46,10 +52,9 @@ class ViewController: UIViewController {
   var _captureSession: STCaptureSession!
   var _slamState: SlamData!
   var _scene: STScene!
-   var _mesh: STMesh? = nil
-  // Visualization
+  var _mesh: STMesh? = nil
   var _metalData: MetalData!
-  // ViewController
+  //ViewController
   var _appStatus: AppStatus = .init()
   var _meshViewController: MeshViewController!
   var _naiveColorizeTask: STBackgroundTask?
@@ -58,12 +63,12 @@ class ViewController: UIViewController {
   var _timeTagOnOcc: String?
   var showingMemoryWarning = false
   var _helpOverlay: HelpOverlay?
+    //Params
   var footType: String?
   var scanType: String?
   var orderId:Int?
   var folderId:Int?
   var orderStatus: String?
-
   // IMU handling.
   var _lastGravity: vector_float3 = .init(0, 0, 0) // For storing gravity vector from IMU.
 
@@ -87,11 +92,11 @@ class ViewController: UIViewController {
   deinit {
     EAGLContext.setCurrent(nil)
   }
-    
+
   override func viewDidLoad() {
     super.viewDidLoad()
       
-      print("footType",footType,scanType,orderId,folderId,orderStatus)
+    print("footType",footType,scanType,orderId,folderId,orderStatus)
     DispatchQueue(label: "license.validation", qos: .userInitiated).async {
       // TODO: complete this code with your license token
       let status = STLicenseManager.unlock(withKey:"sdk-fF75XEFcma68Em-Ur2sdmWfESTjZholpmW28gTuwCJg", shouldRefresh: false)
@@ -99,19 +104,15 @@ class ViewController: UIViewController {
         print("Error: No license!")
       }else{
           print("Valid license!")
-          //self.updateAppStatusMessage()
       }
     }
-
     guard AVCaptureDevice.default(.builtInTrueDepthCamera, for: .video, position: .front) != nil else {
       return
     }
-
     if #available(iOS 15, *) {
      // setupStoreKit()
         self.exportImageView.isHidden = true
     }
-      
       if isTrueDepthCameraAvailable() {
           print("✅ TrueDepth Camera is available!")
       } else {
@@ -121,11 +122,9 @@ class ViewController: UIViewController {
       setupUserInterface()
       setupGestures()
       initializeDynamicOptions()
-      
   }
     
     func isTrueDepthCameraAvailable() -> Bool {
-    
         if let frontCamera = AVCaptureDevice.default(.builtInTrueDepthCamera, for: .video, position: .front) {
             return true
         } else {
@@ -402,7 +401,6 @@ class ViewController: UIViewController {
     scanButton.isHidden = true
     doneButton.isHidden = true
     resetButton.isHidden = false
-
     _slamState.tracker.initialCameraPose = cameraPose.toGLK()
 
     // Turn Off the Idle Timer as phone screen shouldn't Turn off during Scan
@@ -677,7 +675,7 @@ class ViewController: UIViewController {
     let needToRunCalibrator = (userInstructions & STCaptureSessionUserInstruction.needToRunCalibrator.rawValue) != 0
     if needToRunCalibrator {
       showAlert(title: "Error", message: "calibration required")
-      assertionFailure()
+      //assertionFailure()
     }
       print("3")
     // Color camera permission issues.
@@ -951,6 +949,120 @@ extension ViewController: MeshViewDelegate {
     }
     return true
   }
+    
+    
+//    func updateViewsWithSensorStatus() {
+//      let userInstructions = _captureSession.userInstructions
+//      let needLicense = STLicenseManager.status != .valid
+//
+//      var needToConnectSensor = false
+//      needToConnectSensor = (userInstructions.rawValue & STCaptureSessionUserInstruction.needToConnectSensor.rawValue) != 0
+//
+//      var needToChargeSensor = false
+//      needToChargeSensor = (userInstructions.rawValue & STCaptureSessionUserInstruction.needToChargeSensor.rawValue) != 0
+//
+//      var needToAuthorizeColorCamera = false
+//      needToAuthorizeColorCamera = (userInstructions.rawValue & STCaptureSessionUserInstruction.needToAuthorizeColorCamera.rawValue) != 0
+//
+//      var needToUpgradeFirmware = false
+//      needToUpgradeFirmware = (userInstructions.rawValue & STCaptureSessionUserInstruction.firmwareUpdateRequired.rawValue) != 0
+//
+//      // If you don't want to display the overlay message when an approximate calibration
+//      // is available use `_captureSession.calibrationType >= STCalibrationTypeApproximate`
+//      var needToRunCalibrator = false
+//      needToRunCalibrator = (userInstructions.rawValue & STCaptureSessionUserInstruction.needToRunCalibrator.rawValue) != 0
+//
+//      if needToConnectSensor {
+//        // If sensor is never connected before show sensor required banner
+//        if !UserDefaults.standard.hasConnectedSensorBefore {
+//          // Bring the view to front otherwise it appears behind settings view
+//          self.view.bringSubviewToFront(sensorRequiredImageView)
+//          sensorRequiredImageView.isHidden = false
+//        } else {
+//          if st01CompatibilityMode {
+//            showAppStatusMessage(appStatus.pleaseConnectOriginalSensorMessage)
+//          } else {
+//            showAppStatusMessage(appStatus.pleaseConnectSensor3Message)
+//          }
+//        }
+//        return
+//      }
+//
+//      if _captureSession.sensorMode == STCaptureSessionSensorMode.wakingUp {
+//        showAppStatusMessage(appStatus.sensorIsWakingUpMessage)
+//        return
+//      }
+//
+//      // If sensor is connected first time set the flag to true
+//      if _captureSession.sensorMode == STCaptureSessionSensorMode.ready {
+//        if !UserDefaults.standard.hasConnectedSensorBefore {
+//          UserDefaults.standard.hasConnectedSensorBefore = true
+//          sensorRequiredImageView.isHidden = true
+//        }
+//      }
+//
+//      if needToChargeSensor {
+//        showAppStatusMessage(appStatus.pleaseChargeSensorMessage)
+//        return
+//      }
+//
+//      if !needToRunCalibrator {
+//        if calibrationOverlay != nil {
+//          calibrationOverlay!.removeFromSuperview()
+//        }
+//      } else {
+//        var overlayType = CalibrationOverlayType.nocalibration
+//        switch _captureSession!.calibrationType() {
+//        case STCalibrationType.none:
+//          scanButton.isEnabled = false
+//          if _captureSession!.lens == STLens.wideVision {
+//            overlayType = CalibrationOverlayType.strictlyRequired
+//          }
+//        case STCalibrationType.approximate:
+//          scanButton.isEnabled = true
+//          overlayType = CalibrationOverlayType.approximate
+//        case STCalibrationType.deviceSpecific:
+//          // We should not ever enter this case if `needToRunCalibrator` is true
+//          break
+//        default:
+//          print("WARNING: Unknown calibration type returned from the capture session.")
+//        }
+//
+//        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+//
+//        calibrationOverlay = CalibrationOverlay(type: overlayType)
+//        view.addSubview(calibrationOverlay!)
+//
+//        // Center the calibration overlay in X
+//        calibrationOverlay?.superview!.addConstraint(NSLayoutConstraint(item: calibrationOverlay!, attribute: .centerX, relatedBy: .equal, toItem: calibrationOverlay?.superview, attribute: .centerX, multiplier: 1.0, constant: 0.0))
+//
+//        if overlayType == CalibrationOverlayType.approximate {
+//          calibrationOverlay?.superview?.addConstraint(NSLayoutConstraint(item: calibrationOverlay!, attribute: .bottom, relatedBy: .equal, toItem: calibrationOverlay?.superview, attribute: .bottom, multiplier: 1.0, constant: isIPad ? -100 : -25))
+//        } else {
+//          calibrationOverlay?.superview?.addConstraint(NSLayoutConstraint(item: calibrationOverlay!, attribute: .centerY, relatedBy: .equal, toItem: calibrationOverlay?.superview, attribute: .centerY, multiplier: 1.0, constant: 0.0))
+//        }
+//
+//        if !isIPad && overlayType != CalibrationOverlayType.approximate {
+//          calibrationOverlay!.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+//        }
+//
+//        // Color camera permission issues.
+//        if needToAuthorizeColorCamera {
+//          showAppStatusMessage(appStatus.needColorCameraAccessMessage)
+//          return
+//        }
+//      }
+//
+//      if needLicense {
+//        showAppStatusMessage(appStatus.needLicenseMessage)
+//        return
+//      }
+//
+//      firmwareUpdateView.isHidden = !needToUpgradeFirmware
+//
+//      // If we reach this point, no status to show.
+//      hideAppStatusMessage()
+//    }
 }
 
 // MARK: - STBackgroundTaskDelegate
@@ -995,12 +1107,6 @@ extension ViewController {
       })
     optSet.groups.append(groupStreaming)
 
-      
-//    let groupTracker = OptionsGroup(id: .trackerGroup)
-//      .addEnum(id: .trackerType, map: ["Color + Depth", "Depth Only"], val: 0, onChange: { [weak self] (_: OptionId, _: [String], val: Int) in
-//        self?._options.depthAndColorTrackerIsOn = val == 1
-//        self?.onSLAMOptionsChanged()
-//      })
       let savedTrackerType = UserDefaults.standard.string(forKey: "selectedTrackerType") ?? "Depth Only"
     
       let initialTrackerVal = (savedTrackerType == "Color + Depth") ? 0 : 1
@@ -1121,6 +1227,8 @@ extension ViewController {
       _metalData.renderingOption = .scanning
     case .viewing:
       _metalData.renderingOption = .viewing
+    case .numStates:
+        break
     }
   }
 }

@@ -34,36 +34,6 @@
             endingLineNumber = "711"
             landmarkName = "setupCustomCheckboxes()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D1805A1A-DBC6-491A-9203-E418D972DEF3 - 22156296abf88bd7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EmpireScan.OrthoticWorkOrderPart2.setupCustomCheckboxes() -&gt; ()"
-                  moduleName = "EmpireScan.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macok/Desktop/Empire/EmpireScan/EmpireScan/Screens/PatientProfile/Views/OrthoticWorkOrderPart2.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "711"
-                  endingLineNumber = "711">
-               </Location>
-               <Location
-                  uuid = "D1805A1A-DBC6-491A-9203-E418D972DEF3 - f71b2adf4f15b852"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EmpireScan.OrthoticWorkOrderPart2.setupCustomCheckboxes() -&gt; ()"
-                  moduleName = "EmpireScan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macok/Desktop/Empire/EmpireScan/EmpireScan/Screens/PatientProfile/Views/OrthoticWorkOrderPart2.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "711"
-                  endingLineNumber = "711">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -80,36 +50,6 @@
             endingLineNumber = "740"
             landmarkName = "setupCustomCheckboxes()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A37CA164-ADA9-42B6-9464-6B515336BABC - 22156296abf88710"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EmpireScan.OrthoticWorkOrderPart2.setupCustomCheckboxes() -&gt; ()"
-                  moduleName = "EmpireScan.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macok/Desktop/Empire/EmpireScan/EmpireScan/Screens/PatientProfile/Views/OrthoticWorkOrderPart2.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "740"
-                  endingLineNumber = "740">
-               </Location>
-               <Location
-                  uuid = "A37CA164-ADA9-42B6-9464-6B515336BABC - f71b2adf4f15b495"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EmpireScan.OrthoticWorkOrderPart2.setupCustomCheckboxes() -&gt; ()"
-                  moduleName = "EmpireScan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macok/Desktop/Empire/EmpireScan/EmpireScan/Screens/PatientProfile/Views/OrthoticWorkOrderPart2.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "740"
-                  endingLineNumber = "740">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -126,36 +66,6 @@
             endingLineNumber = "130"
             landmarkName = "prefillForm()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "89A8B0C0-C8A9-4E07-A463-49AEC5D880D6 - 69c6cd042a9550f0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EmpireScan.PDFFormViewer.prefillForm() -&gt; ()"
-                  moduleName = "EmpireScan.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macok/Desktop/Empire/EmpireScan/EmpireScan/Screens/PatientProfile/Views/PDFFormModalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "130"
-                  endingLineNumber = "130">
-               </Location>
-               <Location
-                  uuid = "89A8B0C0-C8A9-4E07-A463-49AEC5D880D6 - bcc8854dce786375"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EmpireScan.PDFFormViewer.prefillForm() -&gt; ()"
-                  moduleName = "EmpireScan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macok/Desktop/Empire/EmpireScan/EmpireScan/Screens/PatientProfile/Views/PDFFormModalView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "130"
-                  endingLineNumber = "130">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -248,9 +158,25 @@
             filePath = "EmpireScan/Scanning/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1007"
-            endingLineNumber = "1007"
+            startingLineNumber = "1113"
+            endingLineNumber = "1113"
             landmarkName = "makeOptionsSet()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F7C571B3-6230-48E7-9194-C0A6FE58CAAC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EmpireScan/Scanning/ViewController+CaptureSession.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "setupCaptureSession()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -320,17 +320,42 @@ class FootSelectionVC: UIViewController {
         guard let foot = selectedFoot else { return }
         //print("Starting scan for \(foot) \(selectedFootOptionIndex) foot")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationController") as? FixedOrientationController {
-            if let viewController = fixedOrientationVC.viewControllers.first as? ViewController {
-                viewController.footType = selectedFoot
-                viewController.orderId = patient?.orderId
-                viewController.folderId = folderId
-                viewController.scanType = scanType.text
-                viewController.orderStatus = patient?.status
+        let sensorType = UserDefaults.standard.string(forKey: "selectedSensorType")
+        print("sensorType",sensorType)
+        if(sensorType == "Structure"){
+            
+            guard let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationStructure") as? FixedOrientationStructure,
+                  let viewController = fixedOrientationVC.viewControllers.first as? StructureViewController else {
+                print("❌ Could not instantiate FixedOrientationStructure or inner ViewController")
+                return
             }
-            fixedOrientationVC.modalPresentationStyle = .fullScreen // Optional
-            self.present(fixedOrientationVC, animated: true)
+//            if let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationStructure") as? FixedOrientationStructure {
+                if let viewController = fixedOrientationVC.viewControllers.first as? StructureViewController {
+                    viewController.footType = selectedFoot
+                    viewController.orderId = patient?.orderId
+                    viewController.folderId = folderId
+                    viewController.scanType = scanType.text
+                    viewController.orderStatus = patient?.status
+                }
+                fixedOrientationVC.modalPresentationStyle = .fullScreen // Optional
+                self.present(fixedOrientationVC, animated: true)
+           // }
+            
+        }else{
+            
+            if let fixedOrientationVC = storyboard.instantiateViewController(withIdentifier: "FixedOrientationController") as? FixedOrientationController {
+                if let viewController = fixedOrientationVC.viewControllers.first as? ViewController {
+                    viewController.footType = selectedFoot
+                    viewController.orderId = patient?.orderId
+                    viewController.folderId = folderId
+                    viewController.scanType = scanType.text
+                    viewController.orderStatus = patient?.status
+                }
+                fixedOrientationVC.modalPresentationStyle = .fullScreen // Optional
+                self.present(fixedOrientationVC, animated: true)
+            }
         }
+       
     }
 
 }

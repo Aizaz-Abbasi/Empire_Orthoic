@@ -16,8 +16,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-empire-orthotic" translatesAutoresizingMaskIntoConstraints="NO" id="EOR-cs-sKW">
-                                <rect key="frame" x="20" y="0.0" width="362" height="874"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding-bg" translatesAutoresizingMaskIntoConstraints="NO" id="EOR-cs-sKW">
+                                <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="APPROVED_Powered_By_StructureSDK_logo3" translatesAutoresizingMaskIntoConstraints="NO" id="r1u-lt-YdS">
+                                <rect key="frame" x="0.0" y="755" width="402" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="ahm-FC-OYn"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="black&amp;white-logo-empire-orthotic" translatesAutoresizingMaskIntoConstraints="NO" id="8KB-Fo-D7O">
+                                <rect key="frame" x="0.0" y="414.66666666666669" width="402" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="MbS-Yo-y5f"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -25,8 +37,15 @@
                         <constraints>
                             <constraint firstItem="EOR-cs-sKW" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" id="6eY-0p-Prr"/>
                             <constraint firstItem="EOR-cs-sKW" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="C1I-ze-G2b"/>
-                            <constraint firstItem="EOR-cs-sKW" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.9" id="DYs-b2-vqU"/>
+                            <constraint firstItem="8KB-Fo-D7O" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="COI-94-Xas"/>
+                            <constraint firstItem="EOR-cs-sKW" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="DYs-b2-vqU"/>
+                            <constraint firstItem="r1u-lt-YdS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="KqE-bQ-7IC"/>
+                            <constraint firstItem="8KB-Fo-D7O" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="MCL-fc-64s"/>
+                            <constraint firstItem="8KB-Fo-D7O" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="SVI-Da-5bU"/>
+                            <constraint firstItem="r1u-lt-YdS" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="XWo-tV-H8x"/>
                             <constraint firstItem="EOR-cs-sKW" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ggW-xJ-2SR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="r1u-lt-YdS" secondAttribute="bottom" constant="40" id="n1U-w2-hpR"/>
+                            <constraint firstAttribute="trailing" secondItem="8KB-Fo-D7O" secondAttribute="trailing" id="rMm-bD-9wP"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -36,6 +55,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo-empire-orthotic" width="620" height="116"/>
+        <image name="APPROVED_Powered_By_StructureSDK_logo3" width="341.66665649414062" height="89.666664123535156"/>
+        <image name="black&amp;white-logo-empire-orthotic" width="620" height="116"/>
+        <image name="onboarding-bg" width="1500" height="3248"/>
     </resources>
 </document>

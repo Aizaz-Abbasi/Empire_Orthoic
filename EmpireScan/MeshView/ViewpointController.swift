@@ -14,7 +14,7 @@ func nowInSeconds() -> Double {
 
 class ViewpointController: NSObject {
   // Projection matrix before starting user interaction.
-  private var referenceProjectionMatrix: float4x4 = .identity()
+    private var referenceProjectionMatrix: float4x4 = .identity
 
   // Centroid of the mesh.
   private var meshCenter: vector_float3 = .init(0, 0, 0)
@@ -27,8 +27,8 @@ class ViewpointController: NSObject {
   // ModelView rotation.
   private var lastModelViewRotationUpdateTimestamp: Double = 0
   private var oneFingerPanWhenGestureBegan: vector_float2 = .init(0, 0)
-  private var modelViewRotationWhenPanGestureBegan: float4x4 = .identity()
-  private var modelViewRotation: float4x4 = .identity()
+    private var modelViewRotationWhenPanGestureBegan: float4x4 = .identity
+    private var modelViewRotation: float4x4 = .identity
 
   private var modelViewRotationVelocity: vector_float2 = .init(0, 0) // expressed in terms of touch coordinates.
 
@@ -56,8 +56,8 @@ class ViewpointController: NSObject {
     currentScale = 1
     screenCenter = screenSize * 0.5
     meshCenterOnScreen = screenSize * 0.5
-    modelViewRotationWhenPanGestureBegan = float4x4.identity()
-    modelViewRotation = float4x4.identity()
+      modelViewRotationWhenPanGestureBegan = float4x4.identity
+      modelViewRotation = float4x4.identity
     velocitiesDampingRatio = vector_float2(0.95, 0.95)
     modelViewRotationVelocity = vector_float2(0, 0)
   }

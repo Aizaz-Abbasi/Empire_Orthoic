@@ -6,8 +6,9 @@
 //
 import Foundation
 import SwiftUI
+import MessageUI
 
-class SettingsVC: UIViewController {
+class SettingsVC: UIViewController, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var headerView: UIView?
     @IBOutlet weak var settingsBtn: UIButton?
@@ -15,6 +16,7 @@ class SettingsVC: UIViewController {
     private let structureButton = UIButton(type: .system)
     private let appleButton = UIButton(type: .system)
     private let logoutButton = UIButton(type: .system)
+    let contactSupportButton = UIButton(type: .system)
     private var selectedSensorType: String = ""
     private let sensorContainerView = UIView()
     
@@ -28,9 +30,7 @@ class SettingsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //view.backgroundColor = .red
-        //UIColor(named: "#f5f5f5")
-        //setDynamicCornerRadius()
+        
         print("SettingsVC loaded")
         if let savedSensor = UserDefaults.standard.string(forKey: "selectedSensorType") {
             print("savedSensor",savedSensor)
@@ -39,6 +39,7 @@ class SettingsVC: UIViewController {
         setupSensorUI()
         setupTrackerUI()
         setupHighResolutionMeshToggle()
+        setupContactSupportButton()
         setupLogoutButton()
     }
 
@@ -144,6 +145,48 @@ class SettingsVC: UIViewController {
         ])
     }
     
+    private func setupContactSupportButton() {
+        
+        view.addSubview(contactSupportButton)
+        contactSupportButton.translatesAutoresizingMaskIntoConstraints = false
+        contactSupportButton.setTitle(" Contact Support", for: .normal)
+        contactSupportButton.setTitleColor(.black, for: .normal)
+        contactSupportButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        contactSupportButton.setImage(UIImage(systemName: "envelope"), for: .normal)
+        contactSupportButton.tintColor = .black
+
+        // Match logoutButton style
+        contactSupportButton.backgroundColor = .white
+        contactSupportButton.clipsToBounds = true
+        contactSupportButton.contentHorizontalAlignment = .leading
+        contactSupportButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+
+        contactSupportButton.addTarget(self, action: #selector(contactSupportButtonTapped), for: .touchUpInside)
+
+        NSLayoutConstraint.activate([
+            contactSupportButton.topAnchor.constraint(equalTo: meshContainerView.bottomAnchor, constant: 20),
+            contactSupportButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contactSupportButton.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+
+    @objc private func contactSupportButtonTapped() {
+        if MFMailComposeViewController.canSendMail() {
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            mailComposer.setToRecipients(["Payam@empireoplabs.com"])
+            mailComposer.setSubject("Support Request")
+            mailComposer.setMessageBody("Hi Support Team,\n\n", isHTML: false)
+            present(mailComposer, animated: true, completion: nil)
+        } else {
+            // Optional: Show alert if mail is not set up
+            let alert = UIAlertController(title: "Mail Not Configured", message: "Please set up a Mail account on your device to send emails.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        }
+    }
+
+    
     private func setupLogoutButton() {
         view.addSubview(logoutButton)
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
@@ -156,13 +199,13 @@ class SettingsVC: UIViewController {
         // Match sensorContainerView style
         logoutButton.backgroundColor = .white
         logoutButton.clipsToBounds = true
-        logoutButton.contentHorizontalAlignment = .center
+        logoutButton.contentHorizontalAlignment = .leading
         logoutButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
 
         logoutButton.addTarget(self, action: #selector(logOutButton(_:)), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
-            logoutButton.topAnchor.constraint(equalTo: meshContainerView.bottomAnchor, constant: 20),
+            logoutButton.topAnchor.constraint(equalTo: contactSupportButton.bottomAnchor, constant: 20),
             logoutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])

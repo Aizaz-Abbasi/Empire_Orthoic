@@ -9,20 +9,20 @@ import MetalKit
 import Structure
 import StructureKit
 
-struct RenderingOptions: OptionSet {
-  let rawValue: Int
-  static let colorFrame = RenderingOptions(rawValue: 1 << 0)
-  static let depthOverlay = RenderingOptions(rawValue: 1 << 1)
-  static let mesh = RenderingOptions(rawValue: 1 << 2)
-  static let cube = RenderingOptions(rawValue: 1 << 3)
-  static let anchor = RenderingOptions(rawValue: 1 << 4)
-  static let arkitGeom = RenderingOptions(rawValue: 1 << 5)
-  static let depthFrame = RenderingOptions(rawValue: 1 << 6)
-
-  static let cubePlacement: RenderingOptions = [.colorFrame, .depthOverlay, .cube]
-  static let scanning: RenderingOptions = [.colorFrame, .depthOverlay, .mesh, .cube]
-  static let viewing: RenderingOptions = []
-}
+//struct RenderingOptions: OptionSet {
+//  let rawValue: Int
+//  static let colorFrame = RenderingOptions(rawValue: 1 << 0)
+//  static let depthOverlay = RenderingOptions(rawValue: 1 << 1)
+//  static let mesh = RenderingOptions(rawValue: 1 << 2)
+//  static let cube = RenderingOptions(rawValue: 1 << 3)
+//  static let anchor = RenderingOptions(rawValue: 1 << 4)
+//  static let arkitGeom = RenderingOptions(rawValue: 1 << 5)
+//  static let depthFrame = RenderingOptions(rawValue: 1 << 6)
+//
+//  static let cubePlacement: RenderingOptions = [.colorFrame, .depthOverlay, .cube]
+//  static let scanning: RenderingOptions = [.colorFrame, .depthOverlay, .mesh, .cube]
+//  static let viewing: RenderingOptions = []
+//}
 
 // Display related members.
 class MetalData: NSObject, MTKViewDelegate {
