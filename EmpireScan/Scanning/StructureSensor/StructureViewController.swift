@@ -446,7 +446,7 @@ class StructureViewController: UIViewController, STBackgroundTaskDelegate, MeshV
   }
 
   @IBAction func openDeveloperPortal(_ sender: Any) {
-    UIApplication.shared.open(URL(string: "https://structure.io/developers")!)
+    //UIApplication.shared.open(URL(string: "https://structure.io/developers")!)
   }
 
   func onTapSensorRequiedImageView() {

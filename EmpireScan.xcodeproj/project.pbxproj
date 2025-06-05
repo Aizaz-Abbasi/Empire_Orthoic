@@ -54,7 +54,6 @@
 		A30C39732DE98EE600C5C308 /* CaptureSessionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39722DE98EE600C5C308 /* CaptureSessionConfig.swift */; };
 		A30C39842DEDA6BB00C5C308 /* ViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39822DEDA6BB00C5C308 /* ViewController+Types.swift */; };
 		A30C39862DEDA6BB00C5C308 /* ViewController+showAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39812DEDA6BB00C5C308 /* ViewController+showAlert.swift */; };
-		A30C39872DEDA6BB00C5C308 /* MTLTexture+toImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C397D2DEDA6BB00C5C308 /* MTLTexture+toImage.swift */; };
 		A30C39882DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C39802DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift */; };
 		A30C39892DEDA6BB00C5C308 /* STMesh+BBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C397E2DEDA6BB00C5C308 /* STMesh+BBox.swift */; };
 		A30C398B2DEDA9F100C5C308 /* CalibrationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30C398A2DEDA9F100C5C308 /* CalibrationOverlay.swift */; };
@@ -71,6 +70,7 @@
 		A34393832DA94BF9007E2E18 /* w4_form.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A34393822DA94BF9007E2E18 /* w4_form.pdf */; };
 		A3726BAE2D7ED1C10096FC82 /* Hexa-Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3726BAD2D7ED1C10096FC82 /* Hexa-Colors.swift */; };
 		A378CBA62D814D570009D084 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A378CBA52D814D570009D084 /* Alamofire.framework */; };
+		A38BCF182DF0288800FF2C94 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = A38BCF172DF0288800FF2C94 /* Sentry */; };
 		A39EEBFF2DDDE7920097FD67 /* ScanSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39EEBFE2DDDE7920097FD67 /* ScanSettings.swift */; };
 		A3A11EB72DC0F8CA00E0C9B0 /* blank_order_form1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A3A11EB62DC0F8CA00E0C9B0 /* blank_order_form1.pdf */; };
 		A3A4A1342D883BD000F24F05 /* TabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A4A1332D883BD000F24F05 /* TabViewModel.swift */; };
@@ -153,9 +153,7 @@
 		8B0B7BE2CFC3713D46F52B4C /* Pods_EmpireScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmpireScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A30C39722DE98EE600C5C308 /* CaptureSessionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSessionConfig.swift; sourceTree = "<group>"; };
 		A30C39782DED7EFC00C5C308 /* Structure.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Structure.xcframework; sourceTree = "<group>"; };
-		A30C397D2DEDA6BB00C5C308 /* MTLTexture+toImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MTLTexture+toImage.swift"; sourceTree = "<group>"; };
 		A30C397E2DEDA6BB00C5C308 /* STMesh+BBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "STMesh+BBox.swift"; sourceTree = "<group>"; };
-		A30C397F2DEDA6BB00C5C308 /* StructureKitGlue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureKitGlue.swift; sourceTree = "<group>"; };
 		A30C39802DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Userdefault+isFirstLaunch.swift"; sourceTree = "<group>"; };
 		A30C39812DEDA6BB00C5C308 /* ViewController+showAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+showAlert.swift"; sourceTree = "<group>"; };
 		A30C39822DEDA6BB00C5C308 /* ViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Types.swift"; sourceTree = "<group>"; };
@@ -253,6 +251,7 @@
 				3762F47728F571DF00432973 /* UserNotifications.framework in Frameworks */,
 				3762F47828F571DF00432973 /* ImageIO.framework in Frameworks */,
 				3762F47928F571DF00432973 /* MetalKit.framework in Frameworks */,
+				A38BCF182DF0288800FF2C94 /* Sentry in Frameworks */,
 				3762F47A28F571DF00432973 /* MetalPerformanceShaders.framework in Frameworks */,
 				3762F47B28F571DF00432973 /* Metal.framework in Frameworks */,
 				3762F47C28F571DF00432973 /* Accelerate.framework in Frameworks */,
@@ -439,9 +438,7 @@
 		A30C39832DEDA6BB00C5C308 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A30C397D2DEDA6BB00C5C308 /* MTLTexture+toImage.swift */,
 				A30C397E2DEDA6BB00C5C308 /* STMesh+BBox.swift */,
-				A30C397F2DEDA6BB00C5C308 /* StructureKitGlue.swift */,
 				A30C39802DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift */,
 				A30C39812DEDA6BB00C5C308 /* ViewController+showAlert.swift */,
 				A30C39822DEDA6BB00C5C308 /* ViewController+Types.swift */,
@@ -529,6 +526,7 @@
 			name = EmpireScan;
 			packageProductDependencies = (
 				3AA2383929F1B926003D3253 /* StructureKit */,
+				A38BCF172DF0288800FF2C94 /* Sentry */,
 			);
 			productName = FacePackage;
 			productReference = 3762F49128F571DF00432973 /* EmpireScan.app */;
@@ -554,6 +552,7 @@
 			mainGroup = 66052A43273C26B600744306;
 			packageReferences = (
 				3AA2381029F1B205003D3253 /* XCRemoteSwiftPackageReference "StructureKit" */,
+				A38BCF162DF0288800FF2C94 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66052A4D273C26B600744306 /* Products */;
@@ -656,7 +655,6 @@
 				A30C398B2DEDA9F100C5C308 /* CalibrationOverlay.swift in Sources */,
 				A30C39842DEDA6BB00C5C308 /* ViewController+Types.swift in Sources */,
 				A30C39862DEDA6BB00C5C308 /* ViewController+showAlert.swift in Sources */,
-				A30C39872DEDA6BB00C5C308 /* MTLTexture+toImage.swift in Sources */,
 				A30C39882DEDA6BB00C5C308 /* Userdefault+isFirstLaunch.swift in Sources */,
 				A30C39892DEDA6BB00C5C308 /* STMesh+BBox.swift in Sources */,
 				3762F45428F571DF00432973 /* ViewController.swift in Sources */,
@@ -710,7 +708,8 @@
 				BASE_URL = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7YYQHRBXHC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DERIVED_FILE_DIR)/PackageFrameworks",
@@ -757,7 +756,7 @@
 				BASE_URL = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 7YYQHRBXHC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DERIVED_FILE_DIR)/PackageFrameworks",
@@ -960,6 +959,14 @@
 				minimumVersion = 1.0.1;
 			};
 		};
+		A38BCF162DF0288800FF2C94 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.52.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -967,6 +974,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3AA2381029F1B205003D3253 /* XCRemoteSwiftPackageReference "StructureKit" */;
 			productName = StructureKit;
+		};
+		A38BCF172DF0288800FF2C94 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A38BCF162DF0288800FF2C94 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

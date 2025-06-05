@@ -35,6 +35,12 @@ jobs:
           gem install cocoapods
           pod install --repo-update
 
+      - name: Resolve Swift Package Dependencies
+        run: |
+          xcodebuild -resolvePackageDependencies \
+          -workspace EmpireScan.xcworkspace \
+          -scheme EmpireScan
+
       - name: Set build number from GitHub run number
         run: |
           BASE_BUILD_NUMBER=1000

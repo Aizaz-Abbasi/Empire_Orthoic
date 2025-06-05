@@ -209,7 +209,6 @@ class ViewController: UIViewController {
   func setupUserInterface() {
     // Make sure the status bar is hidden.
     navigationController?.isNavigationBarHidden = true
-
     // Fully transparent message label, initially.
     appStatusMessageBgView.alpha = 0
     appStatusMessageLabel.alpha = 0
@@ -225,14 +224,14 @@ class ViewController: UIViewController {
     alignCubeWithCameraSwitch.isOn = !_options.alignCubeWithCamera
 
 //    var attributeString = NSMutableAttributedString(
-//      string: "Terms of Use",
-//      attributes: linkButtonAttributes)
-   // termsOfUseButton.setAttributedTitle(attributeString, for: .normal)
+//    string: "Terms of Use",
+//    attributes: linkButtonAttributes)
+//    termsOfUseButton.setAttributedTitle(attributeString, for: .normal)
 
 //    attributeString = NSMutableAttributedString(
-//      string: "Privacy Policy",
-//      attributes: linkButtonAttributes)
-   // privacyPolicyButton.setAttributedTitle(attributeString, for: .normal)
+//    string: "Privacy Policy",
+//    attributes: linkButtonAttributes)
+//    privacyPolicyButton.setAttributedTitle(attributeString, for: .normal)
   }
 
   // Make sure the status bar is disabled (iOS 7+)
@@ -1108,7 +1107,6 @@ extension ViewController {
     optSet.groups.append(groupStreaming)
 
       let savedTrackerType = UserDefaults.standard.string(forKey: "selectedTrackerType") ?? "Depth Only"
-    
       let initialTrackerVal = (savedTrackerType == "Color + Depth") ? 0 : 1
 
       let groupTracker = OptionsGroup(id: .trackerGroup)

@@ -158,8 +158,8 @@
             filePath = "EmpireScan/Scanning/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1113"
-            endingLineNumber = "1113"
+            startingLineNumber = "1111"
+            endingLineNumber = "1111"
             landmarkName = "makeOptionsSet()"
             landmarkType = "7">
          </BreakpointContent>

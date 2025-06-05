@@ -287,7 +287,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Z5r-Wo-Qex">
-                                <rect key="frame" x="70.666666666666686" y="126" width="299" height="32"/>
+                                <rect key="frame" x="70.666666666666686" y="64" width="299" height="32"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <segments>
                                     <segment title="X-Ray View"/>
@@ -300,7 +300,7 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjT-pR-saa">
-                                <rect key="frame" x="100" y="494" width="240" height="40"/>
+                                <rect key="frame" x="100" y="480" width="240" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Processing: 100%" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSA-DC-mal">
                                         <rect key="frame" x="49" y="8.3333333333333126" width="142.33333333333334" height="23.333333333333329"/>
@@ -323,7 +323,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7g-9g-7Eo">
-                                <rect key="frame" x="155" y="879" width="130" height="38"/>
+                                <rect key="frame" x="155" y="913" width="130" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="6ae-28-4qp"/>
                                     <constraint firstAttribute="width" constant="130" id="R4j-x5-Z79"/>
@@ -1134,7 +1134,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="bu0-kN-G0L"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wpN-uK-k66">
-                        <rect key="frame" x="0.0" y="62" width="440" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="440" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1561,7 +1561,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <label hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Connect Structure Sensor" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aW9-RL-gOH" userLabel="Label - App Status Message">
-                                <rect key="frame" x="0.0" y="173" width="440" height="783"/>
+                                <rect key="frame" x="0.0" y="649" width="440" height="307"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
@@ -1587,34 +1587,6 @@ Try to re-align or press reset.</string>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wu3-nf-t1Y" userLabel="Button - Scan">
-                                <rect key="frame" x="320" y="478" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="wu3-nf-t1Y" secondAttribute="height" multiplier="1:1" id="ih5-MO-Psf"/>
-                                    <constraint firstAttribute="width" constant="100" id="mGx-AD-Hx5"/>
-                                </constraints>
-                                <color key="tintColor" red="0.082352943720000002" green="0.37647059560000001" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="btn-scan">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="scanButtonPressed:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="nxe-ED-WLH"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tDl-xH-dPz" userLabel="Button - Done">
-                                <rect key="frame" x="320" y="478" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="OwG-HB-Tw2"/>
-                                    <constraint firstAttribute="width" secondItem="tDl-xH-dPz" secondAttribute="height" multiplier="1:1" id="ejx-tI-JEo"/>
-                                </constraints>
-                                <color key="tintColor" red="0.082352943720000002" green="0.37647059560000001" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="btn-done">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="doneButtonPressed:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="qvS-Bi-7KP"/>
-                                </connections>
-                            </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6QK-GW-Stj">
                                 <rect key="frame" x="330" y="338" width="80" height="80"/>
                                 <constraints>
@@ -1770,8 +1742,8 @@ Try to re-align or press reset.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Structure Sensor Required" translatesAutoresizingMaskIntoConstraints="NO" id="Z6a-g0-dhm">
-                                <rect key="frame" x="0.0" y="660" width="440" height="296"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Structure Sensor Required" translatesAutoresizingMaskIntoConstraints="NO" id="Z6a-g0-dhm">
+                                <rect key="frame" x="0.0" y="680" width="440" height="276"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyP-F0-fDS">
@@ -1787,6 +1759,34 @@ Try to re-align or press reset.</string>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="closeButton:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="gkN-s3-v29"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wu3-nf-t1Y" userLabel="Button - Scan">
+                                <rect key="frame" x="320" y="478" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="wu3-nf-t1Y" secondAttribute="height" multiplier="1:1" id="ih5-MO-Psf"/>
+                                    <constraint firstAttribute="width" constant="100" id="mGx-AD-Hx5"/>
+                                </constraints>
+                                <color key="tintColor" red="0.082352943720000002" green="0.37647059560000001" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="btn-scan">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="scanButtonPressed:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="nxe-ED-WLH"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tDl-xH-dPz" userLabel="Button - Done">
+                                <rect key="frame" x="320" y="478" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="OwG-HB-Tw2"/>
+                                    <constraint firstAttribute="width" secondItem="tDl-xH-dPz" secondAttribute="height" multiplier="1:1" id="ejx-tI-JEo"/>
+                                </constraints>
+                                <color key="tintColor" red="0.082352943720000002" green="0.37647059560000001" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="btn-done">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="qvS-Bi-7KP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1809,6 +1809,7 @@ Try to re-align or press reset.</string>
                             <constraint firstItem="8LY-NS-e60" firstAttribute="top" secondItem="eZ2-La-7lI" secondAttribute="bottom" constant="10" id="Gic-cf-AbV"/>
                             <constraint firstItem="Z6a-g0-dhm" firstAttribute="leading" secondItem="Yjg-pm-oql" secondAttribute="leading" id="J9N-8D-q4P"/>
                             <constraint firstItem="pS2-2A-WFh" firstAttribute="top" secondItem="8LY-NS-e60" secondAttribute="bottom" constant="8" symbolic="YES" id="Kth-Qo-WWw"/>
+                            <constraint firstItem="Z6a-g0-dhm" firstAttribute="top" secondItem="wu3-nf-t1Y" secondAttribute="bottom" constant="102" id="LOM-iI-cXw"/>
                             <constraint firstAttribute="trailing" secondItem="Z6a-g0-dhm" secondAttribute="trailing" id="LjR-U0-k6s"/>
                             <constraint firstItem="aW9-RL-gOH" firstAttribute="width" secondItem="Yjg-pm-oql" secondAttribute="width" id="LnV-dp-q6q"/>
                             <constraint firstAttribute="bottom" secondItem="Z6a-g0-dhm" secondAttribute="bottom" id="OOx-hu-NUk"/>
@@ -1828,12 +1829,11 @@ Try to re-align or press reset.</string>
                             <constraint firstItem="aW9-RL-gOH" firstAttribute="trailing" secondItem="Yjg-pm-oql" secondAttribute="trailing" id="fVR-uf-PdG"/>
                             <constraint firstItem="ugf-Mf-Uez" firstAttribute="leading" secondItem="8LY-NS-e60" secondAttribute="trailing" constant="15" id="ggx-P8-5vE"/>
                             <constraint firstItem="eZ2-La-7lI" firstAttribute="leading" secondItem="C0O-1z-TWa" secondAttribute="leading" constant="20" id="glQ-G7-nB7"/>
+                            <constraint firstItem="aW9-RL-gOH" firstAttribute="top" secondItem="wu3-nf-t1Y" secondAttribute="bottom" constant="71" id="iGL-E3-XYS"/>
                             <constraint firstItem="tDl-xH-dPz" firstAttribute="centerX" secondItem="wu3-nf-t1Y" secondAttribute="centerX" id="kkh-f4-nNn"/>
                             <constraint firstItem="dyP-F0-fDS" firstAttribute="leading" secondItem="C0O-1z-TWa" secondAttribute="leading" constant="15" id="m8J-ro-HKb"/>
-                            <constraint firstItem="Z6a-g0-dhm" firstAttribute="top" secondItem="dyP-F0-fDS" secondAttribute="bottom" constant="10" id="mkl-uA-ouW"/>
                             <constraint firstItem="cuj-pj-h1O" firstAttribute="centerX" secondItem="Yjg-pm-oql" secondAttribute="centerX" id="nCo-YE-6xy"/>
                             <constraint firstItem="C0O-1z-TWa" firstAttribute="trailing" secondItem="1q9-q2-imO" secondAttribute="trailing" constant="20" id="qPW-l0-X6r"/>
-                            <constraint firstItem="aW9-RL-gOH" firstAttribute="top" secondItem="dyP-F0-fDS" secondAttribute="bottom" constant="20" id="ud8-iY-RyW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="phW-EM-yOQ" secondAttribute="trailing" constant="20" id="ygj-7d-bjn"/>
                             <constraint firstItem="3J8-G4-YPT" firstAttribute="leading" secondItem="C0O-1z-TWa" secondAttribute="leading" constant="20" id="z6J-vi-d1h"/>
                         </constraints>
@@ -1862,7 +1862,7 @@ Try to re-align or press reset.</string>
                         <outlet property="structureAppIcon" destination="Url-yb-GOl" id="bx4-9E-n9l"/>
                         <outlet property="trackingLostLabel" destination="9pr-Qn-dNe" id="hGi-9J-Rol"/>
                         <outlet property="updateNowButton" destination="IOB-i6-R25" id="3AJ-Nu-gpU"/>
-                        <segue destination="5u1-AS-hYv" kind="show" identifier="segueToMesh" id="eIp-Gx-mXR"/>
+                        <segue destination="5u1-AS-hYv" kind="presentation" identifier="segueToMesh" id="eIp-Gx-mXR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ch-u6-EPH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1903,7 +1903,7 @@ Try to re-align or press reset.</string>
         <image name="scanIcon" width="23.333333969116211" height="23.333333969116211"/>
         <image name="structure-icon" width="1024" height="1024"/>
         <namedColor name="AccentColor">
-            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

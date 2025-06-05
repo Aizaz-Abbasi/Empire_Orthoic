@@ -148,11 +148,16 @@ extension ViewController: STCaptureSessionDelegate {
         //let selectedCamera = loadSelectedCameraFromDefaults()
         let sensorType = UserDefaults.standard.string(forKey: "selectedSensorType")
         if _captureSession == nil {
-            if(sensorType == "Apple"){
-                _captureSession = STCaptureSession.new()//newCaptureSessionWithFrontCameraAndTrueDepth()
-            }else if(sensorType == "Structure"){
+            if(sensorType == "Structure"){
                 _captureSession = STCaptureSession.newCaptureSessionWithIOSCameraDisabled()
+            }else{
+                _captureSession = STCaptureSession.new()//newCaptureSessionWithFrontCameraAndTrueDepth()
             }
+//            if(sensorType == "Apple"){
+//                _captureSession = STCaptureSession.new()//newCaptureSessionWithFrontCameraAndTrueDepth()
+//            }else if(sensorType == "Structure"){
+//                _captureSession = STCaptureSession.newCaptureSessionWithIOSCameraDisabled()
+//            }
         } else {
             _captureSession.streamingEnabled = false
         }
