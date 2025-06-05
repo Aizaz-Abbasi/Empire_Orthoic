@@ -57,15 +57,15 @@ struct PatientsListView: View {
 
     private func selectAllButton() -> some View {
         HStack {
-            Button(action: { isSelected.toggle() }) {
-                Image(systemName: isSelected ? "checkmark.square.fill" : "square")
-                    .foregroundColor(.gray)
-                    .font(.system(size: 20))
-            }
-
-            Text("Select all")
-                .font(.system(size: 16))
-                .foregroundColor(.gray)
+//            Button(action: { isSelected.toggle() }) {
+//                Image(systemName: isSelected ? "checkmark.square.fill" : "square")
+//                    .foregroundColor(.gray)
+//                    .font(.system(size: 20))
+//            }
+//
+//            Text("Select all")
+//                .font(.system(size: 16))
+//                .foregroundColor(.gray)
         }
         .background(Color(UIColor.clear))
     }

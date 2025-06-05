@@ -10,6 +10,7 @@ on:
         type: choice
         options:
           - Release
+          - Development
 
 jobs:
   build:
@@ -24,11 +25,13 @@ jobs:
           XCODE_PATH=$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)
           echo "Using Xcode: $XCODE_PATH"
           sudo xcode-select -switch "$XCODE_PATH/Contents/Developer"
+          xcodebuild -version
 
       - name: Set up Ruby (for CocoaPods)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0
+          bundler-cache: true
 
       - name: Install CocoaPods
         run: |
@@ -38,8 +41,8 @@ jobs:
       - name: Resolve Swift Package Dependencies
         run: |
           xcodebuild -resolvePackageDependencies \
-          -workspace EmpireScan.xcworkspace \
-          -scheme EmpireScan
+            -workspace EmpireScan.xcworkspace \
+            -scheme EmpireScan
 
       - name: Set build number from GitHub run number
         run: |
@@ -48,15 +51,26 @@ jobs:
           echo "BUILD_NUMBER=$NEW_BUILD" >> $GITHUB_ENV
           echo "📈 Build number: $NEW_BUILD"
 
+      - name: Verify required secrets
+        run: |
+          if [[ -z "${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}" ]] || \
+             [[ -z "${{ secrets.APP_STORE_CONNECT_KEY_ID }}" ]] || \
+             [[ -z "${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}" ]]; then
+            echo "❌ Missing required App Store Connect secrets"
+            exit 1
+          fi
+          echo "✅ All required secrets are present"
+
       - name: Build archive
         run: |
           xcodebuild -workspace EmpireScan.xcworkspace \
             -scheme EmpireScan \
-            -configuration Release \
+            -configuration ${{ github.event.inputs.build_type }} \
             -archivePath build/EmpireScan.xcarchive \
             clean archive \
             CURRENT_PROJECT_VERSION=$BUILD_NUMBER \
-            MARKETING_VERSION="1.0.$BUILD_NUMBER"
+            MARKETING_VERSION="1.0.$BUILD_NUMBER" \
+            CODE_SIGN_STYLE=Automatic
 
       - name: Generate ExportOptions.plist
         run: |
@@ -71,8 +85,10 @@ jobs:
             <string>automatic</string>
             <key>stripSwiftSymbols</key>
             <true/>
-            <key>compileBitcode</key>
+            <key>uploadSymbols</key>
             <true/>
+            <key>destination</key>
+            <string>upload</string>
           </dict>
           </plist>
           EOF
@@ -84,102 +100,33 @@ jobs:
             -exportOptionsPlist ExportOptions.plist \
             -exportPath build/Exported
 
-      - name: Upload to TestFlight
+      - name: Create App Store Connect API Key
+        env:
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "${APP_STORE_CONNECT_PRIVATE_KEY}" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_KEY_ID }}.p8
+
+      - name: Upload to TestFlight using App Store Connect API
         env:
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
         run: |
-          echo "${APP_STORE_CONNECT_PRIVATE_KEY}" > AuthKey.p8
-
-          xcrun altool --upload-app \
-            --type ios \
-            --file build/Exported/EmpireScan.ipa \
-            --apiKey $APP_STORE_CONNECT_KEY_ID \
-            --apiIssuer $APP_STORE_CONNECT_ISSUER_ID
+          xcrun notarytool submit build/Exported/EmpireScan.ipa \
+            --key ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_KEY_ID }}.p8 \
+            --key-id $APP_STORE_CONNECT_KEY_ID \
+            --issuer $APP_STORE_CONNECT_ISSUER_ID \
+            --wait
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: exported-ipa-${{ env.BUILD_NUMBER }}
           path: build/Exported/*.ipa
-# name: Manual iOS Build & Upload to TestFlight
 
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       build_type:
-#         description: "Select build type"
-#         required: true
-#         default: "Release"
-#         type: choice
-#         options:
-#           - Release
-
-# jobs:
-#   build:
-#     runs-on: macos-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-
-#       - name: Select preferred Xcode version
-#         run: |
-#           XCODE_PATH=$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)
-#           echo "Using Xcode: $XCODE_PATH"
-#           sudo xcode-select -switch "$XCODE_PATH/Contents/Developer"
-
-#       - name: Set up Ruby (for CocoaPods)
-#         uses: ruby/setup-ruby@v1
-#         with:
-#           ruby-version: 3.0
-
-#       - name: Install CocoaPods
-#         run: |
-#           gem install cocoapods
-#           pod install --repo-update
-
-#       - name: Set build number from GitHub run number
-#         run: |
-#           BASE_BUILD_NUMBER=1000
-#           NEW_BUILD=$((BASE_BUILD_NUMBER + GITHUB_RUN_NUMBER))
-#           echo "BUILD_NUMBER=$NEW_BUILD" >> $GITHUB_ENV
-#           echo "📈 Build number: $NEW_BUILD"
-
-#       - name: Build archive
-#         run: |
-#           xcodebuild -workspace EmpireScan.xcworkspace \
-#             -scheme EmpireScan \
-#             -configuration Release \
-#             -archivePath build/EmpireScan.xcarchive \
-#             clean archive \
-#             CURRENT_PROJECT_VERSION=$BUILD_NUMBER \
-#             MARKETING_VERSION="1.0.$BUILD_NUMBER"
-
-#       - name: Export IPA
-#         run: |
-#           xcodebuild -exportArchive \
-#             -archivePath build/EmpireScan.xcarchive \
-#             -exportOptionsPlist ExportOptions.plist \
-#             -exportPath build/Exported
-
-#       - name: Upload to TestFlight
-#         env:
-#           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-#           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-#           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
-#         run: |
-#           echo "${APP_STORE_CONNECT_PRIVATE_KEY}" > AuthKey.p8
-
-#           xcrun altool --upload-app \
-#             --type ios \
-#             --file build/Exported/EmpireScan.ipa \
-#             --apiKey $APP_STORE_CONNECT_KEY_ID \
-#             --apiIssuer $APP_STORE_CONNECT_ISSUER_ID
-
-#       - name: Upload build artifacts
-#         uses: actions/upload-artifact@v4
-#         with:
-#           name: exported-ipa-${{ env.BUILD_NUMBER }}
-#           path: build/Exported/*.ipa
+      - name: Clean up sensitive files
+        if: always()
+        run: |
+          rm -rf ~/.appstoreconnect/private_keys/
+          rm -f AuthKey*.p8

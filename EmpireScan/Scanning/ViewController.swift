@@ -1116,7 +1116,6 @@ extension ViewController {
           self?._options.depthAndColorTrackerIsOn = (selectedTracker == "Color + Depth")
           self?.onSLAMOptionsChanged()
       })
-
       .addEnum(id: .trackingMode, map: ["Object", "Turntable"], val: _options.isTurntableTracker ? 1 : 0, onChange: { [weak self] (_: OptionId, _: [String], _: Int) in
         self?.onSLAMOptionsChanged()
       })

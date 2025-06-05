@@ -7,7 +7,7 @@ class PatientsVC: UIViewController {
     @IBOutlet weak var profileImg: UIImageView?
     @IBOutlet weak var searchView: UIView?
     @IBOutlet weak var searchBar: UISearchBar!
-    private var selectedTab: String = "All"
+    //private var selectedTab: String = "All"
     
     @ObservedObject private var viewModel = PatientsViewModel()
     private var hostingControllerPatients: UIHostingController<PatientsListView>?
@@ -71,13 +71,13 @@ class PatientsVC: UIViewController {
         ])
     }
     
-    private func handleTabSelection(_ newTab: String) {
-        selectedTab = newTab
-        print("Selected tab updated in ScansVC: \(newTab)")
-        viewModel.patients = []
-        viewModel.totalPatients = 0
-        getData(searchText: "")
-    }
+//    private func handleTabSelection(_ newTab: String) {
+//        selectedTab = newTab
+//        print("Selected tab updated in ScansVC: \(newTab)")
+//        viewModel.patients = []
+//        viewModel.totalPatients = 0
+//        getData(searchText: "")
+//    }
     
     private func bindViewModel() {
         viewModel.$patients

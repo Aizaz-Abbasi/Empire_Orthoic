@@ -8,11 +8,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //        window = UIWindow(frame: UIScreen.main.bounds)
-        SentrySDK.start { options in
-                options.dsn = "https://5b06fb07cfa0e9df68889dfa0dcb693a@o4509438736138240.ingest.us.sentry.io/4509438823825408"
-                options.debug = true // 💡 Remove in production
-                options.enableSwizzling = true // Auto breadcrumbs
-        }
+//        SentrySDK.start { options in
+//                options.dsn = "https://5b06fb07cfa0e9df68889dfa0dcb693a@o4509438736138240.ingest.us.sentry.io/4509438823825408"
+//                options.debug = true // 💡 Remove in production
+//                options.enableSwizzling = true // Auto breadcrumbs
+//        }
         setInitialViewController()
         return true
     }

@@ -1,10 +1,8 @@
 class SessionService {
     static let shared = SessionService()
-
     var filters: FilterValues? = nil
     var selectedTab: String = "All"
     var lastSearchText: String = ""
-    
     private init() {} // Prevent external initialization
 }
 
@@ -33,7 +31,6 @@ class PatientsViewModel: ObservableObject {
         endDate: Date? = nil,
         displayUploadedScans: Bool = false
     ){
-        
         print("fetchPatients",isLoading,canLoadMore)
         if(!isSearching){
             print("returning...",isLoading,canLoadMore)
@@ -51,7 +48,6 @@ class PatientsViewModel: ObservableObject {
         }
         
         isLoading = true
-        
         let requestBody = SearchOrdersRequest(
             searchText: searchText,
             status: status,
@@ -62,7 +58,6 @@ class PatientsViewModel: ObservableObject {
             pageSize: pageSize,
             displayUploadedScans: displayUploadedScans
         )
-        
         ScansService.shared.getScansOrder(requestBody: requestBody) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -71,7 +66,11 @@ class PatientsViewModel: ObservableObject {
                 switch result {
                 case .success(let response):
                     if response.success {
-                        print("getScansOrder",response)
+                        if let jsonData = try? JSONEncoder().encode(response),
+                               let jsonString = String(data: jsonData, encoding: .utf8) {
+                                print("getScansOrder JSON Response: \(jsonString)")
+                            }
+                        //print("getScansOrder",response)
                         let newPatients = response.data?.items ?? []
                         self.totalPatients = response.data?.totalItems ?? 0
                         
@@ -119,7 +118,6 @@ class PatientsViewModel: ObservableObject {
     func updatePatientStatus(byId id: Int,status:String) {
         if let index = patients.firstIndex(where: { $0.id == id }) {
             patients[index].status = status
-            
         }
     }
 }

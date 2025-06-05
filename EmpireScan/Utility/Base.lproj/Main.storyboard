@@ -1561,7 +1561,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <label hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please Connect Structure Sensor" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aW9-RL-gOH" userLabel="Label - App Status Message">
-                                <rect key="frame" x="0.0" y="649" width="440" height="307"/>
+                                <rect key="frame" x="0.0" y="150" width="440" height="806"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
@@ -1587,6 +1587,34 @@ Try to re-align or press reset.</string>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wu3-nf-t1Y" userLabel="Button - Scan">
+                                <rect key="frame" x="320" y="478" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="wu3-nf-t1Y" secondAttribute="height" multiplier="1:1" id="ih5-MO-Psf"/>
+                                    <constraint firstAttribute="width" constant="100" id="mGx-AD-Hx5"/>
+                                </constraints>
+                                <color key="tintColor" red="0.082352943720000002" green="0.37647059560000001" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="btn-scan">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="scanButtonPressed:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="nxe-ED-WLH"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tDl-xH-dPz" userLabel="Button - Done">
+                                <rect key="frame" x="320" y="478" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="OwG-HB-Tw2"/>
+                                    <constraint firstAttribute="width" secondItem="tDl-xH-dPz" secondAttribute="height" multiplier="1:1" id="ejx-tI-JEo"/>
+                                </constraints>
+                                <color key="tintColor" red="0.082352943720000002" green="0.37647059560000001" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="btn-done">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="qvS-Bi-7KP"/>
+                                </connections>
+                            </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6QK-GW-Stj">
                                 <rect key="frame" x="330" y="338" width="80" height="80"/>
                                 <constraints>
@@ -1743,12 +1771,12 @@ Try to re-align or press reset.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Structure Sensor Required" translatesAutoresizingMaskIntoConstraints="NO" id="Z6a-g0-dhm">
-                                <rect key="frame" x="0.0" y="680" width="440" height="276"/>
+                                <rect key="frame" x="0.0" y="140" width="440" height="816"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyP-F0-fDS">
-                                <rect key="frame" x="15" y="93" width="100" height="60"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="15" y="70" width="100" height="60"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Eab-WO-ANh"/>
                                     <constraint firstAttribute="height" constant="60" id="iOL-LM-YZE"/>
@@ -1759,34 +1787,6 @@ Try to re-align or press reset.</string>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="closeButton:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="gkN-s3-v29"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wu3-nf-t1Y" userLabel="Button - Scan">
-                                <rect key="frame" x="320" y="478" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="wu3-nf-t1Y" secondAttribute="height" multiplier="1:1" id="ih5-MO-Psf"/>
-                                    <constraint firstAttribute="width" constant="100" id="mGx-AD-Hx5"/>
-                                </constraints>
-                                <color key="tintColor" red="0.082352943720000002" green="0.37647059560000001" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="btn-scan">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="scanButtonPressed:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="nxe-ED-WLH"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tDl-xH-dPz" userLabel="Button - Done">
-                                <rect key="frame" x="320" y="478" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="OwG-HB-Tw2"/>
-                                    <constraint firstAttribute="width" secondItem="tDl-xH-dPz" secondAttribute="height" multiplier="1:1" id="ejx-tI-JEo"/>
-                                </constraints>
-                                <color key="tintColor" red="0.082352943720000002" green="0.37647059560000001" blue="0.74117648599999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="btn-done">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="doneButtonPressed:" destination="UzU-Tq-EOi" eventType="touchUpInside" id="qvS-Bi-7KP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1809,14 +1809,13 @@ Try to re-align or press reset.</string>
                             <constraint firstItem="8LY-NS-e60" firstAttribute="top" secondItem="eZ2-La-7lI" secondAttribute="bottom" constant="10" id="Gic-cf-AbV"/>
                             <constraint firstItem="Z6a-g0-dhm" firstAttribute="leading" secondItem="Yjg-pm-oql" secondAttribute="leading" id="J9N-8D-q4P"/>
                             <constraint firstItem="pS2-2A-WFh" firstAttribute="top" secondItem="8LY-NS-e60" secondAttribute="bottom" constant="8" symbolic="YES" id="Kth-Qo-WWw"/>
-                            <constraint firstItem="Z6a-g0-dhm" firstAttribute="top" secondItem="wu3-nf-t1Y" secondAttribute="bottom" constant="102" id="LOM-iI-cXw"/>
                             <constraint firstAttribute="trailing" secondItem="Z6a-g0-dhm" secondAttribute="trailing" id="LjR-U0-k6s"/>
                             <constraint firstItem="aW9-RL-gOH" firstAttribute="width" secondItem="Yjg-pm-oql" secondAttribute="width" id="LnV-dp-q6q"/>
                             <constraint firstAttribute="bottom" secondItem="Z6a-g0-dhm" secondAttribute="bottom" id="OOx-hu-NUk"/>
                             <constraint firstItem="9pr-Qn-dNe" firstAttribute="leading" secondItem="C0O-1z-TWa" secondAttribute="leading" id="Pyg-eM-eDf"/>
                             <constraint firstItem="pS2-2A-WFh" firstAttribute="leading" secondItem="C0O-1z-TWa" secondAttribute="leading" constant="20" id="QIA-Xf-oUL"/>
                             <constraint firstItem="ugf-Mf-Uez" firstAttribute="centerY" secondItem="8LY-NS-e60" secondAttribute="centerY" id="Qga-2H-IZe"/>
-                            <constraint firstItem="dyP-F0-fDS" firstAttribute="top" secondItem="Yjg-pm-oql" secondAttribute="top" constant="93" id="Uqs-GC-nzn"/>
+                            <constraint firstItem="dyP-F0-fDS" firstAttribute="top" secondItem="Yjg-pm-oql" secondAttribute="top" constant="70" id="Uqs-GC-nzn"/>
                             <constraint firstAttribute="bottom" secondItem="9pr-Qn-dNe" secondAttribute="bottom" constant="20" id="Vov-I3-yYR"/>
                             <constraint firstItem="C0O-1z-TWa" firstAttribute="trailing" secondItem="tDl-xH-dPz" secondAttribute="trailing" constant="20" id="Xdl-Tp-mxJ"/>
                             <constraint firstItem="2rf-oy-Jdb" firstAttribute="leading" secondItem="Yjg-pm-oql" secondAttribute="leading" id="Y4R-os-ShS"/>
@@ -1829,11 +1828,12 @@ Try to re-align or press reset.</string>
                             <constraint firstItem="aW9-RL-gOH" firstAttribute="trailing" secondItem="Yjg-pm-oql" secondAttribute="trailing" id="fVR-uf-PdG"/>
                             <constraint firstItem="ugf-Mf-Uez" firstAttribute="leading" secondItem="8LY-NS-e60" secondAttribute="trailing" constant="15" id="ggx-P8-5vE"/>
                             <constraint firstItem="eZ2-La-7lI" firstAttribute="leading" secondItem="C0O-1z-TWa" secondAttribute="leading" constant="20" id="glQ-G7-nB7"/>
-                            <constraint firstItem="aW9-RL-gOH" firstAttribute="top" secondItem="wu3-nf-t1Y" secondAttribute="bottom" constant="71" id="iGL-E3-XYS"/>
                             <constraint firstItem="tDl-xH-dPz" firstAttribute="centerX" secondItem="wu3-nf-t1Y" secondAttribute="centerX" id="kkh-f4-nNn"/>
                             <constraint firstItem="dyP-F0-fDS" firstAttribute="leading" secondItem="C0O-1z-TWa" secondAttribute="leading" constant="15" id="m8J-ro-HKb"/>
+                            <constraint firstItem="Z6a-g0-dhm" firstAttribute="top" secondItem="dyP-F0-fDS" secondAttribute="bottom" constant="10" id="mkl-uA-ouW"/>
                             <constraint firstItem="cuj-pj-h1O" firstAttribute="centerX" secondItem="Yjg-pm-oql" secondAttribute="centerX" id="nCo-YE-6xy"/>
                             <constraint firstItem="C0O-1z-TWa" firstAttribute="trailing" secondItem="1q9-q2-imO" secondAttribute="trailing" constant="20" id="qPW-l0-X6r"/>
+                            <constraint firstItem="aW9-RL-gOH" firstAttribute="top" secondItem="dyP-F0-fDS" secondAttribute="bottom" constant="20" id="ud8-iY-RyW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="phW-EM-yOQ" secondAttribute="trailing" constant="20" id="ygj-7d-bjn"/>
                             <constraint firstItem="3J8-G4-YPT" firstAttribute="leading" secondItem="C0O-1z-TWa" secondAttribute="leading" constant="20" id="z6J-vi-d1h"/>
                         </constraints>
@@ -1913,6 +1913,9 @@ Try to re-align or press reset.</string>
         </systemColor>
         <systemColor name="systemBrownColor">
             <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

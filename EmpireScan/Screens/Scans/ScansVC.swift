@@ -106,7 +106,7 @@ class ScansVC: UIViewController {
                             set: { self.viewModel.isLoading = $0 }),
                         loadMoreAction: { [weak self] in
                             guard let self = self else { return }
-                            print("Calling API to load more data...")
+                            print("Calling API to load more data...",selectedTab)
                             var status: String?
                             switch selectedTab {
                             case "All":
@@ -119,6 +119,8 @@ class ScansVC: UIViewController {
                                 status = "Pending"
                             case "Patients not scan yet":
                                 status = "Not Scanned"
+                            case "Submitted":
+                                status = "Scanned and Submitted"
                             default:
                                 status = nil
                             }
