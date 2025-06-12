@@ -21,7 +21,17 @@ This app allows users to perform 3D scanning using two different types of sensor
 
 ---
 
-## 🛠 Architecture
+## 🧭 User Flow to Start Scanning
+
+1. Go to the **"Scans Not Sent"** tab.
+2. If a patient is listed with status **"Not Scanned"**:
+   - Tap on the **user/patient**.
+   - Click the **"Scan Now"** button.
+   - Select which **foot** to scan.
+   - Press the **"Start"** button to begin scanning.
+3. If **no user is available**, tap the **"+"** icon to **add a new patient** before proceeding to scan.
+
+---
 
 ### 1. Sensor Selection
 
