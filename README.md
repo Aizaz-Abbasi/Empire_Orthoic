@@ -1,5 +1,5 @@
 
-# 📱 Emppire Scan
+# 📱 Empire Scan
 
 An iOS scanning application built with Swift that supports 3D scanning using either:
 
