@@ -55,7 +55,7 @@ Each scanner uses its own dedicated screen and class.
 After the scan is complete from either sensor:
 - The app **navigates to `MeshViewController`**
 - It displays the scanned 3D mesh
-- Users can **view, rotate, zoom, and perform custom actions** on the mesh
+- Users can **view and perform custom actions** on the mesh
 
 ---
 
