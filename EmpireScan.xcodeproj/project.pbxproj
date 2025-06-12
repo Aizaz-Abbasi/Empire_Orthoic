@@ -169,6 +169,7 @@
 		A34393822DA94BF9007E2E18 /* w4_form.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = w4_form.pdf; sourceTree = "<group>"; };
 		A3726BAD2D7ED1C10096FC82 /* Hexa-Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hexa-Colors.swift"; sourceTree = "<group>"; };
 		A378CBA52D814D570009D084 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A38BCF312DFAA46100FF2C94 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A39EEBFE2DDDE7920097FD67 /* ScanSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSettings.swift; sourceTree = "<group>"; };
 		A3A11EB62DC0F8CA00E0C9B0 /* blank_order_form1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = blank_order_form1.pdf; sourceTree = "<group>"; };
 		A3A4A1332D883BD000F24F05 /* TabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewModel.swift; sourceTree = "<group>"; };
@@ -320,6 +321,7 @@
 		66052A43273C26B600744306 = {
 			isa = PBXGroup;
 			children = (
+				A38BCF312DFAA46100FF2C94 /* README.md */,
 				66052A4E273C26B600744306 /* EmpireScan */,
 				66052A4D273C26B600744306 /* Products */,
 				32224C2327EC971900FABF72 /* Frameworks */,
@@ -708,7 +710,7 @@
 				BASE_URL = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7YYQHRBXHC;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -756,7 +758,7 @@
 				BASE_URL = "$(inherited)";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 7YYQHRBXHC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DERIVED_FILE_DIR)/PackageFrameworks",

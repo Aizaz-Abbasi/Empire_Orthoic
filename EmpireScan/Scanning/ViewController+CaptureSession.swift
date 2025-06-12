@@ -151,17 +151,12 @@ extension ViewController: STCaptureSessionDelegate {
             if(sensorType == "Structure"){
                 _captureSession = STCaptureSession.newCaptureSessionWithIOSCameraDisabled()
             }else{
-                _captureSession = STCaptureSession.new()//newCaptureSessionWithFrontCameraAndTrueDepth()
+                _captureSession = STCaptureSession.new() //newCaptureSessionWithFrontCameraAndTrueDepth()
             }
-//            if(sensorType == "Apple"){
-//                _captureSession = STCaptureSession.new()//newCaptureSessionWithFrontCameraAndTrueDepth()
-//            }else if(sensorType == "Structure"){
-//                _captureSession = STCaptureSession.newCaptureSessionWithIOSCameraDisabled()
-//            }
+
         } else {
             _captureSession.streamingEnabled = false
         }
-        
         var iosCamera: STCaptureSessionIOSCamera = STCaptureSessionIOSCamera.frontAndTrueDepth
         var colorResolution: STCaptureSessionColorResolution = .resolution640x480
         let depthResolution: STCaptureSessionTrueDepthFrameResolution = .resolution640x480
@@ -175,41 +170,6 @@ extension ViewController: STCaptureSessionDelegate {
             config = StructureSensorConfig(colorResolution: _options.highResColoring ? getBestColorResolution(.builtInWideAngleCamera) : .resolution640x480,
                                                        preset: _options.structure.preset)
         }
-        
-        //var properties: [AnyHashable: Any] = [:]
-//        switch selectedCamera {
-//        case .lidar: config = LidarConfig(useARKit: _options.useARKit,
-//                                          avColorResolution: _options.highResColoring ? getBestColorResolution(.builtInLiDARDepthCamera) : .resolution640x480)
-//        case .truedepth: config = TrueDepthConfig(useARKit: _options.useARKit,
-//                                                  avColorResolution: _options.highResColoring ? getBestColorResolution(.builtInTrueDepthCamera) : .resolution640x480)
-//        case .structure:
-//            config = StructureSensorConfig(colorResolution: _options.highResColoring ? getBestColorResolution(.builtInWideAngleCamera) : .resolution640x480,
-//                                           preset: _options.structure.preset)
-//            properties = _options.structure.properties
-//        case .backCamera: config = BackCameraConfig(colorResolution:_options.highResColoring ? getBestColorResolution(.builtInWideAngleCamera) : .resolution640x480)
-//        case .frontCamera: config = FrontCameraConfig(colorResolution:_options.highResColoring ? getBestColorResolution(.builtInWideAngleCamera, position: .front) : .resolution640x480)
-//            
-//        }
-        
-//        var sensorConfig: [AnyHashable: Any] = [
-//            kSTCaptureSessionOptionIOSCameraKey: iosCamera.rawValue,
-//            kSTCaptureSessionOptionColorResolutionKey: colorResolution.rawValue,
-//            kSTCaptureSessionOptionTrueDepthFrameResolutionKey: depthResolution.rawValue,
-//            kSTCaptureSessionOptionColorMaxFPSKey: 30.0,
-//            kSTCaptureSessionOptionDepthSensorEnabledKey: (selectedCamera != .truedepth),
-//            kSTCaptureSessionOptionUseAppleCoreMotionKey: true,
-//            kSTCaptureSessionOptionDepthStreamPresetKey: STCaptureSessionPreset.default.rawValue,
-//            kSTCaptureSessionOptionSimulateRealtimePlaybackKey: true
-//        ]
-        
-//        if _options.useARKit && selectedCamera == .truedepth {
-//            let arkitConfig = ARFaceTrackingConfiguration()
-//            if #available(iOS 13.0, *) {
-//                arkitConfig.maximumNumberOfTrackedFaces = ARFaceTrackingConfiguration.supportedNumberOfTrackedFaces
-//            }
-//            arkitConfig.isLightEstimationEnabled = true
-//            sensorConfig[kSTCaptureSessionOptionUseARKitConfigurationKey] = arkitConfig
-//        }
         print("config.dict",config.dict)
         _captureSession.lens = STLens.normal
         _captureSession.lensDetection = STLensDetectorState.off

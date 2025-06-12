@@ -174,10 +174,6 @@ class ViewController: UIViewController {
     }
     // enable streaming
     _captureSession.streamingEnabled = true
-    let m =  _captureSession.sensorName
-      let n =  _captureSession.sensorMode
-      let ooo =  _captureSession.userInstructions
-      
     // Abort the current scan if we were still scanning before going into background since we
     // are not likely to recover well.
     if _slamState.scannerState == ScannerState.scanning {
@@ -222,16 +218,6 @@ class ViewController: UIViewController {
     fixedCubeDistanceSwitch.isOn = _options.fixedCubePosition
     fixedCubeDistanceSwitch.isHidden = false
     alignCubeWithCameraSwitch.isOn = !_options.alignCubeWithCamera
-
-//    var attributeString = NSMutableAttributedString(
-//    string: "Terms of Use",
-//    attributes: linkButtonAttributes)
-//    termsOfUseButton.setAttributedTitle(attributeString, for: .normal)
-
-//    attributeString = NSMutableAttributedString(
-//    string: "Privacy Policy",
-//    attributes: linkButtonAttributes)
-//    privacyPolicyButton.setAttributedTitle(attributeString, for: .normal)
   }
 
   // Make sure the status bar is disabled (iOS 7+)
@@ -295,7 +281,7 @@ class ViewController: UIViewController {
     _meshViewController._mesh = mesh
     _meshViewController.setCameraProjectionMatrix(_metalData.depthCameraGLProjectionMatrix)
     _meshViewController.scanType = scanType
-      _meshViewController.footType = footType
+    _meshViewController.footType = footType
       _meshViewController.folderId = folderId
       _meshViewController.orderId = orderId
       _meshViewController.orderStatus = orderStatus
@@ -358,13 +344,6 @@ class ViewController: UIViewController {
       if _captureSession == nil {
           return
      }
-      
-    let m =  _captureSession.sensorBatteryLevel
-    let n =  _captureSession.sensorMode
-      let selectedSensorType = UserDefaults.standard.string(forKey: "selectedSensorType") ?? "Apple"
-      if selectedSensorType == "Structure", m == 0 {
-          showToast(message: "Please, change default sensor preference in settings.",textColor: .white,backgroundColor: Colors.primary.uiColor)
-      }
       
     _captureSession.streamingEnabled = true
     _captureSession.properties = STCaptureSessionPropertiesSetColorCameraAutoExposureISOAndWhiteBalance()
@@ -1152,11 +1131,6 @@ extension ViewController {
       this.onSLAMOptionsChanged()
     }
 
-//    let groupMapper = OptionsGroup(id: .mapperGroup)
-//      .addBool(id: .highResolutionMesh, val: true, onChange: { [weak self] (_: OptionId, val: Bool) in
-//        self?._options.highResMapping = val
-//        self?.onSLAMOptionsChanged()
-//      })
       let highResolutionDefault = UserDefaults.standard.object(forKey: "highResolutionMesh") as? Bool ?? true
       let groupMapper = OptionsGroup(id: .mapperGroup)
         .addBool(id: .highResolutionMesh, val: highResolutionDefault, onChange: { [weak self] (_: OptionId, val: Bool) in
